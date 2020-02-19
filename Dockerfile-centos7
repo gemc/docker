@@ -7,7 +7,7 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-osbase -t gemc:centos7 .
+#  docker build -f Dockerfile-centos7 -t gemc:centos7 .
 #
 #  docker tag gemc:centos7 jeffersonlab/gemc:centos7
 #
@@ -16,6 +16,8 @@
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
+#
+#  docker run -it --rm gemc:centos7 bash
 #
 #  docker run -it --rm jeffersonlab/gemc:centos7 bash
 #
@@ -71,6 +73,19 @@ RUN yum install -y \
 	python-websockify \
 	ghostscript-fonts \
 	&& yum clean all \
-	&& rm -rf /var/cache/yum
+	&& rm -rf /var/cache/yum \
+	&& git clone https://github.com/kanaka/noVNC.git /opt/noVNC \
+	&& cd /opt/noVNC \
+	&& ln -s vnc.html index.html \
+	&& mkdir -p /container/utilities
+
+# These define an alias and a script for easily starting up the
+# servers from either bash or tcsh.
+COPY scripts/xstart_alias.sh  /etc/profile.d
+COPY scripts/xstart_alias.csh /etc/profile.d
+COPY scripts/xstart.sh  /container/utilities
+COPY scripts/xstart.csh /container/utilities
+COPY scripts/xstop /usr/bin
+ADD  dot_config /root/.config
 
 ### END BASEOS
