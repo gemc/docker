@@ -1,0 +1,74 @@
+#
+# docker base image for the final docker image
+#
+# This file is included by the script createDocker 
+#
+#--------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-osbase -t gemc:centos8 .
+#
+#  docker tag gemc:centos8 jeffersonlab/gemc:centos8
+#
+#  docker push jeffersonlab/gemc:centos8
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm jeffersonlab/gemc:centos8 bash
+#
+#--------------------------------------------------------------------------
+
+### START BASEOS
+
+FROM centos:centos8
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+# Running the first line is not enough
+RUN yum install -y epel-release \
+	&& yum install -y 'dnf-command(config-manager)' \
+	&& yum -y config-manager --set-enabled PowerTools \
+	&& yum -y update \
+	&& yum -y check-update
+
+RUN yum install -y \
+	cmake3 \
+	make \
+	gcc-c++ \
+	mysql-devel \
+	python3-devel \
+	python3-scons \
+	libX11-devel \
+	mesa-libGLU-devel \
+	libXt-devel \
+	libXmu-devel \
+	libXrender-devel \
+	libXpm-devel \
+	libXft-devel \
+	expat-devel \
+	bzip2 \
+	qt5-qtbase-devel \
+	qt5-linguist \
+	wget \
+	nano \
+	git \
+	which \
+	tcsh \
+	psmisc \
+	tigervnc-server \
+	xfce4-session \
+	xfce4-panel \
+	xfce4-terminal \
+	xfwm4 \
+	mailcap \
+	net-tools \
+	glx-utils \
+	xterm \
+	nedit \
+	git \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum
+
+### END BASEOS
