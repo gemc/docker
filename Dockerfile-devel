@@ -64,7 +64,8 @@ COPY scripts/xstop /usr/bin
 ADD  dot_config /root/.config
 
 ### END BASEOS
-### START BASEOS
+ 
+### START JLAB SOFTWARE
 
 ADD .jlab_software /root
 
@@ -94,10 +95,11 @@ RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/xerces-c-* \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d 
 
 WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity
 
 
-### END BASEOS
+### END JLAB SOFTWARE
+ 

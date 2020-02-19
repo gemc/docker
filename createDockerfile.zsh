@@ -71,6 +71,7 @@ for container in $dockerCentos $dockerJLab;
 do
 	echo " Merging "$container
 	grep "### START" -A1000 $container | grep "### END" -B1000 >> $dockerFile
+	echo " " >> $dockerFile
 done
 
 

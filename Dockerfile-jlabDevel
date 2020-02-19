@@ -9,17 +9,13 @@
 #
 #  docker build -f Dockerfile-jlabDevel -t gemc:jlabDevel .
 #
-#  docker tag gemc:jlabDevel jeffersonlab/gemc:jlabDevel
-#
-#  docker push jeffersonlab/gemc:jlabDevel
+#  This image is not pushed to JLAB as it's included in "devel"
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
 #  docker run -it --rm gemc:jlabDevel bash
-#
-#  docker run -it --rm jeffersonlab/gemc:jlabDevel bash
 #
 #--------------------------------------------------------------------------
 
@@ -57,7 +53,7 @@ RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/xerces-c-* \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d 
 
 WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity
