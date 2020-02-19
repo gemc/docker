@@ -7,27 +7,31 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-osbase -t gemc:centos7 .
+#  docker build -f Dockerfile-osbase -t gemc:centos8 .
 #
-#  docker tag gemc:centos7 jeffersonlab/gemc:centos7
+#  docker tag gemc:centos8 jeffersonlab/gemc:centos8
 #
-#  docker push jeffersonlab/gemc:centos7
+#  docker push jeffersonlab/gemc:centos8
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm jeffersonlab/gemc:centos7 bash
+#  docker run -it --rm jeffersonlab/gemc:centos8 bash
 #
 #--------------------------------------------------------------------------
 
 ### START BASEOS
 
-FROM centos:7.5.1804
+FROM centos:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 # Running the first line is not enough
-RUN yum install -y epel-release
+RUN yum install -y epel-release \
+	&& yum install -y 'dnf-command(config-manager)' \
+	&& yum -y config-manager --set-enabled PowerTools \
+	&& yum -y update \
+	&& yum -y check-update
 
 RUN yum install -y \
 	cmake3 \
