@@ -1,2 +1,11 @@
-The github username or organization should be linked to docker hub.
+The github username or organization should be linked to docker hub. Here's how:
+
+
+On the ACCOUNT settings go to applications and click on Docker Hub Builder.
+Grant access to the organizations if needed.
+
+
+
+
+
 

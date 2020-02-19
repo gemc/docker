@@ -1,0 +1,73 @@
+#
+# docker base image for the final docker image
+#
+# Instructions:
+#
+#--------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-osbase -t gemc:centos8.1.1911 .
+#
+#  docker tag gemc:centos8.1.1911 jeffersonlab/gemc:centos8.1.1911
+#
+#  docker push jeffersonlab/gemc:centos8.1.1911
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm jeffersonlab/gemc:centos8.1.1911 bash
+#
+#--------------------------------------------------------------------------
+
+### START BASEOS
+
+FROM centos:8.1.1911
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+RUN yum install -y epel-release
+
+RUN yum install -y \
+    cmake3 \
+    make \
+    scons \
+    gcc-c++ \
+    mysql \
+    mysql-devel \
+    python-devel \
+    libX11-devel \
+    mesa-libGLU-devel \
+    libXt-devel \
+    libXmu-devel \
+    libXrender-devel \
+    libXpm-devel \
+    libXft-devel \
+    expat-devel \
+    bzip2 \
+    qt5-qtbase-devel \
+    qt5-linguist \
+    wget \
+    nano \
+    git \
+    which \
+    tcsh \
+    psmisc \
+    tigervnc-server \
+    xfce4-session \
+    xfce4-panel \
+    xfce4-terminal \
+    xfwm4 \
+    mailcap \
+    ghostscript-fonts \
+    net-tools \
+    glx-utils \
+    python-websockify \
+    xterm \
+    nedit \
+    git \
+&& yum clean all \
+    && rm -rf /var/cache/yum \
+    && ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+
+### END BASEOS
