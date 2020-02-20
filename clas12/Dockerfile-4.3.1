@@ -4,19 +4,19 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-4.3.1 -t gemc:4.3.1 .
+#  docker build -f Dockerfile-4.3.1 -t clas12tags:4.3.1 .
 #
-#  docker tag gemc:centos7 jeffersonlab/gemc:centos7
+#  docker tag clas12tags:4.3.1 jeffersonlab/clas12tags:4.3.1
 #
-#  docker push jeffersonlab/gemc:centos7
+#  docker push jeffersonlab/clas12tags:4.3.1
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:centos7 bash
+#  docker run -it --rm clas12tags:4.3.1 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:centos7 bash
+#  docker run -it --rm jeffersonlab/clas12tags:4.3.1 bash
 #
 #--------------------------------------------------------------------------
 
@@ -86,6 +86,7 @@ RUN cd /jlab/work \
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
 	&& cd clas12-mcgen \
+	&& rm -rf .git* */.git* \
 	&& make \
 	&& cp clasdis-nocernlib/clasdis      $JLAB_SOFTWARE/clas12/bin \
 	&& cp inclusive-dis-rad/generate-dis $JLAB_SOFTWARE/clas12/bin \

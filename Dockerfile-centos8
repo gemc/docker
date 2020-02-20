@@ -65,13 +65,15 @@ RUN yum install -y \
 	xterm \
 	nedit \
 	git \
+	 \
+	 \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
+	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
 	&& git clone https://github.com/kanaka/noVNC.git /opt/noVNC \
 	&& cd /opt/noVNC \
 	&& ln -s vnc.html index.html \
 	&& mkdir -p /container/utilities
-
 
 
 # These define an alias and a script for easily starting up the
