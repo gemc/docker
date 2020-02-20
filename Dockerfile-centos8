@@ -1,6 +1,5 @@
 #
 # docker centos8 base image
-#
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container:

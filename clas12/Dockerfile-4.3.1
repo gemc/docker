@@ -1,0 +1,105 @@
+#
+# docker image for CLAS12 Production Simulation - to be run in batch mode on OSG
+#-------------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-4.3.1 -t gemc:4.3.1 .
+#
+#  docker tag gemc:centos7 jeffersonlab/gemc:centos7
+#
+#  docker push jeffersonlab/gemc:centos7
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm gemc:centos7 bash
+#
+#  docker run -it --rm jeffersonlab/gemc:centos7 bash
+#
+#--------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc:2.7
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV JLAB_ROOT /jlab
+ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
+ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
+ENV JLAB_VERSION 2.3
+ENV CLAS12TAG 4.3.1
+ENV CEDFILE ced.1.4.47.tar.gz
+ENV CCDBSQLITE ccdb_2019-08-04.sqlite
+ENV COATJTAG 6.3.1
+ENV CLARATAG 4.3.10
+
+
+# gfortran for clasdis generator
+# root for genKYandOnePion and evio2root
+# xemacs to help users
+# libXtst for kpp-plots
+# libfonts for kpp-plots fonts
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root
+
+WORKDIR $JLAB_ROOT
+
+# Checking out clas12Tags and compiling CLAS12TAG
+# Removing un-used tags and .git stuff
+RUN git clone https://github.com/gemc/clas12Tags.git \
+	&& cd $JLAB_ROOT/clas12Tags \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& rm -rf $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE/gemc \
+	&& ./goInstall $CLAS12TAG \
+	# delete unecessary files
+	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards`
+
+# Getting the field maps
+# Replacing the scripts in /etc and with the environment scripts
+RUN mkdir -p /jlab/noarch/data \
+	&& cd /jlab/noarch/data \
+	&& wget -q http://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
+	&& wget -q http://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
+	&& rm /etc/profile.d/jlab.csh \
+	&& rm /etc/profile.d/jlab.sh
+
+# reconstruction, clara and coatjava
+RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/inc \
+	&& export CLARA_HOME=$JLAB_ROOT/$JLAB_VERSION/claraHome \
+	# creating log dir structure
+	&& mkdir -p $CLARA_HOME/plugins/clas12/log /jlab/tmp \
+	&& cd /jlab/tmp \
+	&& wget -q --no-check-certificate https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
+	&& chmod u+x install-claracre-clas.sh \
+	# new version of clara requires typing "Y" to remove old home dir
+	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG \
+	&& cd /jlab \
+	# temp removal of this jar
+	&& rm /jlab/$JLAB_VERSION/claraHome/plugins/clas12/lib/utils/jclara-*
+
+# CCDBSQLITE
+RUN cd /jlab/work \
+	&& wget -q --no-check-certificate https://www.jlab.org/12gev_phys/packages/ccdb/$CCDBSQLITE
+
+# Generators from clas12-mcgen
+RUN cd /jlab/work \
+	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
+	&& cd clas12-mcgen \
+	&& make \
+	&& cp clasdis-nocernlib/clasdis      $JLAB_SOFTWARE/clas12/bin \
+	&& cp inclusive-dis-rad/generate-dis $JLAB_SOFTWARE/clas12/bin \
+	&& cp dvcsgen/dvcsgen                $JLAB_SOFTWARE/clas12/bin \
+	&& cp genKYandOnePion/eg_ky          $JLAB_SOFTWARE/clas12/bin
+
+# ced
+RUN cd /jlab/work \
+	&& wget -q https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE	 \
+	&& tar -zxpvf $CEDFILE	 \
+	&& rm $CEDFILE
+
+ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d
+ADD environment/environment-CLAS12TAG".sh"    /etc/profile.d
+WORKDIR $JLAB_ROOT/work
+
+ADD createClaraCook.csh $JLAB_SOFTWARE/clas12/bin/createClaraCook.csh

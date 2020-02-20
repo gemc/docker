@@ -1,6 +1,5 @@
 #
 # docker centos7 base image
-#
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container:
