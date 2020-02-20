@@ -1,7 +1,5 @@
 #
-# docker base image for the final docker image
-#
-# This file is included by the script createDocker
+# docker centos8 base image
 #
 #--------------------------------------------------------------------------
 #
@@ -22,8 +20,6 @@
 #  docker run -it --rm jeffersonlab/gemc:centos8 bash
 #
 #--------------------------------------------------------------------------
-
-### START BASEOS
 
 FROM centos:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
@@ -87,5 +83,3 @@ COPY scripts/xstart.sh  /container/utilities
 COPY scripts/xstart.csh /container/utilities
 COPY scripts/xstop /usr/bin
 ADD  dot_config /root/.config
-
-### END BASEOS

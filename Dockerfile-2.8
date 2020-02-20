@@ -1,23 +1,23 @@
 #
-# docker devel (jlab devel) libraries image
+# docker 2.8 (jlab 2.4) libraries image
 #
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-devel -t gemc:devel .
+#  docker build -f Dockerfile-2.8 -t gemc:2.8 .
 #
-#  docker tag gemc:devel jeffersonlab/gemc:devel
+#  docker tag gemc:2.8 jeffersonlab/gemc:2.8
 #
-#  docker push jeffersonlab/gemc:devel
+#  docker push jeffersonlab/gemc:2.8
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:devel bash
+#  docker run -it --rm gemc:2.8 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:devel bash
+#  docker run -it --rm jeffersonlab/gemc:2.8 bash
 #
 #--------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 ADD .jlab_software /root
 
 ENV JLAB_ROOT /jlab
-ENV JLAB_VERSION devel
+ENV JLAB_VERSION 2.4
 
 RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 

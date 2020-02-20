@@ -1,34 +1,33 @@
 #
-# docker jlab libraries image for the final docker image
-#
-# This file is included by the script createDocker
+# docker 2.7 (jlab 2.3) libraries image
 #
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-jlabDevel -t gemc:jlabDevel .
+#  docker build -f Dockerfile-2.7 -t gemc:2.7 .
 #
-#  This image is not pushed to JLAB as it's included in "devel"
+#  docker tag gemc:2.7 jeffersonlab/gemc:2.7
+#
+#  docker push jeffersonlab/gemc:2.7
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:jlabDevel bash
+#  docker run -it --rm gemc:2.7 bash
+#
+#  docker run -it --rm jeffersonlab/gemc:2.7 bash
 #
 #--------------------------------------------------------------------------
-
 
 FROM jeffersonlab/gemc:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-### START JLAB SOFTWARE
-
 ADD .jlab_software /root
 
 ENV JLAB_ROOT /jlab
-ENV JLAB_VERSION devel
+ENV JLAB_VERSION 2.3
 
 RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
@@ -57,6 +56,3 @@ RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 
 WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity
-
-
-### END JLAB SOFTWARE
