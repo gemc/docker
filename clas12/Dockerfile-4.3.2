@@ -4,19 +4,19 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-4.3.1 -t clas12tags:4.3.1 .
+#  docker build -f Dockerfile-4.3.2 -t clas12tags:4.3.2 .
 #
-#  docker tag clas12tags:4.3.1 jeffersonlab/clas12tags:4.3.1
+#  docker tag clas12tags:4.3.2 jeffersonlab/clas12tags:4.3.2
 #
-#  docker push jeffersonlab/clas12tags:4.3.1
+#  docker push jeffersonlab/clas12tags:4.3.2
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm clas12tags:4.3.1 bash
+#  docker run -it --rm clas12tags:4.3.2 bash
 #
-#  docker run -it --rm jeffersonlab/clas12tags:4.3.1 bash
+#  docker run -it --rm jeffersonlab/clas12tags:4.3.2 bash
 #
 #--------------------------------------------------------------------------
 
@@ -27,11 +27,11 @@ ENV JLAB_ROOT /jlab
 ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
-ENV CLAS12TAG 4.3.1
+ENV CLAS12TAG 4.3.2
 ENV CEDFILE ced.1.4.47.tar.gz
 ENV CCDBSQLITE ccdb_2019-08-04.sqlite
 ENV COATJTAG 6.3.1
-ENV CLARATAG 4.3.10
+ENV CLARATAG 4.3.20
 
 
 # gfortran for clasdis generator

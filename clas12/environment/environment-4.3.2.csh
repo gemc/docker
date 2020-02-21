@@ -2,7 +2,7 @@
 
 setenv JLAB_ROOT    /jlab
 setenv JLAB_VERSION 2.3
-setenv CLAS12TAG    4.3.1
+setenv CLAS12TAG    4.3.2
 setenv JAVATAG      11.0.5
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we
