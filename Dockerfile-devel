@@ -38,7 +38,9 @@ RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
-	&& ./go_xercesc \
+	&& ./go_xercesc
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_qt system\
 	&& ./go_geant4 \
 	&& ./go_sconsscript \
