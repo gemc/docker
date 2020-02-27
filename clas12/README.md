@@ -15,7 +15,7 @@ https://github.com/JeffersonLab/clas12-mcgen
 
 ### clas12tags
 
-- (gemc)[https://gemc.jlab.org/gemc/html/index.html] and (clas12 geometry and digitization)[https://github.com/gemc/clas12Tags] 
+- [gemc](https://gemc.jlab.org/gemc/html/index.html] and (clas12 geometry and digitization)[https://github.com/gemc/clas12Tags)
 
 
 ### reconstruction
