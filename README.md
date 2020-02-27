@@ -1,13 +1,10 @@
-# docker
-
-
-# Docker Hubs
+# Docker configuration files for various docker hubs:
 
 
 ### gemc
 The files in the main directory are for GEMC images. The corresponding docker hub is:
 
-`jeffersonlab/gemc`
+(jeffersonlab/gemc)[https://hub.docker.com/repository/docker/jeffersonlab/gemc]
 
 ---
 
