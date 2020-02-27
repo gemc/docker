@@ -39,7 +39,8 @@ ENV CLARATAG 4.3.10
 # xemacs to help users
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg \
+	&& yum clean all
 
 WORKDIR $JLAB_ROOT
 
