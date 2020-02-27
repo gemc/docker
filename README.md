@@ -30,7 +30,5 @@ The files inside clas12 are for the Jefferson Lab common environment.
 
 ####
 
-Contact:
-
-(Maurizio Ungaro)[mailto:ungaro@jlab.org]
+Contact: ungaro@jlab.org
 
