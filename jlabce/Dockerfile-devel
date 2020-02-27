@@ -1,0 +1,31 @@
+#
+# jlabce docker devel (jlab devel) libraries image
+#--------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-devel -t jlabce:devel .
+#
+#  docker tag jlabce:devel jeffersonlab/jlabce:devel
+#
+#  docker push jeffersonlab/jlabce:devel
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm jlabce:devel bash
+#
+#  docker run -it --rm jeffersonlab/jlabce:devel bash
+#
+#--------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc:devel
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_banks 
+
+WORKDIR $JLAB_ROOT/work
+CMD bash /container/utilities/xstart.sh && sleep infinity

@@ -1,5 +1,5 @@
 #
-# docker devel (jlab devel) libraries image
+# gemc docker devel (jlab devel) libraries image
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container:
@@ -32,16 +32,18 @@ RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
 
+# splitting commands for debugging purposes
 RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
-	&& ./go_xercesc
+	&& ./go_xercesc \
+	&& ./go_qt system
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_qt system\
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_geant4 \
 	&& ./go_sconsscript \
 	&& ./go_evio \
