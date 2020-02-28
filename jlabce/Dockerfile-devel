@@ -25,6 +25,11 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ADD .jlab_software /root
 
+# Root by itself, it's quite big package
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_root
+
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_banks
