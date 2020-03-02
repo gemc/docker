@@ -56,8 +56,9 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_ccdb \
 	&& ./go_mlibrary \
 	&& ./go_gemc \
-	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
-	&& rm -rf $JLAB_SOFTWARE/xercesc/*/xerces-c-* \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d 
