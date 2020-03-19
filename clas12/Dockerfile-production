@@ -4,7 +4,7 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-production -t gemc:production .
+#  docker build -f Dockerfile-production -t clas12tags:production .
 #
 #  docker tag clas12tags:production jeffersonlab/clas12tags:production
 #
@@ -30,7 +30,7 @@ ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.3.2
 ENV CEDFILE ced.1.4.48.tar.gz
 ENV CCDBSQLITE ccdb_2019-08-04.sqlite
-ENV COATJTAG 6b.3.2
+ENV COATJTAG 6.5.3
 ENV JAVATAG 11.0.5
 ENV JAVADOWNLOAD jdk-$JAVATAG"_linux-x64_bin.tar.gz"
 
@@ -89,10 +89,7 @@ RUN cd /jlab/work \
 	&& cd clas12-mcgen \
 	&& rm -rf .git* */.git* \
 	&& make \
-	&& cp clasdis-nocernlib/clasdis      $JLAB_SOFTWARE/clas12/bin \
-	&& cp inclusive-dis-rad/generate-dis $JLAB_SOFTWARE/clas12/bin \
-	&& cp dvcsgen/dvcsgen                $JLAB_SOFTWARE/clas12/bin \
-	&& cp genKYandOnePion/eg_ky          $JLAB_SOFTWARE/clas12/bin
+	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 # ced
 RUN cd /jlab/work \

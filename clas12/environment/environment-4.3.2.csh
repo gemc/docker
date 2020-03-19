@@ -11,14 +11,14 @@ setenv XERCESCROOT /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5/xercesc/3.2.2
 setenv XERCESC_VERSION 3.2.2
 
 # using sqlite
-setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2019-08-04.sqlite
+setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2020-03-15.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
-setenv CLASDIS_PDF        /jlab/work/clasdis/pdf
-setenv CLASPYTHIA_DECLIST /jlab/work/claspyth/pdf
-setenv CLASDVCS_PDF       /jlab/work/dvcsgen
-setenv DISRAD_PDF         /jlab/work/inclusive-dis-rad
-setenv DataKYandOnePion   /jlab/work/genKYandOnePion/data
+setenv CLASDIS_PDF        /jlab/work/clas12-mcgen/clasdis/pdf
+setenv CLASPYTHIA_DECLIST /jlab/work/clas12-mcgen/claspyth/pdf
+setenv CLASDVCS_PDF       /jlab/work/clas12-mcgen/dvcsgen
+setenv DISRAD_PDF         /jlab/work/clas12-mcgen/inclusive-dis-rad
+setenv DataKYandOnePion   /jlab/work/clas12-mcgen/genKYandOnePion/data
 
 setenv GEMC /jlab/clas12Tags/$CLAS12TAG/source
 setenv GEMC_VERSION $CLAS12TAG
