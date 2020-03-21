@@ -29,9 +29,9 @@ ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.4.0
 ENV CEDFILE ced.1.4.48.tar.gz
-ENV CCDBSQLITE ccdb_2019-08-04.sqlite
-ENV COATJTAG 6.3.1
-ENV CLARATAG 4.3.10
+ENV CCDBSQLITE ccdb_2020-03-15.sqlite
+ENV COATJTAG 6.5.3
+ENV CLARATAG 4.3.12
 
 
 # gfortran for clasdis generator
@@ -81,7 +81,7 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget -q --no-check-certificate https://www.jlab.org/12gev_phys/packages/ccdb/$CCDBSQLITE
+	&& wget -q --no-check-certificate https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
@@ -89,11 +89,7 @@ RUN cd /jlab/work \
 	&& cd clas12-mcgen \
 	&& rm -rf .git* */.git* \
 	&& make \
-	&& cp clasdis/clasdis                     $JLAB_SOFTWARE/clas12/bin \
-	&& cp inclusive-dis-rad/inclusive-dis-rad $JLAB_SOFTWARE/clas12/bin \
-	&& cp dvcsgen/dvcsgen                     $JLAB_SOFTWARE/clas12/bin \
-	&& cp claspyth/claspyth                   $JLAB_SOFTWARE/clas12/bin \
-	&& cp genKYandOnePion/eg_ky               $JLAB_SOFTWARE/clas12/bin
+	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 # ced
 RUN cd /jlab/work \

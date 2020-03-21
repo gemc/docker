@@ -29,7 +29,7 @@ ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.3.2
 ENV CEDFILE ced.1.4.48.tar.gz
-ENV CCDBSQLITE ccdb_2019-08-04.sqlite
+ENV CCDBSQLITE ccdb_2020-03-15.sqlite
 ENV COATJTAG 6.5.3
 ENV JAVATAG 11.0.5
 ENV JAVADOWNLOAD jdk-$JAVATAG"_linux-x64_bin.tar.gz"
@@ -81,7 +81,7 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget -q --no-check-certificate https://www.jlab.org/12gev_phys/packages/ccdb/$CCDBSQLITE
+	&& wget -q --no-check-certificate https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
