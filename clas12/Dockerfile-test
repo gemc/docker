@@ -1,7 +1,11 @@
+FROM jeffersonlab/gemc:2.7
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
-ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 WORKDIR $JLAB_ROOT
+
+RUN yum install -y libXtst  \
+	&& yum clean all
 
 ADD tests/test1.sh /jlab
 ADD tests/test2.sh /jlab
