@@ -28,11 +28,11 @@ ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.3.2
-ENV CEDFILE ced.1.4.48.tar.gz
 ENV CCDBSQLITE ccdb_2020-03-15.sqlite
 ENV COATJTAG 6.5.3
 ENV JAVATAG 11.0.5
 ENV JAVADOWNLOAD jdk-$JAVATAG"_linux-x64_bin.tar.gz"
+
 
 # gfortran for clasdis generator
 # root for genKYandOnePion and evio2root
@@ -81,7 +81,7 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget -q --no-check-certificate https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
+	&& wget -q --no-check-certificate https://clasweb.jlab.org/clas12offline/sqlite/ccdb/$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
@@ -91,11 +91,11 @@ RUN cd /jlab/work \
 	&& make \
 	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
-# ced
-RUN cd /jlab/work \
-	&& wget -q https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE	 \
-	&& tar -zxpvf $CEDFILE	 \
-	&& rm $CEDFILE
+
+
+
+
+
 
 ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d
 ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
