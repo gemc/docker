@@ -1,5 +1,5 @@
-sut:
-  build: Dockerfile-4.3.2
-  command:
-    - /jlab/test1.sh
-    - /jlab/test2.sh
+services:
+
+  sut:
+    command: /jlab/test1.sh
+
