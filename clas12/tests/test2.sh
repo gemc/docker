@@ -3,6 +3,6 @@
 
 # This script will print hello and exit with 1 (failure)
 
-echo hello
+echo oh no
 
 exit 1
