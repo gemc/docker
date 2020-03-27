@@ -10,6 +10,8 @@ Grant access to the organizations if needed.
 Tests:
 ------
 
+Source: https://docs.docker.com/docker-hub/builds/automated-testing/
+
 1. create docker-compose.test.yml, see for example in clas12
 2. Whatever test command you specify runs inside a container instantiated from the image
    you are building with Docker Hub. You must ensure that all resources, external applications,
