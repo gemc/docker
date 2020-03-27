@@ -1,6 +1,4 @@
 sut:
   build: .
   dockerfile: Dockerfile-test
-  command:
-  - /jlab/test1.sh
-  - /jlab/test2.sh
+  command: /jlab/test1.sh
