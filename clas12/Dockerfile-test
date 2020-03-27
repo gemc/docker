@@ -1,0 +1,7 @@
+
+ENV JLAB_ROOT /jlab
+ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
+WORKDIR $JLAB_ROOT
+
+ADD tests/test1.sh /jlab
+ADD tests/test2.sh /jlab

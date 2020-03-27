@@ -1,5 +1,3 @@
-services:
-
-  sut:
-    command: /jlab/test1.sh
-
+sut:
+  build: Dockerfile-test
+  command: /jlab/test1.sh
