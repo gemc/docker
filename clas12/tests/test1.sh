@@ -3,6 +3,6 @@
 
 # This script will print hello and exit with 0 (success)
 
-echo hello - doing nothing here.
+ls /jlab/tests
 
 exit 0

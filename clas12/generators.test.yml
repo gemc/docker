@@ -1,4 +1,4 @@
 sut:
   build: .
   dockerfile: Dockerfile-4.3.2
-  command: /jlab/generators.sh
+  command: /jlab/tests/generators.sh

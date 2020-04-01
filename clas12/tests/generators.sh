@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /etc/profile.d/environment-4.3.2.sh
+
 # Template for generators.
 
 # This script will test these generators with success criteria below:
@@ -11,7 +13,6 @@
 #
 
 clasdis --t 20 25 --docker
-
 
 
 exit 0
