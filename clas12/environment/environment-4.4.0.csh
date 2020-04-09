@@ -16,11 +16,11 @@ setenv XERCESCROOT /jlab/$JLAB_VERSION/$OSRELEASE/xercesc/$XERCESC_VERSION
 setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2020-04-05.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
-setenv CLASDIS_PDF /jlab/work/clasdis/pdf
-setenv CLASPYTHIA_DECLIST /jlab/work/claspyth/pdf
-setenv CLASDVCS_PDF /jlab/work/dvcsgen
-setenv DISRAD_PDF /jlab/work/inclusive-dis-rad
-setenv DataKYandOnePion /jlab/work/genKYandOnePion/data
+setenv CLASDIS_PDF /jlab/work/clas12-mcgen/clasdis/pdf
+setenv CLASPYTHIA_DECLIST /jlab/work/clas12-mcgen/claspyth/pdf
+setenv CLASDVCS_PDF /jlab/work/clas12-mcgen/dvcsgen
+setenv DISRAD_PDF /jlab/work/clas12-mcgen/inclusive-dis-rad
+setenv DataKYandOnePion /jlab/work/clas12-mcgen/genKYandOnePion/data
 
 setenv GEMC /jlab/clas12Tags/$CLAS12TAG/source
 setenv GEMC_VERSION $CLAS12TAG

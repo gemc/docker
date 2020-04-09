@@ -34,6 +34,8 @@ ENV COATJTAG 6.5.3
 ENV CLARATAG 4.3.12
 
 
+ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
+
 # gfortran for clasdis generator
 # root for genKYandOnePion and evio2root
 # xemacs to help users
@@ -56,11 +58,10 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 
 # Getting the field maps
 # Replacing the scripts in /etc and with the environment scripts
-# Creating test dir
 RUN mkdir -p /jlab/noarch/data \
 	&& cd /jlab/noarch/data \
-	&& wget -q http://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
-	&& wget -q http://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
+	&& wget $WGETOPTONS http://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
+	&& wget $WGETOPTONS http://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
@@ -73,7 +74,7 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	# creating log dir structure
 	&& mkdir -p $CLARA_HOME/plugins/clas12/log /jlab/tmp \
 	&& cd /jlab/tmp \
-	&& wget -q --no-check-certificate https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
+	&& wget $WGETOPTONS https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
 	&& chmod u+x install-claracre-clas.sh \
 	# new version of clara requires typing "Y" to remove old home dir
 	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG \
@@ -83,7 +84,7 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget -q --no-check-certificate https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
+	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
@@ -95,7 +96,7 @@ RUN cd /jlab/work \
 
 # ced
 RUN cd /jlab/work \
-	&& wget -q https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE	 \
+	&& wget $WGETOPTONS https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE	 \
 	&& tar -zxpvf $CEDFILE	 \
 	&& rm $CEDFILE
 

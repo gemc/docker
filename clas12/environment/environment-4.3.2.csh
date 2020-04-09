@@ -3,7 +3,7 @@
 setenv JLAB_ROOT /jlab
 setenv JLAB_VERSION 2.3
 setenv CLAS12TAG 4.3.2
-setenv JAVATAG 11.0.5
+setenv JAVAPATHNOCLARA jre1.8.0_191
 setenv JAVAPATHINSIDECLARA jre/linux-64/jre
 
 
@@ -45,7 +45,7 @@ if (-d $CLARA_HOME) then
 	setenv CLAS12DIR ${COATJAVA} 	# CED
 else
 	setenv COATJAVA $JLAB_SOFTWARE/clas12/coatjava
-	setenv JAVA_HOME $JLAB_SOFTWARE/jdk-$JAVATAG
+	setenv JAVA_HOME $JLAB_SOFTWARE/JAVAPATHNOCLARA
 endif
 
 setenv PATH ${PATH}:${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin

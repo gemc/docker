@@ -16,11 +16,11 @@ export XERCESCROOT=/jlab/$JLAB_VERSION/$OSRELEASE/xercesc/$XERCESC_VERSION
 export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_2020-04-05.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
-export CLASDIS_PDF=/jlab/work/clasdis/pdf
-export CLASPYTHIA_DECLIST=/jlab/work/claspyth/pdf
-export CLASDVCS_PDF=/jlab/work/dvcsgen
-export DISRAD_PDF=/jlab/work/inclusive-dis-rad
-export DataKYandOnePion=/jlab/work/genKYandOnePion/data
+export CLASDIS_PDF=/jlab/work/clas12-mcgen/clasdis/pdf
+export CLASPYTHIA_DECLIST=/jlab/work/clas12-mcgen/claspyth/pdf
+export CLASDVCS_PDF=/jlab/work/clas12-mcgen/dvcsgen
+export DISRAD_PDF=/jlab/work/clas12-mcgen/inclusive-dis-rad
+export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
 
 export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG

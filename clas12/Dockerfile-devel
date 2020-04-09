@@ -29,12 +29,10 @@ ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION devel
 ENV CLAS12TAG 4.4.0
 ENV CCDBSQLITE ccdb_2020-04-05.sqlite
-ENV COATJTAG 6.5.3
-#ENV JAVATAG 11.0.5
-#ENV JAVADOWNLOAD jdk-$JAVATAG"_linux-x64_bin.tar.gz"
-ENV JAVATAG 8u181
-ENV JAVADOWNLOAD jre-$JAVATAG"-linux-x64.tar.gz"
-ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
+ENV COATJDOWNLOAD coatjava-6.5.3.tar.gz
+ENV JAVADOWNLOAD jre-8u191-linux-x64.tar.gz
+
+ENV WGETOPTONS --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
 # root for genKYandOnePion and evio2root
@@ -65,7 +63,7 @@ RUN mkdir -p /jlab/noarch/data \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh
 
-# java and coatjava
+# reconstruction: java and coatjava
 RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
 	&& mkdir -p $JLAB_SOFTWARE/clas12/inc \
@@ -77,8 +75,8 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	&& tar -zxpvf $JAVADOWNLOAD \
 	# reconstruction: coatjava. untar file in coatjava directory
 	&& cd $JLAB_SOFTWARE/clas12 \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/distribution/coatjava/coatjava-$COATJTAG.tar.gz \
-	&& mkdir -p coatjava ; tar -zxpvf coatjava-$COATJTAG.tar.gz  --strip-components 1 -C coatjava
+	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/distribution/coatjava/$COATJDOWNLOAD \
+	&& mkdir -p coatjava ; tar -zxpvf $COATJDOWNLOAD  --strip-components 1 -C coatjava
 
 
 # CCDBSQLITE
@@ -88,7 +86,7 @@ RUN cd /jlab/work \
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
-	&& cd clas12-mcgen \
+	&& cd clas12-mcgen 
 #	&& rm -rf .git* */.git* \
 #	&& make \
 #	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin

@@ -3,7 +3,7 @@
 export JLAB_ROOT=/jlab
 export JLAB_VERSION=2.3
 export CLAS12TAG=4.3.2
-export JAVATAG=11.0.5
+export JAVAPATHNOCLARA=jre1.8.0_191
 export JAVAPATHINSIDECLARA=jre/linux-64/jre 
 
 
@@ -25,7 +25,7 @@ export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
 export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG
 
-source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh keepmine
+source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh  keepmine
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
 export FIELD_DIR=/jlab/noarch/data
 
@@ -39,16 +39,16 @@ export CLARA_HOME=$JLAB_ROOT/$JLAB_VERSION/claraHome
 # here we discriminate between the two installations
 if  [ -d $CLARA_HOME ];
 then
-	export=COATJAVA $CLARA_HOME/plugins/clas12
-	export=JAVA_HOME $CLARA_HOME/$JAVAPATHINSIDECLARA
-	export=PATH ${PATH}:${CLARA_HOME}/bin
+	export COATJAVA=$CLARA_HOME/plugins/clas12
+	export JAVA_HOME=$CLARA_HOME/$JAVAPATHINSIDECLARA
+	export PATH=${PATH}:${CLARA_HOME}/bin
 	export CLAS12DIR=${COATJAVA} 	# CED
 else
-	export=COATJAVA $JLAB_SOFTWARE/clas12/coatjava
-	export=JAVA_HOME $JLAB_SOFTWARE/jdk-$JAVATAG
+	export COATJAVA=$JLAB_SOFTWARE/clas12/coatjava
+	export JAVA_HOME=$JLAB_SOFTWARE/JAVAPATHNOCLARAs
 fi
 
-export PATH=${PATH}:${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin
+export PATH ${PATH}:${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin
 
 set autolist
 alias l='ls -l'
