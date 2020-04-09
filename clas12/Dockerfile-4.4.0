@@ -28,7 +28,7 @@ ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.4.0
-ENV CCDBSQLITE ccdb_2020-03-15.sqlite
+ENV CCDBSQLITE ccdb_2020-04-05.sqlite
 ENV COATJTAG 6.5.3
 ENV CLARATAG 4.3.12
 ENV CEDFILE ced.1.4.48.tar.gz
@@ -58,8 +58,8 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 # Replacing the scripts in /etc and with the environment scripts
 RUN mkdir -p /jlab/noarch/data \
 	&& cd /jlab/noarch/data \
-	&& wget -q http://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
-	&& wget -q http://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
+	&& wget -q https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
+	&& wget -q https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh
 

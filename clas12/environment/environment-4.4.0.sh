@@ -4,14 +4,15 @@ export JLAB_ROOT=/jlab
 export JLAB_VERSION=devel
 export CLAS12TAG=4.4.0
 export JAVATAG=11.0.5
+export OSRELEASE=Linux_CentOS8.1.1911-x86_64-gcc8
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)
-export XERCESCROOT=/jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5/xercesc/3.2.2
 export XERCESC_VERSION=3.2.2
+export XERCESCROOT=/jlab/$JLAB_VERSION/$OSRELEASE/xercesc/$XERCESC_VERSION
 
 # using sqlite
-export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_2019-08-04.sqlite
+export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_2020-04-05.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
 export CLASDIS_PDF=/jlab/work/clasdis/pdf
@@ -33,6 +34,7 @@ export CLAS12_INC=$JLAB_SOFTWARE/clas12/inc
 export CLAS12_BIN=$JLAB_SOFTWARE/clas12/bin
 
 export CLARA_HOME=$JLAB_ROOT/$JLAB_VERSION/claraHome
+
 if  [ -d $CLARA_HOME ];
 then
 	export COATJAVA=$CLARA_HOME/plugins/clas12
@@ -42,8 +44,6 @@ else
 	export COATJAVA=$JLAB_SOFTWARE/clas12/coatjava
 	export JAVA_HOME=$JLAB_SOFTWARE/jdk-$JAVATAG
 fi
-
-
 
 export PATH=${JAVA_HOME}/bin:${PATH}:${CLAS12_BIN}:${COATJAVA}/bin
 

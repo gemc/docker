@@ -4,14 +4,15 @@ setenv JLAB_ROOT    /jlab
 setenv JLAB_VERSION devel
 setenv CLAS12TAG    4.4.0
 setenv JAVATAG      11.0.5
+setenv OSRELEASE    Linux_CentOS8.1.1911-x86_64-gcc8
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)
-setenv XERCESCROOT /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5/xercesc/3.2.2
 setenv XERCESC_VERSION 3.2.2
+setenv XERCESCROOT /jlab/$JLAB_VERSION/$OSRELEASE/xercesc/$XERCESC_VERSION
 
 # using sqlite
-setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2019-08-04.sqlite
+setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2020-04-05.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
 setenv CLASDIS_PDF        /jlab/work/clasdis/pdf
@@ -35,6 +36,7 @@ setenv CLAS12_BIN $JLAB_SOFTWARE/clas12/bin
 setenv CLARA_HOME $JLAB_ROOT/$JLAB_VERSION/claraHome
 
 if (-d $CLARA_HOME) then
+
 	setenv COATJAVA   $CLARA_HOME/plugins/clas12
 	setenv JAVA_HOME  $CLARA_HOME/jre/$JRE
 	setenv PATH ${PATH}:${CLARA_HOME}/bin
