@@ -87,9 +87,9 @@ RUN cd /jlab/work \
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
 	&& cd clas12-mcgen \
-	&& rm -rf .git* */.git* \
-	&& make \
-	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
+#	&& rm -rf .git* */.git* \
+#	&& make \
+#	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 
 
