@@ -48,7 +48,7 @@ else
 	export JAVA_HOME=$JLAB_SOFTWARE/$JAVAPATHNOCLARA
 fi
 
-export PATH=${PATH}:${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin
+export PATH=${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin:${PATH}
 
 set autolist
 alias l='ls -l'
