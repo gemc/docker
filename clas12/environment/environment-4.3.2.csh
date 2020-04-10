@@ -13,7 +13,7 @@ setenv XERCESCROOT /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5/xercesc/3.2.2
 setenv XERCESC_VERSION 3.2.2
 
 # using sqlite
-setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2020-03-15.sqlite
+setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_2020-04-05.sqlite
 
 # sidis, inclusive dis with rad correction, dvcs
 setenv CLASDIS_PDF /jlab/work/clas12-mcgen/clasdis/pdf
