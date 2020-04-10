@@ -61,7 +61,8 @@ RUN mkdir -p /jlab/noarch/data \
 	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
 	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
 	&& rm /etc/profile.d/jlab.csh \
-	&& rm /etc/profile.d/jlab.sh
+	&& rm /etc/profile.d/jlab.sh \
+	&& mkdir -p /jlab/tests/
 
 # reconstruction: clara and coatjava
 RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
@@ -71,25 +72,24 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	# creating log dir structure
 	&& mkdir -p $CLARA_HOME/plugins/clas12/log /jlab/tmp \
 	&& cd /jlab/tmp \
-	&& wget $WGETOPTONS --no-check-certificate https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
+	&& wget $WGETOPTONS https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
 	&& chmod u+x install-claracre-clas.sh \
 	# new version of clara requires typing "Y" to remove old home dir
-	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG \
-	&& cd /jlab \
-	# temp removal of this jar
-	&& rm /jlab/$JLAB_VERSION/claraHome/plugins/clas12/lib/utils/jclara-*
+	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG
 
+
+	
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
+	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb/$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
 	&& cd clas12-mcgen \
-	&& rm -rf .git* */.git* \
-	&& make \
-	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
+	&& rm -rf .git* */.git* 
+#	&& make \
+#	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 # ced
 RUN cd /jlab/work \
@@ -102,3 +102,5 @@ ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
 WORKDIR $JLAB_ROOT/work
 
 ADD createClaraCook.csh $JLAB_SOFTWARE/clas12/bin/createClaraCook.csh
+
+ADD tests/*.sh /jlab/tests/

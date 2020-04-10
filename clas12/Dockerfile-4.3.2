@@ -28,12 +28,10 @@ ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.3.2
-ENV CEDFILE ced.1.4.48.tar.gz
-ENV CCDBSQLITE ccdb_2020-03-15.sqlite
+ENV CCDBSQLITE ccdb_2020-04-05.sqlite
 ENV COATJTAG 6.5.3
 ENV CLARATAG 4.3.12
-
-
+ENV CEDFILE ced.1.4.48.tar.gz
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
@@ -60,13 +58,13 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 # Replacing the scripts in /etc and with the environment scripts
 RUN mkdir -p /jlab/noarch/data \
 	&& cd /jlab/noarch/data \
-	&& wget $WGETOPTONS http://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
-	&& wget $WGETOPTONS http://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
+	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
+	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
 
-# reconstruction, clara and coatjava
+# reconstruction: clara and coatjava
 RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
 	&& mkdir -p $JLAB_SOFTWARE/clas12/inc \
@@ -77,22 +75,21 @@ RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
 	&& wget $WGETOPTONS https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
 	&& chmod u+x install-claracre-clas.sh \
 	# new version of clara requires typing "Y" to remove old home dir
-	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG \
-	&& cd /jlab \
-	# temp removal of this jar
-	&& rm /jlab/$JLAB_VERSION/claraHome/plugins/clas12/lib/utils/jclara-*
+	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG
 
+
+	
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb//$CCDBSQLITE
+	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb/$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
 	&& cd clas12-mcgen \
-	&& rm -rf .git* */.git* \
-	&& make \
-	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
+	&& rm -rf .git* */.git* 
+#	&& make \
+#	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 # ced
 RUN cd /jlab/work \
