@@ -41,7 +41,7 @@ if  [ -d $CLARA_HOME ];
 then
 	export COATJAVA=$CLARA_HOME/plugins/clas12
 	export JAVA_HOME=$CLARA_HOME/$JAVAPATHINSIDECLARA
-	export PATH=${PATH}:${CLARA_HOME}/bin
+	export PATH=${CLARA_HOME}/bin:${PATH}
 	export CLAS12DIR=${COATJAVA} 	# CED
 else
 	export COATJAVA=$JLAB_SOFTWARE/clas12/coatjava
