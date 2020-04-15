@@ -31,7 +31,7 @@ ENV CLAS12TAG 4.4.0
 ENV CCDBSQLITE ccdb_2020-04-05.sqlite
 ENV COATJTAG 6.5.3
 ENV CLARATAG 4.3.12
-ENV CEDFILE ced.1.4.50.tar.gz
+ENV CEDFILE ced.1.4.52.tar.gz
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
