@@ -65,7 +65,7 @@ RUN yum install -y \
 	xterm \
 	nedit \
 	git \
-	 \
+	perl-CPAN \
 	 \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
