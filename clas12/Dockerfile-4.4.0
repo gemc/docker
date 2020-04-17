@@ -95,6 +95,8 @@ RUN cd /jlab/work \
 RUN cd /jlab/work \
 	&& wget -q https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE \
 	&& tar -zxpvf $CEDFILE	 \
+	&& mv cedbuild/ced.sh cedbuild/ced \
+	&& chmod a+x cedbuild/ced\
 	&& rm $CEDFILE
 
 ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d

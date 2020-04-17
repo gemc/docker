@@ -48,7 +48,7 @@ else
 	setenv JAVA_HOME $JLAB_SOFTWARE/$JAVAPATHNOCLARA
 endif
 
-setenv PATH ${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin:${PATH}
+setenv PATH ${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin:/jlab/work/cedbuild:${PATH}
 
 set autolist
 alias l ls -l
