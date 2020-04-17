@@ -39,7 +39,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # xemacs to help users
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT

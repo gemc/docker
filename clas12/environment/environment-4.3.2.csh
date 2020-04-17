@@ -5,6 +5,7 @@ setenv JLAB_VERSION 2.3
 setenv CLAS12TAG 4.3.2
 setenv JAVAPATHNOCLARA jre1.8.0_191
 setenv JAVAPATHINSIDECLARA jre/linux-64/jre
+setenv LD_PRELOAD /usr/lib64/libXrdPosixPreload.so
 
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we

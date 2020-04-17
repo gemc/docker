@@ -6,6 +6,7 @@ export CLAS12TAG=4.4.0
 export JAVAPATHNOCLARA=jre1.8.0_191
 export JAVAPATHINSIDECLARA=jre/linux-64/jre
 export OSRELEASE=Linux_CentOS8.1.1911-x86_64-gcc8
+export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)

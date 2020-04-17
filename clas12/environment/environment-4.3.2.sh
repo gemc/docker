@@ -5,6 +5,7 @@ export JLAB_VERSION=2.3
 export CLAS12TAG=4.3.2
 export JAVAPATHNOCLARA=jre1.8.0_191
 export JAVAPATHINSIDECLARA=jre/linux-64/jre 
+export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we

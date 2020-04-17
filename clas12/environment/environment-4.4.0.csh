@@ -6,6 +6,7 @@ setenv CLAS12TAG 4.4.0
 setenv JAVAPATHNOCLARA jre1.8.0_191
 setenv JAVAPATHINSIDECLARA jre/linux-64/jre
 setenv OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
+setenv LD_PRELOAD /usr/lib64/libXrdPosixPreload.so
 
 # some OSG nodes have XERCESROOT defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)
