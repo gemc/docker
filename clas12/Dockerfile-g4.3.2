@@ -4,19 +4,19 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-production -t clas12tags:production .
+#  docker build -f Dockerfile-g4.3.2 -t clas12tags:g4.3.2 .
 #
-#  docker tag clas12tags:production jeffersonlab/clas12tags:production
+#  docker tag clas12tags:g4.3.2 jeffersonlab/clas12tags:g4.3.2
 #
-#  docker push jeffersonlab/clas12tags:production
+#  docker push jeffersonlab/clas12tags:g4.3.2
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm clas12tags:production bash
+#  docker run -it --rm clas12tags:g4.3.2 bash
 #
-#  docker run -it --rm jeffersonlab/clas12tags:production bash
+#  docker run -it --rm jeffersonlab/clas12tags:g4.3.2 bash
 #
 #--------------------------------------------------------------------------
 
@@ -24,14 +24,11 @@ FROM jeffersonlab/gemc:2.7
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
-ENV OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
+ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.3
 ENV CLAS12TAG 4.3.2
 ENV CCDBSQLITE ccdb_2020-04-05.sqlite
-ENV COATJTAG 6.5.3
-ENV JAVATAG 11.0.5
-ENV JAVADOWNLOAD jdk-$JAVATAG"_linux-x64_bin.tar.gz"
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
@@ -39,10 +36,15 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # xemacs to help users
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
+
+# CLAS12 Dirs
+RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/inc 
 
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
@@ -61,23 +63,8 @@ RUN mkdir -p /jlab/noarch/data \
 	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
 	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
 	&& rm /etc/profile.d/jlab.csh \
-	&& rm /etc/profile.d/jlab.sh
-
-# java and coatjava
-RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/inc \
-	&& cd $JLAB_SOFTWARE \
-	# JAVA from Oracle
-	# Get JRE tar.gz from https://www.oracle.com/technetwork/java/javase/downloads/index.html
-	# The .tar.gz is then put at JLAB on /group/12gev_phys/www/packages/sources/java
-	&& wget $WGETOPTONS https://www.jlab.org/12gev_phys/packages/sources/java/$JAVADOWNLOAD \
-	&& tar -zxpvf $JAVADOWNLOAD \
-	# reconstruction: coatjava. untar file in coatjava directory
-	&& cd $JLAB_SOFTWARE/clas12 \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/distribution/coatjava/coatjava-$COATJTAG.tar.gz \
-	&& mkdir -p coatjava ; tar -zxpvf coatjava-$COATJTAG.tar.gz  --strip-components 1 -C coatjava
-
+	&& rm /etc/profile.d/jlab.sh \
+	&& mkdir -p /jlab/tests/
 
 # CCDBSQLITE
 RUN cd /jlab/work \
@@ -92,15 +79,8 @@ RUN cd /jlab/work \
 	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 
-
-
-
-
-
 ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d
 ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
 WORKDIR $JLAB_ROOT/work
 
-# Temp /condor for el6 binding
-RUN mkdir /condor \
-	&& mkdir /etc/condor
+ADD tests/*.sh /jlab/tests/
