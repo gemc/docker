@@ -26,12 +26,9 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 ENV JLAB_ROOT /jlab
 ENV OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
-ENV JLAB_VERSION 2.4
+ENV JLAB_VERSION devel
 ENV CLAS12TAG 4.4.0
 ENV CCDBSQLITE ccdb_2020-04-05.sqlite
-ENV COATJTAG 6.5.3
-ENV CLARATAG 4.3.12
-ENV CEDFILE ced.1.4.52.tar.gz
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
@@ -43,6 +40,11 @@ RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg 
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
+
+# CLAS12 Dirs
+RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/inc
 
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
@@ -63,21 +65,6 @@ RUN mkdir -p /jlab/noarch/data \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
-
-# reconstruction: clara and coatjava. The wget options above would give error
-RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/inc \
-	&& export CLARA_HOME=$JLAB_ROOT/$JLAB_VERSION/claraHome \
-	# creating log dir structure
-	&& mkdir -p $CLARA_HOME/plugins/clas12/log /jlab/tmp \
-	&& cd /jlab/tmp \
-	&& wget https://claraweb.jlab.org/clara/_downloads/install-claracre-clas.sh \
-	&& chmod u+x install-claracre-clas.sh \
-	# new version of clara requires typing "Y" to remove old home dir
-	&& echo Y | ./install-claracre-clas.sh -v $COATJTAG -f $CLARATAG
-
-
 	
 # CCDBSQLITE
 RUN cd /jlab/work \
@@ -91,18 +78,8 @@ RUN cd /jlab/work \
 	&& make \
 	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
-# ced. The wget options above would give error
-RUN cd /jlab/work \
-	&& wget -q https://userweb.jlab.org/~heddle/ced/builds/$CEDFILE \
-	&& tar -zxpvf $CEDFILE	 \
-	&& mv cedbuild/ced.sh cedbuild/ced \
-	&& chmod a+x cedbuild/ced\
-	&& rm $CEDFILE
-
 ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d
 ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
 WORKDIR $JLAB_ROOT/work
-
-ADD createClaraCook.csh $JLAB_SOFTWARE/clas12/bin/createClaraCook.csh
 
 ADD tests/*.sh /jlab/tests/
