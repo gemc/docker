@@ -6,7 +6,7 @@
 #
 #  docker build -f Dockerfile-clas12software -t clas12software:devel .
 #
-#  docker tag clas12software:2.0 jeffersonlab/clas12software:devel
+#  docker tag clas12software:devel jeffersonlab/clas12software:devel
 #
 #  docker push jeffersonlab/clas12software:devel
 #
