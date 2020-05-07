@@ -14,9 +14,9 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm clas12software:2.0 bash
+#  docker run -it --rm clas12software:devel bash
 #
-#  docker run -it --rm jeffersonlab/clas12software:2.0 bash
+#  docker run -it --rm jeffersonlab/clas12software:devel bash
 #
 #--------------------------------------------------------------------------
 

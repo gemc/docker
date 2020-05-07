@@ -84,3 +84,7 @@ ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
 WORKDIR $JLAB_ROOT/work
 
 ADD tests/*.sh /jlab/tests/
+
+# Temp /condor for el6 binding
+RUN mkdir /condor \
+	&& mkdir /etc/condor
