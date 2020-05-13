@@ -14,7 +14,7 @@ export XERCESC_VERSION=3.2.2
 export XERCESCROOT=/jlab/$JLAB_VERSION/$OSRELEASE/xercesc/$XERCESC_VERSION
 
 # using sqlite
-export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_2020-04-05.sqlite
+export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_2020-05-10.sqlite	
 
 # sidis, inclusive dis with rad correction, dvcs
 export CLASDIS_PDF=/jlab/work/clas12-mcgen/clasdis/pdf

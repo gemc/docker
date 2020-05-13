@@ -99,8 +99,8 @@ RUN cd /jlab/work \
 	&& chmod a+x cedbuild/ced\
 	&& rm $CEDFILE
 
-ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d
-ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d
+ADD environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
+ADD environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
 WORKDIR $JLAB_ROOT/work
 
 ADD createClaraCook.csh $JLAB_SOFTWARE/clas12/bin/createClaraCook.csh
