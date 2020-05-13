@@ -28,7 +28,7 @@ ENV OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION devel
 ENV CLAS12TAG 4.4.0
-ENV CCDBSQLITE ccdb_2020-05-10.sqlite	
+ENV CCDBSQLITE ccdb_$CLAS12TAG".sqlite"
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
@@ -68,7 +68,7 @@ RUN mkdir -p /jlab/noarch/data \
 	
 # CCDBSQLITE
 RUN cd /jlab/work \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb/$CCDBSQLITE
+	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb/clas12tags/$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \

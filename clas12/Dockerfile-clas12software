@@ -4,11 +4,11 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-clas12software -t clas12software:devel .
+#  docker build -f Dockerfile-clas12software -t clas12software:production .
 #
-#  docker tag clas12software:devel jeffersonlab/clas12software:devel
+#  docker tag clas12software:production jeffersonlab/clas12software:production
 #
-#  docker push jeffersonlab/clas12software:devel
+#  docker push jeffersonlab/clas12software:production
 #
 #--------------------------------------------------------------------------
 #
