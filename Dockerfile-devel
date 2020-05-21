@@ -48,6 +48,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_geant4 src\
 	&& ./go_geant4 make
 
+
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_sconsscript \
@@ -62,6 +63,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d 
+
 
 WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity

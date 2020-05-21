@@ -48,6 +48,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_geant4 src\
 	&& ./go_geant4 makeMT
 
+# unfortunately the g4 version hardcoded here. We could make it more general but we'll have one container version only soon...
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_sconsscript \
@@ -61,7 +62,8 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d 
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d \
+	&& sed  -i s/4.10.06/4.10.06MT/ $JLAB_ROOT/$JLAB_VERSION/ce/versions.env
 
 WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity

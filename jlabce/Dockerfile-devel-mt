@@ -4,23 +4,23 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-devel -t jlabce:devel .
+#  docker build -f Dockerfile-devel-mt -t jlabce:devel-mt .
 #
-#  docker tag jlabce:devel jeffersonlab/jlabce:devel
+#  docker tag jlabce:devel-mt jeffersonlab/jlabce:devel-mt
 #
-#  docker push jeffersonlab/jlabce:devel
+#  docker push jeffersonlab/jlabce:devel-mt
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm jlabce:devel bash
+#  docker run -it --rm jlabce:devel-mt bash
 #
-#  docker run -it --rm jeffersonlab/jlabce:devel bash
+#  docker run -it --rm jeffersonlab/jlabce:devel-mt bash
 #
 #--------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:devel
+FROM jeffersonlab/gemc:devel-mt
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ADD .jlab_software /root
