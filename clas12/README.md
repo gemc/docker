@@ -30,3 +30,10 @@ https://github.com/JeffersonLab/clas12-mcgen
 
 Contact: ungaro@jlab.org
 
+# Singularity Image
+
+* cvmfs path: ```/cvmfs/singularity.opensciencegrid.org/jeffersonlab/clas12software:production```
+
+To run the singularity image:
+```
+singularity shell --home ${PWD}:/srv --pwd /srv --bind /cvmfs --contain --ipc --pid /cvmfs/singularity.opensciencegrid.org/jeffersonlab/clas12software:production

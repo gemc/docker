@@ -6,12 +6,17 @@ setenv CLAS12TAG 4.3.2
 setenv JAVAPATHNOCLARA jre1.8.0_191
 setenv JAVAPATHINSIDECLARA jre/linux-64/jre
 setenv LD_PRELOAD /usr/lib64/libXrdPosixPreload.so
+setenv JLAB_SOFTWARE /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5
 
-
-# some OSG nodes have XERCESROOT defined. Since we use keepmine we
+# some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)
-setenv XERCESCROOT /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5/xercesc/3.2.2
 setenv XERCESC_VERSION 3.2.2
+setenv XERCESCROOT $JLAB_SOFTWARE/xercesc/$XERCESC_VERSION
+setenv QT_VERSION system
+setenv QTSYSTEM gcc_64
+setenv QT_VERSION system
+setenv QTDIR $JLAB_SOFTWARE/qt/$QT_VERSION/$QTSYSTEM
+setenv QTLIB $QTDIR/lib
 
 # using sqlite
 setenv CCDB_CONNECTION sqlite:////jlab/work/ccdb_$CLAS12TAG".sqlite"
