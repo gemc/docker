@@ -36,8 +36,10 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # xemacs to help users
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
+# ROOT temporarily removed as centos8 removed zstd library.
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client \
 	&& yum clean all
+#RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
 
 WORKDIR $JLAB_ROOT
 
@@ -74,9 +76,9 @@ RUN cd /jlab/work \
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
 	&& cd clas12-mcgen \
-	&& rm -rf .git* */.git* \
-	&& make \
-	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
+	&& rm -rf .git* */.git*
+#	&& make \
+#	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh

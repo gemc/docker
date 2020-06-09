@@ -23,7 +23,8 @@
 FROM centos:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-# Running the first line is not enough
+# CentOS8 notes:
+# See https://fedoraproject.org/wiki/EPEL
 RUN yum install -y epel-release \
 	&& yum install -y 'dnf-command(config-manager)' \
 	&& yum -y config-manager --set-enabled PowerTools \

@@ -4,28 +4,28 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-clas12software -t clas12software:production .
+#  docker build -f Dockerfile-clas12softwareDevel -t clas12software:devel .
 #
-#  docker tag clas12software:production jeffersonlab/clas12software:production
+#  docker tag clas12software:devel jeffersonlab/clas12software:devel
 #
-#  docker push jeffersonlab/clas12software:production
+#  docker push jeffersonlab/clas12software:devel
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm clas12software:production bash
+#  docker run -it --rm clas12software:devel bash
 #
-#  docker run -it --rm jeffersonlab/clas12software:production bash
+#  docker run -it --rm jeffersonlab/clas12software:devel bash
 #
 #--------------------------------------------------------------------------
 
-FROM jeffersonlab/clas12tags:g4.3.2
+FROM jeffersonlab/clas12tags:4.4.0
 
 ENV JLAB_ROOT /jlab
-ENV OSRELEASE Linux_CentOS7.5.1804-x86_64-gcc4.8.5
+ENV OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
-ENV JLAB_VERSION 2.3
+ENV JLAB_VERSION devel
 ENV COATJTAG 6.5.3
 #ENV CLARATAG 4.3.12
 ENV JAVADOWNLOAD jre-8u191-linux-x64.tar.gz
