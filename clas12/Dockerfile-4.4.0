@@ -37,9 +37,9 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
 # ROOT temporarily removed as centos8 removed zstd library.
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client \
+# RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
 	&& yum clean all
-#RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client\
 
 WORKDIR $JLAB_ROOT
 

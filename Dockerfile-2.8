@@ -23,7 +23,8 @@
 FROM jeffersonlab/gemc:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-ADD .jlab_software /root
+
+COPY .jlab_software /root
 
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.4
@@ -54,7 +55,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_evio \
 	&& ./go_mysql \
 	&& ./go_ccdb \
-	&& ./go_mlibrary \
+	&& ./go_mlibrary\
 	&& ./go_gemc \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
