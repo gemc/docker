@@ -1,11 +1,11 @@
 #!/bin/bash
 
 export JLAB_ROOT=/jlab
-export JLAB_VERSION=devel
+export JLAB_VERSION=2.4
 export CLAS12TAG=4.4.0
 export JAVAPATHNOCLARA=jre1.8.0_191
 export JAVAPATHINSIDECLARA=jre/linux-64/jre
-export OSRELEASE=Linux_CentOS8.1.1911-x86_64-gcc8
+export OSRELEASE=Linux_CentOS8.2.2004-gcc8.3.1
 export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we
@@ -31,7 +31,7 @@ export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
 export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG
 
-source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh  keepmine
+source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh keepmine
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
 export FIELD_DIR=/jlab/noarch/data
 

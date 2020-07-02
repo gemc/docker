@@ -1,11 +1,11 @@
 #!/bin/csh
 
 setenv JLAB_ROOT /jlab
-setenv JLAB_VERSION devel
+setenv JLAB_VERSION 2.4
 setenv CLAS12TAG 4.4.0
 setenv JAVAPATHNOCLARA jre1.8.0_191
 setenv JAVAPATHINSIDECLARA jre/linux-64/jre
-setenv OSRELEASE Linux_CentOS8.1.1911-x86_64-gcc8
+setenv OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
 setenv LD_PRELOAD /usr/lib64/libXrdPosixPreload.so
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we

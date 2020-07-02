@@ -45,8 +45,8 @@ RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
 
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_geant4 data\
-	&& ./go_geant4 src\
+	&& ./go_geant4 data \
+	&& ./go_geant4 src \
 	&& ./go_geant4 make
 
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
