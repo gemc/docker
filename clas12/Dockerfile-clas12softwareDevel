@@ -1,5 +1,5 @@
 #
-# docker image for CLAS12 Software Development Simulation - to be run in batch mode on OSG
+# docker image for CLAS12 Software Development
 #-----------------------------------------------------------------------------------------
 #
 # To manually build and push the container:
@@ -16,9 +16,9 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v /cvmfs:/cvmfs clas12software:devel bash
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs clas12software:devel bash
 #
-#  docker run -it --rm -v /cvmfs:/cvmfs jeffersonlab/clas12software:devel bash
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs jeffersonlab/clas12software:devel bash
 #
 #--------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libfonts for kpp-plots fonts
 # ROOT temporarily removed as centos8 removed zstd library.
 # RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules \
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
@@ -71,10 +71,6 @@ RUN mkdir -p /jlab/noarch/data \
 	&& rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
-
-# CCDBSQLITE
-RUN cd /jlab/work \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/clas12offline/sqlite/ccdb/clas12tags/$CCDBSQLITE
 
 # Generators from clas12-mcgen
 RUN cd /jlab/work \

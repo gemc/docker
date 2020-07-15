@@ -36,6 +36,10 @@ export PYTHONPATH=${PYTHONPATH}:${GEMC}/api/python
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
 export FIELD_DIR=/jlab/noarch/data
 
+source /etc/profile.d/modules.sh
+source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.sh
+module load coatjava/6.5.8
+
 set autolist
 alias l='ls -l'
 alias lt='ls -lt'

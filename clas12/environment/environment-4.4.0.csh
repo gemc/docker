@@ -36,6 +36,10 @@ setenv PYTHONPATH ${PYTHONPATH}:${GEMC}/api/python
 setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /jlab/noarch/data
 
+source /etc/profile.d/modules.csh
+source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh
+module load coatjava/6.5.8
+
 set autolist
 alias l ls -l
 alias lt ls -lt
