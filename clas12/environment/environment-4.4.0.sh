@@ -3,8 +3,6 @@
 export JLAB_ROOT=/jlab
 export JLAB_VERSION=2.4
 export CLAS12TAG=4.4.0
-export JAVAPATHNOCLARA=jre1.8.0_191
-export JAVAPATHINSIDECLARA=jre/linux-64/jre
 export OSRELEASE=Linux_CentOS8.2.2004-gcc8.3.1
 export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 
@@ -19,7 +17,7 @@ export QTDIR=$JLAB_SOFTWARE/qt/$QT_VERSION/$QTSYSTEM
 export QTLIB=$QTDIR/lib
 
 # using sqlite
-export CCDB_CONNECTION=sqlite:////jlab/work/ccdb_$CLAS12TAG".sqlite"
+export CCDB_CONNECTION=sqlite:////cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/ccdb/ccdb_$CLAS12TAG".sqlite"
 
 # sidis, inclusive dis with rad correction, dvcs
 export CLASDIS_PDF=/jlab/work/clas12-mcgen/clasdis/pdf
@@ -28,33 +26,15 @@ export CLASDVCS_PDF=/jlab/work/clas12-mcgen/dvcsgen
 export DISRAD_PDF=/jlab/work/clas12-mcgen/inclusive-dis-rad
 export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
 
+# env does not contain gemc, adding it manually
+source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh keepmine
 export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG
+export PATH=${PATH}:${GEMC}
+export PYTHONPATH=${PYTHONPATH}:${GEMC}/api/python
 
-source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh keepmine
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
 export FIELD_DIR=/jlab/noarch/data
-
-# CLAS12 Reconstruction
-export CLAS12_LIB=$JLAB_SOFTWARE/clas12/lib
-export CLAS12_INC=$JLAB_SOFTWARE/clas12/inc
-export CLAS12_BIN=$JLAB_SOFTWARE/clas12/bin
-
-export CLARA_HOME=$JLAB_ROOT/$JLAB_VERSION/claraHome
-# this environment file is used for both the interactive and production container
-# here we discriminate between the two installations
-if  [ -d $CLARA_HOME ];
-then
-	export COATJAVA=$CLARA_HOME/plugins/clas12
-	export JAVA_HOME=$CLARA_HOME/$JAVAPATHINSIDECLARA
-	export PATH=${CLARA_HOME}/bin:${PATH}
-	export CLAS12DIR=${COATJAVA} 	# CED
-else
-	export COATJAVA=$JLAB_SOFTWARE/clas12/coatjava
-	export JAVA_HOME=$JLAB_SOFTWARE/$JAVAPATHNOCLARA
-fi
-
-export PATH=${JAVA_HOME}/bin:${CLAS12_BIN}:${COATJAVA}/bin:/jlab/work/cedbuild:${PATH}
 
 set autolist
 alias l='ls -l'
