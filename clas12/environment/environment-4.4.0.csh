@@ -26,11 +26,16 @@ setenv CLASDVCS_PDF /jlab/work/clas12-mcgen/dvcsgen
 setenv DISRAD_PDF /jlab/work/clas12-mcgen/inclusive-dis-rad
 setenv DataKYandOnePion /jlab/work/clas12-mcgen/genKYandOnePion/data
 
+# CLAS12 envs
+setenv CLAS12_LIB $JLAB_SOFTWARE/clas12/lib
+setenv CLAS12_INC $JLAB_SOFTWARE/clas12/inc
+setenv CLAS12_BIN $JLAB_SOFTWARE/clas12/bin
+
 # env does not contain gemc, adding it manually
 source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh keepmine
 setenv GEMC /jlab/clas12Tags/$CLAS12TAG/source
 setenv GEMC_VERSION $CLAS12TAG
-setenv PATH ${PATH}:${GEMC}
+setenv PATH ${PATH}:${CLAS12_BIN}:${GEMC}
 setenv PYTHONPATH ${PYTHONPATH}:${GEMC}/api/python
 
 setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG

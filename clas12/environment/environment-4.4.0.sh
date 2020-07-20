@@ -26,11 +26,16 @@ export CLASDVCS_PDF=/jlab/work/clas12-mcgen/dvcsgen
 export DISRAD_PDF=/jlab/work/clas12-mcgen/inclusive-dis-rad
 export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
 
+# CLAS12 envs
+export CLAS12_LIB=$JLAB_SOFTWARE/clas12/lib
+export CLAS12_INC=$JLAB_SOFTWARE/clas12/inc
+export CLAS12_BIN=$JLAB_SOFTWARE/clas12/bin
+
 # env does not contain gemc, adding it manually
 source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh keepmine
 export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG
-export PATH=${PATH}:${GEMC}
+export PATH=${PATH}:${CLAS12_BIN}:${GEMC}
 export PYTHONPATH=${PYTHONPATH}:${GEMC}/api/python
 
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
