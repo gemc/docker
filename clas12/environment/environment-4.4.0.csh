@@ -40,7 +40,7 @@ setenv PATH ${PATH}:${CLAS12_BIN}:${GEMC}
 setenv PYTHONPATH ${PYTHONPATH}:${GEMC}/api/python
 
 setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
-setenv FIELD_DIR /jlab/noarch/data
+setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
 source /etc/profile.d/modules.csh
 source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh

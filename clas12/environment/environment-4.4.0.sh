@@ -40,7 +40,7 @@ export PATH=${PATH}:${CLAS12_BIN}:${GEMC}
 export PYTHONPATH=${PYTHONPATH}:${GEMC}/api/python
 
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
-export FIELD_DIR=/jlab/noarch/data
+export FIELD_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
 source /etc/profile.d/modules.sh
 source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.sh

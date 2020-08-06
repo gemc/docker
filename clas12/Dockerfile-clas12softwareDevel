@@ -40,7 +40,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libfonts for kpp-plots fonts
 # ROOT temporarily removed as centos8 removed zstd library.
 # RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules lsof \
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
@@ -62,13 +62,8 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 	# temporary removing gemc from .jlab_software, the env is added to environment scripts
 	&& sed -i s/gemc// /root/.jlab_software
 
-# Getting the field maps
-# Replacing the scripts in /etc and with the environment scripts
-RUN mkdir -p /jlab/noarch/data \
-	&& cd /jlab/noarch/data \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
-	&& rm /etc/profile.d/jlab.csh \
+# Removing the scripts in /etc, creating the test dir for travis
+RUN    rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
 
