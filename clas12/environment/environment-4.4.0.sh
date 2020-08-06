@@ -5,10 +5,11 @@ export JLAB_VERSION=2.4
 export CLAS12TAG=4.4.0
 export OSRELEASE=Linux_CentOS8.2.2004-gcc8.3.1
 export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
+export JLAB_SOFTWARE=/jlab/$JLAB_VERSION/$OSRELEASE
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we
 # need to re-define those here. Notice: this is dependent on the Dockerfile (CentOS version)
-export XERCESC_VERSION=3.2.2
+export XERCESC_VERSION=3.2.3
 export XERCESCROOT=$JLAB_SOFTWARE/xercesc/$XERCESC_VERSION
 export QT_VERSION=system
 export QTSYSTEM=gcc_64
