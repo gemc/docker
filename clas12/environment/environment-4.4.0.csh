@@ -4,7 +4,6 @@ setenv JLAB_ROOT /jlab
 setenv JLAB_VERSION 2.4
 setenv CLAS12TAG 4.4.0
 setenv OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
-setenv LD_PRELOAD /usr/lib64/libXrdPosixPreload.so
 setenv JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we
@@ -43,7 +42,7 @@ setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
 source /etc/profile.d/modules.csh
-source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh
+source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 module load coatjava/6.5.8
 
 set autolist
