@@ -44,6 +44,7 @@ setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/
 source /etc/profile.d/modules.csh
 source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 module load coatjava/6.5.8
+module load jdk
 
 set autolist
 alias l ls -l
