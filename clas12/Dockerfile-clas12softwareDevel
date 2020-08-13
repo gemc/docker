@@ -6,9 +6,7 @@
 #
 #  docker build -f Dockerfile-clas12softwareDevel -t clas12software:devel .
 #
-#
 #  docker tag clas12software:devel jeffersonlab/clas12software:devel
-#
 #
 #  docker push jeffersonlab/clas12software:devel
 #
@@ -78,6 +76,7 @@ RUN cd /jlab/work \
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
+COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin
 WORKDIR $JLAB_ROOT/work
 
 ADD tests/*.sh /jlab/tests/
