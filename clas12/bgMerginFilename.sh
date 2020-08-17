@@ -7,6 +7,7 @@
 configuration=$1
 fields=$2
 bkmerging=$3
+getit=$4
 
 export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 # for onsite
@@ -33,6 +34,12 @@ fi
 bgfile=$baseDir"clas12/backgroundfiles/"$configuration"/"$fields"/"$bkmerging"/10k/"$nzeros$R".hipo"
 
 echo $bgfile
+
+if [ "$#" == 4 ]; then
+	if [ $getit == "get" ]; then
+		cp $bgfile .
+	fi
+fi
 
 unset LD_PRELOAD
 
