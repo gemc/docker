@@ -1,13 +1,13 @@
 #
-# docker image for CLAS12 Software Production
-#-------------------------------------------------------------------------------
+# docker image for CLAS12 Software Development
+#-----------------------------------------------------------------------------------------
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-clas12software -t clas12software:production .
+#  docker build -f Dockerfile-clas12software4.4.0 -t clas12software:4.4.0 .
 #
-#  docker tag clas12software:production jeffersonlab/clas12software:4.4.0
-#  docker tag clas12software:production jeffersonlab/clas12software:production
+#  docker tag clas12software:4.4.0 jeffersonlab/clas12software:4.4.0
+#  docker tag clas12software:4.4.0 jeffersonlab/clas12software:production
 #
 #  docker push jeffersonlab/clas12software:4.4.0
 #  docker push jeffersonlab/clas12software:production
@@ -16,9 +16,9 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v /cvmfs:/cvmfs clas12software:production bash
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs clas12software:4.4.0 bash
 #
-#  docker run -it --rm -v /cvmfs:/cvmfs jeffersonlab/clas12software:production bash
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs jeffersonlab/clas12software:4.4.0 bash
 #
 #--------------------------------------------------------------------------
 
@@ -30,7 +30,6 @@ ENV OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.4
 ENV CLAS12TAG 4.4.0
-ENV CCDBSQLITE ccdb_$CLAS12TAG".sqlite"
 ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 
 # gfortran for clasdis generator
@@ -40,7 +39,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libfonts for kpp-plots fonts
 # ROOT temporarily removed as centos8 removed zstd library.
 # RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules lsof \
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
@@ -62,13 +61,8 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 	# temporary removing gemc from .jlab_software, the env is added to environment scripts
 	&& sed -i s/gemc// /root/.jlab_software
 
-# Getting the field maps
-# Replacing the scripts in /etc and with the environment scripts
-RUN mkdir -p /jlab/noarch/data \
-	&& cd /jlab/noarch/data \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/TorusSymmetric.dat \
-	&& wget $WGETOPTONS https://clasweb.jlab.org/12gev/field_maps/clas12NewSolenoidFieldMap.dat \
-	&& rm /etc/profile.d/jlab.csh \
+# Removing the scripts in /etc, creating the test dir for travis
+RUN    rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
 
@@ -78,10 +72,13 @@ RUN cd /jlab/work \
 	&& cd clas12-mcgen \
 	&& rm -rf .git* */.git* \
 	&& make \
-	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin
+	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin \
+	&& ln -s /usr/bin/python3 /usr/bin/python
+
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
+COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin
 WORKDIR $JLAB_ROOT/work
 
 ADD tests/*.sh /jlab/tests/
