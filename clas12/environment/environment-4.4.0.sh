@@ -37,6 +37,7 @@ export GEMC=/jlab/clas12Tags/$CLAS12TAG/source
 export GEMC_VERSION=$CLAS12TAG
 export PATH=${PATH}:${CLAS12_BIN}:${GEMC}
 export PYTHONPATH=${PYTHONPATH}:${GEMC}/api/python
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CLAS12_LIB}
 
 export GEMC_DATA_DIR=/jlab/clas12Tags/$CLAS12TAG
 export FIELD_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/

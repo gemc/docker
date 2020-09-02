@@ -37,6 +37,7 @@ setenv GEMC /jlab/clas12Tags/$CLAS12TAG/source
 setenv GEMC_VERSION $CLAS12TAG
 setenv PATH ${PATH}:${CLAS12_BIN}:${GEMC}
 setenv PYTHONPATH ${PYTHONPATH}:${GEMC}/api/python
+setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${CLAS12_LIB}
 
 setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/

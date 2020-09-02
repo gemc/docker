@@ -73,6 +73,7 @@ RUN cd /jlab/work \
 	&& rm -rf .git* */.git* \
 	&& make \
 	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin \
+	&& cp lib/*   $JLAB_SOFTWARE/clas12/lib \
 	&& ln -s /usr/bin/python3 /usr/bin/python
 
 
