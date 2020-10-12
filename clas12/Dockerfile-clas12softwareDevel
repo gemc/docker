@@ -77,7 +77,6 @@ RUN cd /jlab/work \
 	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
 	&& ln -s /usr/bin/python3 /usr/bin/python
 
-
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
 COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin

@@ -69,13 +69,13 @@ RUN    rm /etc/profile.d/jlab.csh \
 # Generators from clas12-mcgen
 RUN cd /jlab/work \
 	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
-	&& cd clas12-mcgen \
+	&& cd clas12-mcgen  \
 	&& rm -rf .git* */.git* \
 	&& make \
 	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin \
 	&& cp lib/*   $JLAB_SOFTWARE/clas12/lib \
+	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
 	&& ln -s /usr/bin/python3 /usr/bin/python
-
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
