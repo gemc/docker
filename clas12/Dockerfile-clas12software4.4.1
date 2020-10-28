@@ -1,0 +1,89 @@
+#
+# docker image for CLAS12 Software Development
+#-----------------------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-clas12software4.4.1 -t clas12software:4.4.1 .
+#
+#  docker tag clas12software:4.4.1 jeffersonlab/clas12software:4.4.1
+#  docker tag clas12software:4.4.1 jeffersonlab/clas12software:production
+#
+#  docker push jeffersonlab/clas12software:4.4.1
+#  docker push jeffersonlab/clas12software:production
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs clas12software:4.4.1 bash
+#
+#  docker run -it --rm -v /Users/Shared/cvmfs:/cvmfs jeffersonlab/clas12software:4.4.1 bash
+#
+#--------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc:2.8
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV JLAB_ROOT /jlab
+ENV OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
+ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
+ENV JLAB_VERSION 2.4
+ENV CLAS12TAG 4.4.1
+ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
+
+# gfortran for clasdis generator
+# root for genKYandOnePion and evio2root
+# xemacs to help users
+# libXtst for kpp-plots
+# libfonts for kpp-plots fonts
+# ROOT temporarily removed as centos8 removed zstd library.
+# RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules lsof \
+	&& yum clean all
+
+WORKDIR $JLAB_ROOT
+
+# CLAS12 Dirs
+RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
+	&& mkdir -p $JLAB_SOFTWARE/clas12/inc
+
+# Checking out clas12Tags and compiling CLAS12TAG
+# Removing un-used tags and .git stuff
+RUN git clone https://github.com/gemc/clas12Tags.git \
+	&& cd $JLAB_ROOT/clas12Tags \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& rm -rf $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE/gemc  \
+	&& ./goInstall $CLAS12TAG \
+	# delete unecessary files
+	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards` \
+	# temporary removing gemc from .jlab_software, the env is added to environment scripts
+	&& sed -i s/gemc// /root/.jlab_software
+
+# Removing the scripts in /etc, creating the test dir for travis
+RUN    rm /etc/profile.d/jlab.csh \
+	&& rm /etc/profile.d/jlab.sh \
+	&& mkdir -p /jlab/tests/
+
+# Generators from clas12-mcgen
+RUN cd /jlab/work \
+	&& git clone --recurse-submodules https://github.com/JeffersonLab/clas12-mcgen.git \
+	&& cd clas12-mcgen  \
+	&& rm -rf .git* */.git* \
+	&& make \
+	&& cp bin/*   $JLAB_SOFTWARE/clas12/bin \
+	&& cp lib/*   $JLAB_SOFTWARE/clas12/lib \
+	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin  \
+	&& ln -s /usr/bin/python3 /usr/bin/python
+
+COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
+COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
+COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin
+WORKDIR $JLAB_ROOT/work
+
+ADD tests/*.sh /jlab/tests/
+
+# Temp /condor for el6 binding
+RUN mkdir /condor \
+	&& mkdir /etc/condor
