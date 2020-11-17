@@ -21,11 +21,11 @@ setenv CCDB_CONNECTION sqlite:////cvmfs/oasis.opensciencegrid.org/jlab/hallb/cla
 
 # sidis, inclusive dis with rad correction, dvcs
 setenv CLASDIS_PDF /jlab/work/clas12-mcgen/clasdis/pdf
-setenv CLASPYTHIA_DECLIST /jlab/work/clas12-mcgen/claspyth/pdf
+setenv CLASPYTHIA_DECLIST /jlab/work/clas12-mcgen/claspyth
 setenv CLASDVCS_PDF /jlab/work/clas12-mcgen/dvcsgen
 setenv DISRAD_PDF /jlab/work/clas12-mcgen/inclusive-dis-rad
 setenv DataKYandOnePion /jlab/work/clas12-mcgen/genKYandOnePion/data
-setenv TWOPEG_DATA_DIR /jlab/work/clas12-mcgen/twopeg/data
+setenv TWOPEG_DATA_DIR /jlab/work/clas12-mcgen/twopeg
 
 # CLAS12 envs
 setenv CLAS12_LIB $JLAB_SOFTWARE/clas12/lib

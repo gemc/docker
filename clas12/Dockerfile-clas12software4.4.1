@@ -39,7 +39,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libfonts for kpp-plots fonts
 # ROOT temporarily removed as centos8 removed zstd library.
 # RUN yum install -y gcc-gfortran xemacs libXtst libfonts  xrootd-client
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules lsof \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts root root-montecarlo-eg xrootd-client environment-modules lsof zsh \
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
@@ -74,7 +74,7 @@ RUN cd /jlab/work \
 	&& make \
 	&& cp bin/*  $JLAB_SOFTWARE/clas12/bin \
 	&& cp lib/*  $JLAB_SOFTWARE/clas12/lib \
-	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
+	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin  \
 	&& ln -s /usr/bin/python3 /usr/bin/python
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh

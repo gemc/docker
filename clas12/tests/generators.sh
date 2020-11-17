@@ -1,18 +1,41 @@
-#!/bin/bash
+#!/bin/zsh
 
-source /etc/profile.d/environment-4.3.2.sh
+# This tests the generators installation and the three requirements:
+# - executable name
+# - working options: --docker --trig 10 --seed 124
+# - output name
 
-# Template for generators.
+generators=(clasdis claspyth dvcsgen genKYandOnePion inclusive-dis-rad JPsiGen TCSGen twopeg)
 
-# This script will test these generators with success criteria below:
-#
-# - clasdis. No criteria
-#
-#
-# The script is located in the container at /jlab/generators.sh
-#
+declare -A working
 
-clasdis --t 20 25 --docker
+echo
+for g in $generators
+    do
+    eOut=$g".dat"
+
+    echo testing:  $g
+    working[$g]=":red_circle:"
+   
+    $g --docker --trig 10 --seed 123 > $g.log
+    if test -f "$eOut"; then
+        echo $eOut" exists. "$g is good
+            working[$g]=":white_check_mark:"
+    fi
+    echo
+done
+echo
+echo
+echo "name | working"
+echo "---- | -------"
+for g in $generators
+    do
+    echo $g "|" $working[$g]
+done
+echo
+echo
 
 
+# success
 exit 0
+

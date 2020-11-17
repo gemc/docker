@@ -21,11 +21,11 @@ export CCDB_CONNECTION=sqlite:////cvmfs/oasis.opensciencegrid.org/jlab/hallb/cla
 
 # sidis, inclusive dis with rad correction, dvcs
 export CLASDIS_PDF=/jlab/work/clas12-mcgen/clasdis/pdf
-export CLASPYTHIA_DECLIST=/jlab/work/clas12-mcgen/claspyth/pdf
+export CLASPYTHIA_DECLIST=/jlab/work/clas12-mcgen/claspyth
 export CLASDVCS_PDF=/jlab/work/clas12-mcgen/dvcsgen
 export DISRAD_PDF=/jlab/work/clas12-mcgen/inclusive-dis-rad
 export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
-export TWOPEG_DATA_DIR=/jlab/work/clas12-mcgen/twopeg/data
+export TWOPEG_DATA_DIR=/jlab/work/clas12-mcgen/twopeg
 
 # CLAS12 envs
 export CLAS12_LIB=$JLAB_SOFTWARE/clas12/lib
