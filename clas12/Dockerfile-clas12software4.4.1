@@ -74,7 +74,7 @@ RUN cd /jlab/work \
 	&& make \
 	&& cp bin/*  $JLAB_SOFTWARE/clas12/bin \
 	&& cp lib/*  $JLAB_SOFTWARE/clas12/lib \
-	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin  \
+	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
 	&& ln -s /usr/bin/python3 /usr/bin/python
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh

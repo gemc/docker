@@ -26,6 +26,7 @@ setenv CLASDVCS_PDF /jlab/work/clas12-mcgen/dvcsgen
 setenv DISRAD_PDF /jlab/work/clas12-mcgen/inclusive-dis-rad
 setenv DataKYandOnePion /jlab/work/clas12-mcgen/genKYandOnePion/data
 setenv TWOPEG_DATA_DIR /jlab/work/clas12-mcgen/twopeg
+setenv TCSGEN_DIR /jlab/work/clas12-mcgen/TCSGen
 
 # CLAS12 envs
 setenv CLAS12_LIB $JLAB_SOFTWARE/clas12/lib
