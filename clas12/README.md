@@ -1,13 +1,10 @@
 # Docker configuration files for clas12
 
 
-These images contain:
 
+### CLAS12 Generators
 
-
-## Various generators
-
-The generatos are submodules in this repo:
+Installed in /jlab/work/clas12-mcgen
 
 https://github.com/JeffersonLab/clas12-mcgen
 
@@ -15,20 +12,20 @@ https://github.com/JeffersonLab/clas12-mcgen
 
 ### clas12tags
 
+Installed in /jlab/clas12Tags/4.4.1/
+
 - [gemc](https://gemc.jlab.org/gemc/html/index.html)  
 - [clas12 geometry and digitization](https://github.com/gemc/clas12Tags)
 
 
-### reconstruction
-
-- https://github.com/JeffersonLab/clas12-offline-software
-
-
-### ced
-
-####
+### reconstruction loaded from CVMFS
 
 Contact: ungaro@jlab.org
+
+
+# Tests
+
+/jlab/tests/generators.sh
 
 # Singularity Image
 
@@ -44,7 +41,7 @@ singularity shell --home ${PWD}:/srv --pwd /srv --bind /cvmfs --contain --ipc --
 
 # Notes:
 
-The dockerfile of 4.4.1 is identical to 4.4.0 except the 
+The dockerfile of 4.4.1 is identical to 4.4.0 except the gemc track cutoff z, expanded to 9m from 8m 
 
 
 
