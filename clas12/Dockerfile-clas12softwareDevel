@@ -1,6 +1,7 @@
 #
 # docker image for CLAS12 Software Development
-#-----------------------------------------------------------------------------------------
+# Notice: make sure there is enough disk and memory in the docker preferences to build this image
+#------------------------------------------------------------------------------------------------
 #
 # To manually build and push the container:
 #

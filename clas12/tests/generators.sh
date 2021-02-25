@@ -5,7 +5,7 @@
 # - working options: --docker --trig 10 --seed 124
 # - output name
 
-generators=(clasdis claspyth dvcsgen genKYandOnePion inclusive-dis-rad JPsiGen TCSGen twopeg)
+generators=(clasdis claspyth dvcsgen genKYandOnePion inclusive-dis-rad JPsiGen TCSGen twopeg clas12-elSpectro)
 
 declare -A working
 
