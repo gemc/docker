@@ -19,15 +19,6 @@ setenv QTLIB $QTDIR/lib
 # using sqlite
 setenv CCDB_CONNECTION sqlite:////cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/ccdb/ccdb_$CLAS12TAG".sqlite"
 
-# sidis, inclusive dis with rad correction, dvcs
-setenv CLASDIS_PDF /jlab/work/clas12-mcgen/clasdis/pdf
-setenv CLASPYTHIA_DECLIST /jlab/work/clas12-mcgen/claspyth
-setenv CLASDVCS_PDF /jlab/work/clas12-mcgen/dvcsgen
-setenv DISRAD_PDF /jlab/work/clas12-mcgen/inclusive-dis-rad
-setenv DataKYandOnePion /jlab/work/clas12-mcgen/genKYandOnePion/data
-setenv TWOPEG_DATA_DIR /jlab/work/clas12-mcgen/twopeg
-setenv TCSGEN_DIR /jlab/work/clas12-mcgen/TCSGen
-
 # CLAS12 envs
 setenv CLAS12_LIB $JLAB_SOFTWARE/clas12/lib
 setenv CLAS12_INC $JLAB_SOFTWARE/clas12/inc
@@ -45,9 +36,7 @@ setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
 source /etc/profile.d/modules.csh
-source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
-module load coatjava/6.5.9
-module load jdk/1.8.0_31
+source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh
 
 set autolist
 alias l ls -l

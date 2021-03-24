@@ -19,15 +19,6 @@ export QTLIB=$QTDIR/lib
 # using sqlite
 export CCDB_CONNECTION=sqlite:////cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/ccdb/ccdb_$CLAS12TAG".sqlite"
 
-# sidis, inclusive dis with rad correction, dvcs
-export CLASDIS_PDF=/jlab/work/clas12-mcgen/clasdis/pdf
-export CLASPYTHIA_DECLIST=/jlab/work/clas12-mcgen/claspyth
-export CLASDVCS_PDF=/jlab/work/clas12-mcgen/dvcsgen
-export DISRAD_PDF=/jlab/work/clas12-mcgen/inclusive-dis-rad
-export DataKYandOnePion=/jlab/work/clas12-mcgen/genKYandOnePion/data
-export TWOPEG_DATA_DIR=/jlab/work/clas12-mcgen/twopeg
-export TCSGEN_DIR=/jlab/work/clas12-mcgen/TCSGen
-
 # CLAS12 envs
 export CLAS12_LIB=$JLAB_SOFTWARE/clas12/lib
 export CLAS12_INC=$JLAB_SOFTWARE/clas12/inc
@@ -46,8 +37,6 @@ export FIELD_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/
 
 source /etc/profile.d/modules.sh
 source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.sh
-module load coatjava/6.5.9
-module load jdk/1.8.0_31
 
 set autolist
 alias l='ls -l'

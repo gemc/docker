@@ -4,6 +4,12 @@
 # - executable name
 # - working options: --docker --trig 10 --seed 124
 # - output name
+#
+# Installation path on the container: /jlab/tests/
+
+
+module load root/6.22.06
+module load mcgen/1.5
 
 generators=(clasdis claspyth dvcsgen genKYandOnePion inclusive-dis-rad JPsiGen TCSGen twopeg clas12-elSpectro)
 
