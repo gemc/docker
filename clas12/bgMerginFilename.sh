@@ -2,7 +2,7 @@
 
 # Returns a random background hipo file in the selected configuration
 # example of command line:
-# bgMerginFilename.sh rga_fall2018  tor-1.00_sol-1.00 45nA_10604MeV
+# bgMerginFilename.sh rga_fall2018 tor-1.00_sol-1.00 45nA_10604MeV
 
 configuration=$1
 fields=$2
@@ -33,6 +33,8 @@ fi
 
 bgfile=$baseDir"clas12/backgroundfiles/"$configuration"/"$fields"/"$bkmerging"/10k/"$nzeros$R".hipo"
 
+test -e $bgfile && exit 1
+
 echo $bgfile
 
 if [ "$#" == 4 ]; then
@@ -43,3 +45,4 @@ fi
 
 unset LD_PRELOAD
 
+exit 0
