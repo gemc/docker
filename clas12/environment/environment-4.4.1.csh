@@ -36,7 +36,7 @@ setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
 source /etc/profile.d/modules.csh
-source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh
+source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 
 set autolist
 alias l ls -l

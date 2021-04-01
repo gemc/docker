@@ -61,13 +61,22 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 	# temporary removing gemc from .jlab_software, the env is added to environment scripts
 	&& sed -i s/gemc// /root/.jlab_software
 
+# Generators from clas12-mcgen
+# This is only used to do cp generate-seeds.py 
+RUN cd /jlab/work \
+	&& git clone https://github.com/JeffersonLab/clas12-mcgen.git \
+	&& cd clas12-mcgen  \
+	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
+	&& ln -s /usr/bin/python3 /usr/bin/python
+
 # Removing the scripts in /etc, creating the test dir for travis
-RUN    rm /etc/profile.d/jlab.csh \
+# adding generate-seeds.py  and linking python
+RUN   rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
 
-COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
-COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
+COPY environment/environment-$CLAS12TAG".sh"  /etc/profile.d/environment.sh
+COPY environment/environment-$CLAS12TAG".csh" /etc/profile.d/environment.csh
 COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin
 WORKDIR $JLAB_ROOT/work
 
