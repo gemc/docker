@@ -39,8 +39,7 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
 #
-# 
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts environment-modules lsof zsh gsl-devel \
+RUN yum install -y gcc-gfortran xemacs libXtst libfonts xrootd-client environment-modules lsof zsh gsl-devel \
 	&& yum clean all
 
 WORKDIR $JLAB_ROOT
@@ -66,18 +65,6 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 RUN    rm /etc/profile.d/jlab.csh \
 	&& rm /etc/profile.d/jlab.sh \
 	&& mkdir -p /jlab/tests/
-
-
-
-
-
-
-
-
-
-
-
-
 
 COPY environment/environment-$CLAS12TAG".csh"  /etc/profile.d/environment.csh
 COPY environment/environment-$CLAS12TAG".sh"   /etc/profile.d/environment.sh
