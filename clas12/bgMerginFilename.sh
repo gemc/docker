@@ -21,7 +21,7 @@ NFILES=`ls $xdir | wc | awk '{print $1}'`
 # works only if > 100 files
 nzeros="00"
 
-R=$(( $RANDOM % $NFILES ))
+R=$(( $RANDOM % $NFILES + 1))
 
 if (($R <10))
 then
