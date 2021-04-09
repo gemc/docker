@@ -2,14 +2,6 @@
 
 
 
-### CLAS12 Generators
-
-Installed in /jlab/work/clas12-mcgen
-
-https://github.com/JeffersonLab/clas12-mcgen
-
-
-
 ### clas12tags
 
 Installed in /jlab/clas12Tags/4.4.1/
