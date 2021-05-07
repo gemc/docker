@@ -35,6 +35,29 @@ setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${CLAS12_LIB}
 setenv GEMC_DATA_DIR /jlab/clas12Tags/$CLAS12TAG
 setenv FIELD_DIR /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/noarch/data/magfield/ascii/
 
+# clearing module environment, as suggested by OSG, #67051
+unsetenv ENABLE_LMOD
+unsetenv _LMFILES_
+unsetenv LMOD_ANCIENT_TIME
+unsetenv LMOD_arch
+unsetenv LMOD_CMD
+unsetenv LMOD_COLORIZE
+unsetenv LMOD_DEFAULT_MODULEPATH
+unsetenv LMOD_DIR
+unsetenv LMOD_FULL_SETTARG_SUPPORT
+unsetenv LMOD_PACKAGE_PATH
+unsetenv LMOD_PKG
+unsetenv LMOD_PREPEND_BLOCK
+unsetenv LMOD_SETTARG_CMD
+unsetenv LMOD_SETTARG_FULL_SUPPORT
+unsetenv LMOD_sys
+unsetenv LMOD_SYSTEM_DEFAULT_MODULES
+unsetenv LMOD_VERSION
+unsetenv LOADEDMODULES
+unsetenv MODULEPATH
+unsetenv MODULEPATH_ROOT
+unsetenv MODULESHOME
+
 source /etc/profile.d/modules.csh
 source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/setup.csh /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 
