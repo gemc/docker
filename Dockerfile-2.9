@@ -1,0 +1,68 @@
+#
+# gemc docker 2.8 (jlab 2.4) libraries image
+#--------------------------------------------------------------------------
+#
+# To manually build and push the container:
+#
+#  docker build -f Dockerfile-2.8 -t gemc:2.8 .
+#
+#  docker tag gemc:2.8 jeffersonlab/gemc:2.8
+#
+#  docker push jeffersonlab/gemc:2.8
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm gemc:2.8 bash
+#
+#  docker run -it --rm jeffersonlab/gemc:2.8 bash
+#
+#--------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc:centos8
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+
+COPY .jlab_software /root
+
+ENV JLAB_ROOT /jlab
+ENV JLAB_VERSION 2.4
+
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
+
+WORKDIR $JLAB_ROOT
+
+# splitting commands for debugging purposes
+RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
+	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_clhep \
+	&& ./go_xercesc \
+	&& ./go_qt system
+
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_geant4 data \
+	&& ./go_geant4 src \
+	&& ./go_geant4 make
+
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_sconsscript \
+	&& ./go_evio \
+	&& ./go_mysql \
+	&& ./go_ccdb \
+	&& ./go_mlibrary\
+	&& ./go_gemc \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
+	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+
+WORKDIR $JLAB_ROOT/work
+CMD bash /container/utilities/xstart.sh && sleep infinity
