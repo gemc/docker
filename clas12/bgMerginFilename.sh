@@ -9,6 +9,11 @@ fields=$2
 bkmerging=$3
 getit=$4
 
+if [ ! -h /usr/lib64/libXrdPosixPreload.so ]; then
+    echo "/usr/lib64/libXrdPosixPreload.so does not exist. exiting"
+    exit 99
+fi
+
 export LD_PRELOAD=/usr/lib64/libXrdPosixPreload.so
 # for onsite
 # baseDir="xroot://sci-xrootd-ib//osgpool/hallb/"
@@ -33,13 +38,12 @@ fi
 
 bgfile=$baseDir"clas12/backgroundfiles/"$configuration"/"$fields"/"$bkmerging"/10k/"$nzeros$R".hipo"
 
-test -e $bgfile && exit 1
-
 echo $bgfile
 
 if [ "$#" == 4 ]; then
 	if [ $getit == "get" ]; then
 		cp $bgfile .
+		exit $?
 	fi
 fi
 
