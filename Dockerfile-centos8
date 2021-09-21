@@ -4,7 +4,7 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-centos8 -t gemc:centos8 .
+#  docker build --progress=plain -f Dockerfile-centos8 -t gemc:centos8 .
 #
 #  docker tag gemc:centos8 jeffersonlab/gemc:centos8
 #

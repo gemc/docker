@@ -4,7 +4,7 @@
 #
 # To manually build and push the container:
 #
-#  docker build -f Dockerfile-3.0 -t gemc:3.0 .
+#  docker build --progress=plain -f Dockerfile-3.0 -t gemc:3.0 .
 #
 #  docker tag gemc:3.0 jeffersonlab/gemc:3.0
 #
@@ -41,14 +41,14 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
 	&& ./go_xercesc \
-	&& ./go_qt system \
+	&& ./go_qt system  \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
 
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_geant4 data \
+	&& ./go_geant4 data  \
 	&& ./go_geant4 src \
 	&& ./go_geant4 makeMT \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
