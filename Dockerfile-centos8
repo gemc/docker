@@ -2,9 +2,10 @@
 # docker centos8 base image
 #--------------------------------------------------------------------------
 #
-# To manually build and push the container:
+# To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain -f Dockerfile-centos8 -t gemc:centos8 .
+#  docker build --progress=plain            -f Dockerfile-centos8 -t gemc:centos8 .
+#  docker build --progress=plain --no-cache -f Dockerfile-centos8 -t gemc:centos8 .
 #
 #  docker tag gemc:centos8 jeffersonlab/gemc:centos8
 #
@@ -35,21 +36,21 @@ RUN yum install -y epel-release \
 # notice: gcc-c++ is gcc8
 # for gcc9.2 need to install
 # gcc-toolset-9-gcc gcc-toolset-9-gcc-c++
+# the last line adds the environment needed to use gcc9 by default
 RUN yum install -y \
 	cmake3 \
 	make \
-	gcc-toolset-9-gcc \
-	gcc-toolset-9-gcc-c++ \
+	gcc-c++ \
 	mysql-devel \
 	python3-devel \
 	python3-scons \
-	libX11-devel \
 	mesa-libGLU-devel \
+	libX11-devel \
+	libXpm-devel \
+	libXft-devel \
 	libXt-devel \
 	libXmu-devel \
 	libXrender-devel \
-	libXpm-devel \
-	libXft-devel \
 	expat-devel \
 	bzip2 \
 	qt5-qtbase-devel \
@@ -58,7 +59,6 @@ RUN yum install -y \
 	nano \
 	git \
 	which \
-	tcsh \
 	psmisc \
 	tigervnc-server \
 	xfce4-session \
