@@ -1,46 +1,41 @@
 #
-# docker centos8 base image
+# docker ubuntu20 base image
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain            -f Dockerfile-centos8 -t gemc:centos8 .
-#  docker build --progress=plain --no-cache -f Dockerfile-centos8 -t gemc:centos8 .
+#  docker build --progress=plain            -f Dockerfile-ubuntu20 -t gemc:ubuntu20 .
+#  docker build --progress=plain --no-cache -f Dockerfile-ubuntu20 -t gemc:ubuntu20 .
 #
-#  docker tag gemc:centos8 jeffersonlab/gemc:centos8
+#  docker tag gemc:ubuntu20 jeffersonlab/gemc:ubuntu20
 #
-#  docker push jeffersonlab/gemc:centos8
+#  docker push jeffersonlab/gemc:ubuntu20
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:centos8 bash
+#  docker run -it --rm gemc:ubuntu20 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:centos8 bash
+#  docker run -it --rm jeffersonlab/gemc:ubuntu20 bash
 #
 #--------------------------------------------------------------------------
 
-FROM centos:centos8
+FROM ubuntu:focal
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 # See https://fedoraproject.org/wiki/EPEL
-RUN yum install -y epel-release \
-	&& yum -y install 'dnf-command(config-manager)' \
-	&& yum -y install dnf-plugins-core \
-	&& yum -y config-manager --set-enabled powertools \
-	&& yum -y update \
-	&& yum -y check-update
+RUN apt -y update \
+	&& apt -y upgrade
 
 
 # notice: gcc-c++ is gcc8
-RUN yum install -y \
-	cmake3 \
+RUN apt -y install \
+	cmake \
 	make \
-	gcc-c++ \
-	mysql-devel \
-	python3-devel \
-	python3-scons \
+	gcc \
+	python3 \
+	scons \
 	mesa-libGLU-devel \
 	libX11-devel \
 	libXpm-devel \
@@ -48,30 +43,26 @@ RUN yum install -y \
 	libXt-devel \
 	libXmu-devel \
 	libXrender-devel \
-	expat-devel \
-	bzip2 \
-	qt5-qtbase-devel \
-	qt5-linguist \
-	wget \
-	nano \
-	git \
-	which \
-	tcsh \
-	psmisc \
-	tigervnc-server \
-	xfce4-session \
-	xfce4-panel \
-	xfce4-terminal \
-	xfwm4 \
-	mailcap \
-	net-tools \
-	glx-utils \
-	xterm \
-	nedit \
-	perl-CPAN \
-	glibc-langpack-en \
-	&& yum clean all \
-	&& rm -rf /var/cache/yum \
+#	expat-devel \
+#	bzip2 \
+#	qt5-default \
+#	wget \
+#	nano \
+#	git \
+#	which \
+#	tcsh \
+#	tigervnc-xorg-extension \
+#	tigervnc-standalone-server \
+#	xfce4-session \
+#	xfce4-panel \
+#	xfce4-terminal \
+#	xfwm4 \
+#	net-tools \
+#	glx-utils \
+#	xterm \
+#	nedit \
+#	glibc-langpack-en \
+	&& apt-get clean \
 	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
 	&& ln -s /usr/bin/scons-3 /usr/bin/scons \
 	&& git clone https://github.com/kanaka/noVNC.git /opt/noVNC \
