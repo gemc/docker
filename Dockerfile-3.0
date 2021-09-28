@@ -21,7 +21,7 @@
 #
 #--------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:fedora32
+FROM jeffersonlab/gemc:fedora34
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 
@@ -54,32 +54,32 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_geant4 src \
 	&& ./go_geant4 makeMT
 
-#RUN cd $JLAB_ROOT/$JLAB_VERSION \
-# 	&& ./go_reload 2.5 \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-# 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-#	&& ./go_sconsscript \
-#	&& ./go_glibrary src
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload 2.5 \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_sconsscript \
+	&& ./go_glibrary src
 
-#RUN cd $JLAB_ROOT/$JLAB_VERSION \
-# 	&& ./go_reload 2.5 \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-# 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-#	&& ./go_glibrary cadmesh
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload 2.5 \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_glibrary cadmesh
 
-#RUN cd $JLAB_ROOT/$JLAB_VERSION \
-# 	&& ./go_reload 2.5 \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-# 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-#	&& ./go_glibrary make
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload 2.5 \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_glibrary make
 
-#RUN cd $JLAB_ROOT/$JLAB_VERSION \
-# 	&& ./go_reload 2.5 \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-# 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-#	&& ./go_gemc 3.0 \
-#	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-#	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload 2.5 \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_gemc 3.0 \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
 
 
 # clean up
