@@ -40,7 +40,7 @@ done
 
 echo " "
 echo " Launching noVNC on port $port ..."
-/opt/noVNC/utils/launch.sh --listen $port --vnc $vnchostport < /dev/null &> /dev/null &
+/opt/noVNC/utils/novnc_proxy --listen $port --vnc $vnchostport < /dev/null &> /dev/null &
 
 echo " "
 echo " Point your browser on to:"
