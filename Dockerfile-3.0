@@ -77,18 +77,18 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload 2.5 \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_gemc 3.0 \
+	&& ./go_gemc 3.0   \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
 
 
 # clean up
-#RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
-#	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
-#	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
-#	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
-#	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
 
 
-WORKDIR $JLAB_ROOT/work
+#WORKDIR $JLAB_ROOT/work
 CMD bash /container/utilities/xstart.sh && sleep infinity

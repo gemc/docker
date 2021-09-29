@@ -88,3 +88,6 @@ COPY scripts/xstart.sh  /container/utilities
 COPY scripts/xstart.csh /container/utilities
 COPY scripts/xstop /usr/bin
 ADD  dot_config /root/.config
+
+# start the xserver
+CMD bash /container/utilities/xstart.sh && sleep infinity
