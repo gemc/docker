@@ -1,6 +1,6 @@
 #!/bin/bash
 
-killall Xvnc
-killall websockify
+killall -q Xvnc
+killall -q websockify
 
 

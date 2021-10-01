@@ -5,7 +5,7 @@
 # be done via the xstart alias which is defined in
 # /etc/profile.d/xstart.csh  which itself is sourced 
 # automatically at login (because it's put in /etc/profile)
-
+xstop
 set geom="1600x1200"
 
 # Start VNC server
@@ -22,7 +22,7 @@ echo "setenv DISPLAY :$vncnum" >> $HOME/.tcshrc
 
 # Start xfce4 window manager
 # Why do we need to sleep?
-sleep 2
+# sleep 2
 xfce4-session < /dev/null >& /dev/null &
 
 # Start noVNC server to present VNC as HTML5 webserver
@@ -39,8 +39,8 @@ foreach port (`seq 6080 6280` )
 end
 
 echo " "
-echo " Launching noVNC on port $port ..."
-/opt/noVNC/utils/launch.sh --listen $port --vnc $vnchostport < /dev/null >& /dev/null &
+echo " TCSH: Launching noVNC on port $port ..."
+/opt/noVNC/utils/novnc_proxy --listen $port --vnc $vnchostport < /dev/null &> /dev/null &
 
 echo " "
 echo " Point your browser on to:"
