@@ -1,9 +1,10 @@
 #
-# gemc docker 2.9 (jlab 2.4) libraries image
-#--------------------------------------------------------------------------
+# gemc docker 3.0 (jlab 2.5) libraries image
+# --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
+#  docker pull jeffersonlab/gemc:fedora34
 #  docker build --progress=plain            -f Dockerfile-3.0 -t gemc:3.0 .
 #  docker build --progress=plain --no-cache -f Dockerfile-3.0 -t gemc:3.0 .
 #
@@ -11,7 +12,7 @@
 #
 #  docker push jeffersonlab/gemc:3.0
 #
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
@@ -19,7 +20,7 @@
 #
 #  docker run -it --rm jeffersonlab/gemc:3.0 bash
 #
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 
 FROM jeffersonlab/gemc:fedora34
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
@@ -90,5 +91,5 @@ RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
 
 
-WORKDIR $JLAB_ROOT/work
+WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity
