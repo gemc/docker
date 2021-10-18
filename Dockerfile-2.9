@@ -1,68 +1,100 @@
 #
-# gemc docker 2.9 (jlab 2.4) libraries image
-#--------------------------------------------------------------------------
+# gemc docker 2.9 (jlab 2.5) libraries image
+# --------------------------------------------------------------------------
 #
-# To manually build and push the container:
+# To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build -f Dockerfile-2.9 -t gemc:2.9 .
+#  docker pull jeffersonlab/gemc:fedora34
+#  docker build --progress=plain            -f Dockerfile-2.9 -t gemc:2.9 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.9 -t gemc:2.9 .
 #
 #  docker tag gemc:2.9 jeffersonlab/gemc:2.9
 #
 #  docker push jeffersonlab/gemc:2.9
 #
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:2.9 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:2.9 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:2.9 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:2.9 bash
 #
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:centos8
+FROM jeffersonlab/gemc:fedora34
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 
-COPY .jlab_software /root
+COPY .jlab_softwareg2 /root/.jlab_software
 
 ENV JLAB_ROOT /jlab
-ENV JLAB_VERSION 2.4
+ENV JLAB_VERSION 2.5s
 
 RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
 
+# notice the line include gcc9 while building things
 # splitting commands for debugging purposes
-RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
+RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
 	&& ./go_xercesc \
-	&& ./go_qt system
+	&& ./go_qt system \
+	&& ./go_root system
 
-RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_geant4 data \
 	&& ./go_geant4 src \
 	&& ./go_geant4 make
 
-RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
 	&& ./go_evio \
 	&& ./go_mysql \
-	&& ./go_ccdb \
-	&& ./go_mlibrary\
-	&& ./go_gemc \
-	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
-	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
-	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
-	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh* \
+	&& ./go_ccdb
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_mlibrary
+
+RUN yum install -y lz4-devel
+
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install   \
+	&& ./go_hipo
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_gemc src \
+	&& ./go_gemc make  \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
 
-WORKDIR $JLAB_ROOT/work
+# clean up
+RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+
+
+WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity

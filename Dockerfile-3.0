@@ -16,9 +16,9 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:3.0 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:3.0 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:3.0 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:3.0 bash
 #
 # --------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& ./go_root system
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload 2.5 \
+ 	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_geant4 data \
@@ -56,26 +56,26 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_geant4 makeMT
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload 2.5 \
+ 	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
-	&& ./go_glibrary     src
+	&& ./go_glibrary src
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload 2.5 \
+ 	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_glibrary cadmesh
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload 2.5 \
+ 	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_glibrary make
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload 2.5 \
+ 	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_gemc 3.0   \
