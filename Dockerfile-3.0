@@ -58,7 +58,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_sconsscript \
 	&& ./go_glibrary src
 
@@ -72,13 +72,15 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_glibrary make
+	&& ./go_glibrary make \
+	&& ./go_ccdb
+
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_gemc 3.0   \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& ./go_gemc 3.0 \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
 
