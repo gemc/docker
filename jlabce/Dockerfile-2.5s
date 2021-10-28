@@ -1,30 +1,29 @@
 #
-# gemc docker 2.9 (jlab 2.5) libraries image
+# jlabce docker 2.5s libraries image
 # --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker pull jeffersonlab/gemc:fedora34
-#  docker build --progress=plain            -f Dockerfile-2.9 -t gemc:2.9 .
-#  docker build --progress=plain --no-cache -f Dockerfile-2.9 -t gemc:2.9 .
+#  docker pull jeffersonlab/base:centos8
+#  docker build --progress=plain            -f Dockerfile-2.5s -t jlabce:2.5s .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.5s -t jlabce:2.5s .
 #
-#  docker tag gemc:2.9 jeffersonlab/gemc:2.9
+#  docker tag jlabce:2.5s jeffersonlab/jlabce:2.5s
 #
-#  docker push jeffersonlab/gemc:2.9
+#  docker push jeffersonlab/jlabce:2.5s
 #
 # --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:2.9 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5s bash
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:2.9 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5s bash
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:fedora34
+FROM jeffersonlab/base:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
-
 
 COPY .jlab_softwareg2 /root/.jlab_software
 
@@ -35,8 +34,6 @@ RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
 
-# notice the line include gcc9 while building things
-# splitting commands for debugging purposes
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
@@ -55,6 +52,9 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_geant4 src \
 	&& ./go_geant4 make
 
+# for hipo
+RUN yum install -y lz4-devel
+
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
@@ -62,31 +62,11 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_sconsscript \
 	&& ./go_evio \
 	&& ./go_mysql \
-	&& ./go_ccdb
-
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_mlibrary
-
-RUN yum install -y lz4-devel
-
-
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install   \
-	&& ./go_hipo
-
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_gemc src \
-	&& ./go_gemc make  \
+	&& ./go_hipo \
+	&& ./go_ccdb \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+
 
 # clean up
 RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
@@ -96,5 +76,3 @@ RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
 
 
-WORKDIR $JLAB_ROOT
-CMD bash /container/utilities/xstart.sh && sleep infinity

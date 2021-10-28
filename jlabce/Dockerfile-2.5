@@ -1,0 +1,77 @@
+#
+# jlabce docker 2.5 libraries image
+# --------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker pull jeffersonlab/base:fedora34
+#  docker build --progress=plain            -f Dockerfile-2.5 -t jlabce:2.5 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.5 -t jlabce:2.5 .
+#
+#  docker tag jlabce:2.5 jeffersonlab/jlabce:2.5
+#
+#  docker push jeffersonlab/jlabce:2.5
+#
+# --------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5 bash
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5 bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:fedora34
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+COPY .jlab_softwareg2 /root/.jlab_software
+
+ENV JLAB_ROOT /jlab
+ENV JLAB_VERSION 2.5
+
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
+
+WORKDIR $JLAB_ROOT
+
+RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
+	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_clhep \
+	&& ./go_xercesc \
+	&& ./go_qt system \
+	&& ./go_root system
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_geant4 data \
+	&& ./go_geant4 src \
+	&& ./go_geant4 makeMT
+
+
+
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& ./go_sconsscript \
+	&& ./go_ccdb \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+
+
+
+
+# clean up
+RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+
+

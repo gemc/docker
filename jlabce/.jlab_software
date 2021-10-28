@@ -1,1 +1,1 @@
-ccdb clhep geant4 qt xercesc gemc evio mlibrary scons banks root
+clhep geant4 qt xercesc gemc glibrary scons root ccdb

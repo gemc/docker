@@ -1,0 +1,48 @@
+#
+# gemc docker 2.9 (jlab 2.5) libraries image
+# --------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker pull jeffersonlab/jlabce:2.5s
+#  docker build --progress=plain            -f Dockerfile-2.9 -t gemc:2.9 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.9 -t gemc:2.9 .
+#
+#  docker tag gemc:2.9 jeffersonlab/gemc:2.9
+#
+#  docker push jeffersonlab/gemc:2.9
+#
+# --------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:2.9 bash
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:2.9 bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/jlabce:2.5s
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV JLAB_ROOT /jlab
+ENV JLAB_VERSION 2.5s
+
+WORKDIR $JLAB_ROOT
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_mlibrary
+
+
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_gemc src \
+	&& ./go_gemc make  
+
+WORKDIR $JLAB_ROOT
+CMD bash /container/utilities/xstart.sh && sleep infinity

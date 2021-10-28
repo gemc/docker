@@ -4,20 +4,20 @@
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain            -f Dockerfile-fedora34 -t gemc:fedora34 .
-#  docker build --progress=plain --no-cache -f Dockerfile-fedora34 -t gemc:fedora34 .
+#  docker build --progress=plain            -f Dockerfile-fedora34 -t base:fedora34 .
+#  docker build --progress=plain --no-cache -f Dockerfile-fedora34 -t base:fedora34 .
 #
-#  docker tag gemc:fedora34 jeffersonlab/gemc:fedora34
+#  docker tag base:fedora34 jeffersonlab/base:fedora34
 #
-#  docker push jeffersonlab/gemc:fedora34
+#  docker push jeffersonlab/base:fedora34
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm gemc:fedora34 bash
+#  docker run -it --rm base:fedora34 bash
 #
-#  docker run -it --rm jeffersonlab/gemc:fedora34 bash
+#  docker run -it --rm jeffersonlab/base:fedora34 bash
 #
 #--------------------------------------------------------------------------
 
@@ -30,10 +30,10 @@ RUN yum -y update \
 
 
 
+
+
+
 # xrandr added so we could change resolutions
-
-
-
 RUN yum install -y \
 	cmake3 \
 	make \
