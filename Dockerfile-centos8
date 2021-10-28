@@ -32,8 +32,8 @@ RUN yum install -y epel-release \
 	&& yum -y update \
 	&& yum -y check-update
 
-
 # notice: gcc-c++ is gcc8
+# xrandr added so we could change resolutions
 RUN yum install -y \
 	cmake3 \
 	make \
@@ -58,6 +58,8 @@ RUN yum install -y \
 	which \
 	tcsh \
 	psmisc \
+	procps \
+	hostname \
 	tigervnc-server \
 	xfce4-session \
 	xfce4-panel \
@@ -71,15 +73,16 @@ RUN yum install -y \
 	perl-CPAN \
 	glibc-langpack-en \
 	root \
+	xrandr \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
 	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
-	&& ln -s /usr/bin/scons-3 /usr/bin/scons \
-	&& git clone https://github.com/kanaka/noVNC.git /opt/noVNC \
+	&& git clone https://github.com/novnc/noVNC /opt/noVNC \
 	&& cd /opt/noVNC \
 	&& ln -s vnc.html index.html \
-	&& mkdir -p /container/utilities
-
+	&& rm -rf .git* \
+	&& mkdir -p /container/utilities \
+	&& ln -s /usr/bin/scons-3 /usr/bin/scons 
 
 # These define an alias and a script for easily starting up the
 # servers from either bash or tcsh.
