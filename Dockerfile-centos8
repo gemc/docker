@@ -30,7 +30,9 @@ RUN yum install -y epel-release \
 	&& yum -y install dnf-plugins-core \
 	&& yum -y config-manager --set-enabled powertools \
 	&& yum -y update \
-	&& yum -y check-update
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
 
 # notice: gcc-c++ is gcc8
 # xrandr added so we could change resolutions
@@ -74,6 +76,7 @@ RUN yum install -y \
 	glibc-langpack-en \
 	root \
 	xrandr \
+	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
 	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \

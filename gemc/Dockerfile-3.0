@@ -30,7 +30,6 @@ ENV JLAB_VERSION 2.5
 
 WORKDIR $JLAB_ROOT
 
-
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
@@ -43,6 +42,13 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION   \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_gemc 3.0 
+
+
+
+
+
+
+
 
 WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity

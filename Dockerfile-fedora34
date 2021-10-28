@@ -24,8 +24,10 @@
 FROM fedora:34
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-RUN yum -y update \
-	&& yum -y check-update
+RUN   yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
 
 
 
@@ -74,6 +76,7 @@ RUN yum install -y \
 	glibc-langpack-en \
 	root \
 	xrandr \
+	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
 	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
