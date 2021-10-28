@@ -18,27 +18,30 @@ Centos8 or Fedora34 images with rpm packages installed
   - evio
   - ccdb
   - hipo
-  
+  - cadmesh
+   
+- 2.5: Based on Fedora34, use geant4 compiled in multi-thread mode. Includes:
 
-- 2.5: Based on Fedora34, use geant4 compiled in multi-thread mode
-
+  - ccdb
+  - cadmesh
+ 
 
 [jeffersonlab/jlabce](https://hub.docker.com/repository/docker/jeffersonlab/jlabce)
 
 
 ### gemc
-The files in the main directory are for GEMC images. The corresponding docker hub is:
+
+- 2.9: based on jabce:2.5s
+- 3.0: based on jabce:2.5
 
 [jeffersonlab/gemc](https://hub.docker.com/repository/docker/jeffersonlab/gemc)
 
 ---
 
 ### clas12tags
-The files inside clas12 are for clas12tags images. The corresponding docker hub is:
+
 
 [jeffersonlab/clas12tags](https://hub.docker.com/repository/docker/jeffersonlab/clas12tags)
-
-
 
 
 ####
@@ -53,9 +56,7 @@ On the ACCOUNT settings go to applications and click on Docker Hub Builder.
 Grant access to the organizations if needed.
 
 
-Missing Packages:
-----------------
+#### Missing Packages:
 
-# CentOS8 notes:
-# See https://fedoraproject.org/wiki/EPEL
+- CentOS8 notes:  https://fedoraproject.org/wiki/EPEL
 

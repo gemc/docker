@@ -52,6 +52,10 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_geant4 src \
 	&& ./go_geant4 make
 
+
+
+
+
 # for hipo
 RUN yum install -y lz4-devel
 
@@ -63,16 +67,13 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_evio \
 	&& ./go_mysql \
 	&& ./go_hipo \
-	&& ./go_ccdb \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+	&& ./go_ccdb
 
-
-# clean up
-RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
+# linking scripts and clean up
+RUN ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
-
-

@@ -52,8 +52,12 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_geant4 src \
 	&& ./go_geant4 makeMT
 
-
-
+RUN cd $JLAB_ROOT/$JLAB_VERSION    \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_glibrary src \
+	&& ./go_glibrary cadmesh
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
@@ -61,14 +65,14 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
 	&& ./go_ccdb \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
 
 
 
 
-# clean up
-RUN   rm -rf $JLAB_SOFTWARE/geant4/*/build \
+# linking scripts and clean up
+RUN ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
+	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/build \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build \

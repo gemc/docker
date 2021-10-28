@@ -30,12 +30,6 @@ ENV JLAB_VERSION 2.5
 
 WORKDIR $JLAB_ROOT
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION    \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_glibrary src \
-	&& ./go_glibrary cadmesh
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
@@ -48,8 +42,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION   \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& ./go_gemc 3.0 \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
-	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
+	&& ./go_gemc 3.0 
 
-
+WORKDIR $JLAB_ROOT
+CMD bash /container/utilities/xstart.sh && sleep infinity
