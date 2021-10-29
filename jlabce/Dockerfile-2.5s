@@ -68,8 +68,10 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
 	&& ./go_evio \
+	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
 	&& ./go_mysql \
 	&& ./go_hipo \
+	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
 	&& ./go_ccdb
 
 # linking scripts and clean up

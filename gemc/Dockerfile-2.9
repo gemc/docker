@@ -34,7 +34,10 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_mlibrary
+	&& ./go_mlibrary \
+	&& rm -rf $JLAB_SOFTWARE/mlibrary/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh*
+
 
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
@@ -42,22 +45,17 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_gemc src \
-	&& ./go_gemc make
+	&& ./go_gemc make \
+	&& rm -rf $JLAB_SOFTWARE/gemc/*.gz
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_banks
-
-WORKDIR $JLAB_ROOT
-CMD bash /container/utilities/xstart.sh && sleep infinity
-
-
-
-
-
-
+#RUN cd $JLAB_ROOT/$JLAB_VERSION \
+# 	&& ./go_reload $JLAB_VERSION \
+#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+# 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+#	&& ./go_banks
 
 WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity
+
+
+

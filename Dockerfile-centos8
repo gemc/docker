@@ -74,7 +74,6 @@ RUN yum install -y \
 	nedit \
 	perl-CPAN \
 	glibc-langpack-en \
-	root \
 	xrandr \
 	&& yum clean packages \
 	&& yum clean all \
