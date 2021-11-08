@@ -43,6 +43,8 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& ./go_xercesc \
 	&& ./go_qt system \
 	&& ./go_root system \
+	&& rm -rf $JLAB_SOFTWARE/clhep/*/lib/libCLHEP-*-* \
+	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share

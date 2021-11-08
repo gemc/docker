@@ -34,8 +34,8 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_glibrary src \
 	&& ./go_glibrary make \
+	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION   \
  	&& ./go_reload $JLAB_VERSION \

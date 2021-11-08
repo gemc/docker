@@ -1,1 +1,1 @@
-clhep geant4 qt xercesc gemc glibrary scons root ccdb
+clhep xercesc qt geant4 scons glibrary gemc root ccdb

@@ -1,1 +1,1 @@
-banks ccdb clhep evio geant4 gemc mlibrary mysql qt root scons xercesc hipo
+clhep xercesc qt geant4 scons mlibrary gemc ccdb mysql root hipo banks   evio
