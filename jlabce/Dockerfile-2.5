@@ -58,13 +58,10 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& ./go_glibrary src \
-	&& ./go_glibrary cadmesh  \
-	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
+
+
+
+
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
@@ -76,6 +73,8 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+
+
 
 
 

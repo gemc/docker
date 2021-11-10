@@ -43,7 +43,6 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& ./go_xercesc \
 	&& ./go_qt system \
 	&& ./go_root system \
-	&& rm -rf $JLAB_SOFTWARE/clhep/*/lib/libCLHEP-*-* \
 	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
@@ -70,11 +69,15 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
 	&& ./go_evio \
-	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
 	&& ./go_mysql \
 	&& ./go_hipo \
+	&& ./go_ccdb \
 	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
-	&& ./go_ccdb
+	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
 # linking scripts and clean up
 RUN   ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
