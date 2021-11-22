@@ -79,6 +79,16 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
+# root
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+ 	&& ./go_reload $JLAB_VERSION \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+ 	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& ./go_root src \
+	&& ./go_root make \
+	&& rm -rf $JLAB_SOFTWARE/root/root-*-build 
+
+
 # linking scripts and clean up
 RUN   ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh /etc/profile.d \
 	&& ln -s $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh /etc/profile.d
