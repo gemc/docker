@@ -9,8 +9,10 @@
 #  docker build --progress=plain --no-cache -f Dockerfile-2.9 -t gemc:2.9 .
 #
 #  docker tag gemc:2.9 jeffersonlab/gemc:2.9
+#  docker tag gemc:2.9 jeffersonlab/jlabce:2.5
 #
 #  docker push jeffersonlab/gemc:2.9
+#  docker push jeffersonlab/jlabce:2.5
 #
 # --------------------------------------------------------------------------
 #
@@ -37,8 +39,6 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_mlibrary \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*.gz \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh*
-
-
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \

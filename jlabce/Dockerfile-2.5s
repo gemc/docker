@@ -46,7 +46,9 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
-	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share \
+	&& rm -rf $JLAB_SOFTWARE/root/root* \
+	&& rm -rf $JLAB_SOFTWARE/root/*/build* 
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
