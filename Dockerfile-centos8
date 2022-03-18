@@ -24,6 +24,9 @@
 FROM centos:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
+# migrate from Centos Linux 8 to Centos Stream 8
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+
 # See https://fedoraproject.org/wiki/EPEL
 RUN yum install -y epel-release \
 	&& yum -y install 'dnf-command(config-manager)' \

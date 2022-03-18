@@ -2,9 +2,11 @@
 # gemc docker 2.8 (jlab 2.4) libraries image
 #--------------------------------------------------------------------------
 #
-# To manually build and push the container:
+# To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build -f Dockerfile-2.8 -t gemc:2.8 .
+#  docker pull jeffersonlab/gemc:centos8
+#  docker build --progress=plain            -f Dockerfile-2.8 -t gemc:2.8 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.8 -t gemc:2.8 .
 #
 #  docker tag gemc:2.8 jeffersonlab/gemc:2.8
 #
@@ -20,11 +22,10 @@
 #
 #--------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:centos8
+FROM jeffersonlab/base:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-
-COPY .jlab_software /root
+COPY .jlab_softwareg2 /root/.jlab_software
 
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.4
@@ -32,6 +33,9 @@ ENV JLAB_VERSION 2.4
 RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
+
+# migrate from Centos Linux 8 to Centos Stream 8
+#RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
 
 # splitting commands for debugging purposes
 RUN rm -f ceInstall_$JLAB_VERSION.tar.gz \
