@@ -3,7 +3,7 @@
 setenv JLAB_ROOT /jlab
 setenv JLAB_VERSION 2.4
 setenv CLAS12TAG 4.4.2
-setenv OSRELEASE Linux_CentOS8-gcc8.5.0
+setenv OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
 setenv JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we

@@ -26,11 +26,13 @@
 #
 #--------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc:2.8
+#FROM jeffersonlab/gemc:2.8
+FROM jeffersonlab/clas12software:4.4.1
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
-ENV OSRELEASE Linux_CentOS8-gcc8.5.0
+#ENV OSRELEASE Linux_CentOS8-gcc8.5.0
+ENV OSRELEASE Linux_CentOS8.2.2004-gcc8.3.1
 ENV JLAB_SOFTWARE /jlab/$JLAB_VERSION/$OSRELEASE
 ENV JLAB_VERSION 2.4
 ENV CLAS12TAG 4.4.2
@@ -41,19 +43,20 @@ ENV WGETOPTONS -q --secure-protocol=TLSv1 --no-check-certificate
 # libXtst for kpp-plots
 # libfonts for kpp-plots fonts
 #
-RUN yum install -y gcc-gfortran xemacs libXtst libfonts xrootd-client environment-modules lsof zsh gsl-devel \
-	&& yum clean all
+#RUN yum install -y gcc-gfortran xemacs libXtst libfonts xrootd-client environment-modules lsof zsh gsl-devel \
+#	&& yum clean all
 
 WORKDIR $JLAB_ROOT
 
 # CLAS12 Dirs
-RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
-	&& mkdir -p $JLAB_SOFTWARE/clas12/inc
+#RUN   mkdir -p $JLAB_SOFTWARE/clas12/lib \
+#	&& mkdir -p $JLAB_SOFTWARE/clas12/bin \
+#	&& mkdir -p $JLAB_SOFTWARE/clas12/inc
 
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
-RUN git clone https://github.com/gemc/clas12Tags.git \
+RUN rm -rf clas12Tags \
+   && git clone https://github.com/gemc/clas12Tags.git \
 	&& cd $JLAB_ROOT/clas12Tags \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& rm -rf $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE/gemc \
@@ -65,28 +68,30 @@ RUN git clone https://github.com/gemc/clas12Tags.git \
 
 # Generators from clas12-mcgen
 # This is only used to do cp generate-seeds.py 
-RUN cd /jlab/work \
-	&& git clone https://github.com/JeffersonLab/clas12-mcgen.git \
-	&& cd clas12-mcgen  \
-	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
-	&& cd .. \
-	&& rm -rf clas12-mcgen \
-	&& ln -s /usr/bin/python3 /usr/bin/python
+#RUN cd /jlab/work \
+#	&& rm -rf clas12-mcgen  \
+#	&& git clone https://github.com/JeffersonLab/clas12-mcgen.git \
+#	&& cd clas12-mcgen  \
+#	&& rm $JLAB_SOFTWARE/clas12/bin/generate-seeds.py \
+#	&& cp generate-seeds.py   $JLAB_SOFTWARE/clas12/bin \
+#	&& cd .. \
+#	&& rm -rf clas12-mcgen
+#	&& ln -s /usr/bin/python3 /usr/bin/python
 
 
 # Removing the scripts in /etc, creating the test dir for travis
 # adding generate-seeds.py  and linking python
-RUN   rm /etc/profile.d/jlab.csh \
-	&& rm /etc/profile.d/jlab.sh \
-	&& mkdir -p /jlab/tests/
+#RUN   rm /etc/profile.d/jlab.csh \
+#	&& rm /etc/profile.d/jlab.sh \
+#	&& mkdir -p /jlab/tests/
 
 COPY environment/environment-$CLAS12TAG".sh"  /etc/profile.d/environment.sh
 COPY environment/environment-$CLAS12TAG".csh" /etc/profile.d/environment.csh
-COPY bgMerginFilename.sh                       $JLAB_SOFTWARE/clas12/bin
+COPY bgMerginFilename.sh                      $JLAB_SOFTWARE/clas12/bin
 WORKDIR $JLAB_ROOT/work
 
 ADD tests/*.sh /jlab/tests/
 
 # Temp /condor for el6 binding
-RUN mkdir /condor \
-	&& mkdir /etc/condor
+#RUN mkdir /condor \
+#	&& mkdir /etc/condor

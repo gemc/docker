@@ -3,7 +3,7 @@
 export JLAB_ROOT=/jlab
 export JLAB_VERSION=2.4
 export CLAS12TAG=4.4.2
-export OSRELEASE=Linux_CentOS8-gcc8.5.0
+export OSRELEASE=Linux_CentOS8.2.2004-gcc8.3.1
 export JLAB_SOFTWARE=/jlab/$JLAB_VERSION/$OSRELEASE
 
 # some OSG nodes have XERCESROOT, QTDIR defined. Since we use keepmine we
