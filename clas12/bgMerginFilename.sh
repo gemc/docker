@@ -23,9 +23,8 @@ baseDir="xroot://sci-xrootd.jlab.org//osgpool/hallb/"
 xdir=$baseDir"clas12/backgroundfiles/"$configuration"/"$fields"/"$bkmerging"/10k"
 
 NFILES=`ls $xdir | wc | awk '{print $1}'`
-if (($NFILES == 0))
-then
-    echo "bgMerginFilename: " $xdir " not found. exiting"
+if [[ $NFILES -eq 0 ]]; then
+    echo "wrong NFILES: " $NFILES " not found. exiting"
     exit 221
 fi
 
@@ -33,10 +32,10 @@ fi
 nzeros="00"
 
 R=$(( $RANDOM % $NFILES + 1))
-if ($? != 0) then
-	echo "bgMerginFilename: RANDOM cannot be computed"
-	exit 222
-endif
+if [[ ! $? -eq 0 ]]; then
+        echo "bgMerginFilename: RANDOM Number not valid: " $R
+        exit 223
+fi
 
 if (($R < 10))
 then
@@ -47,13 +46,10 @@ then
 fi
 
 bgfile=$baseDir"clas12/backgroundfiles/"$configuration"/"$fields"/"$bkmerging"/10k/"$nzeros$R".hipo"
-
-ls $bgfile
-if ($? != 0) then
-	echo "bgMerginFilename: " $bgfile does not exist
-	exit 223
-endif
-
+if [[ ! $? -eq 0 ]]; then
+        echo "bgMerginFilename: " $bgfile does not exist
+        exit 223
+fi
 
 echo $bgfile
 
