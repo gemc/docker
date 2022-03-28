@@ -1,24 +1,24 @@
 #
-# jlabce docker 2.5 libraries image
+# jlabce docker 2.5mt libraries image
 # --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
 #  docker pull jeffersonlab/base:fedora34
-#  docker build --progress=plain            -f Dockerfile-2.5 -t jlabce:2.5 .
-#  docker build --progress=plain --no-cache -f Dockerfile-2.5 -t jlabce:2.5 .
+#  docker build --progress=plain            -f Dockerfile-2.5mt -t jlabce:2.5mt .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.5mt -t jlabce:2.5mt .
 #
-#  docker tag jlabce:2.5 jeffersonlab/jlabce:2.5
+#  docker tag jlabce:2.5mt jeffersonlab/jlabce:2.5mt
 #
-#  docker push jeffersonlab/jlabce:2.5
+#  docker push jeffersonlab/jlabce:2.5mt
 #
 # --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5mt bash
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5mt bash
 #
 # --------------------------------------------------------------------------
 

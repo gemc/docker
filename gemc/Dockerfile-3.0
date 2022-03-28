@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/jlabce:2.5
+FROM jeffersonlab/jlabce:2.5mt
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
@@ -40,7 +40,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
+RUN  cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
