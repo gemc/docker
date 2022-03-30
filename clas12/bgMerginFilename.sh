@@ -5,6 +5,12 @@
 # bgMerginFilename.sh rga_fall2018 tor-1.00_sol-1.00 45nA_10604MeV
 # exit codes defined in Submit documentation repo
 
+
+# notice: in newer OSses we use xrdfs and xrdcp as follows:
+# - no need to export LD_PRELOAD
+# - ls: xrdfs xroot://sci-xrootd.jlab.org ls /osgpool/hallb/clas12/backgroundfiles/rga_fall2018/tor+1.00_sol-1.00/40nA_10604MeV/10k/00095.hipo
+# - cp: xrdcp xroot://sci-xrootd.jlab.org//osgpool/hallb/clas12/backgroundfiles/rga_fall2018/tor+1.00_sol-1.00/40nA_10604MeV/10k/00095.hipo .
+
 configuration=$1
 fields=$2
 bkmerging=$3
