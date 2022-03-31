@@ -1,0 +1,59 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+
+==================================
+CLAS12 Workshop April 2020 - *6/6*
+==================================
+
+
+OSG Resources and Priorities
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The OSG Portal is:
+
+https://gemc.jlab.org/web_interface/index.php
+
+The portal software supports a priority system.
+
+
+This assures that if you submit new jobs to OSG, your jobs will start immediately.
+At regime, all users have the same amount of running jobs.
+
+
+Check out the OSG Stats link.
+
+
+
+Current and future container contents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The current OSG production container contains clas12tags 4.3.1 and coatjava 6b.3.2.
+
+The new container will have clas12tags 4.3.2 and coatjava 6.5.3.
+
+
+Submit type 1 and 2 simulations jobs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For type 2, you can use the lund address::
+
+ https://userweb.jlab.org/~ungaro/lund/
+
+
+
+
+
+
+|br|
+
+|
+
+.. image:: ../previous.png
+	:target: 	p5.html
+	:align: left
+
+

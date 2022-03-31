@@ -1,0 +1,130 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+================================
+CLAS12 Docker Tutorial  - *4/10*
+================================
+
+Inside $CLAS12_BIN (which is in your path) we have three executables. Type::
+
+ ls $CLAS12_BIN/
+
+to list them.
+
+- clasdis: `a SIDIS generatoron based on PEPSI LUND MC <https://github.com/JeffersonLab/clasdis-nocernlib/blob/master/README.md>`_.
+- dvcsgen: `dvcs/pi0/eta generator using pdfs and gpds <https://github.com/JeffersonLab/dvcsgen/blob/master/README.md>`_.
+- generate-dis: `inclusive DIS generator with radiative corrections <https://github.com/JeffersonLab/inclusive-dis-rad/blob/master/README.md>`_.
+
+
+|br|
+
+
+Run the CLASDIS generator
+-------------------------
+
+Let's create a "clasdis" directory inside mywork and run clasdis to get 1000 events:
+
+.. code-block:: ruby
+
+ cd /jlab/work/mywork
+ mkdir -p clasdis
+ cd clasdis
+ clasdis --trig 1000 --docker --t 25 35
+ ls -lrt
+
+You should see the newly LUND file: **sidis.dat**
+
+
+
+The LUND format is described `here <https://gemc.jlab.org/gemc/html/documentation/generator/lund.html>`_.
+
+|br|
+
+Notice each event contains many particles but only **type 1** particles will be generated and tracked by geant4. **type** is the third column in the particle information.
+
+|br|
+
+
+
+
+
+Run GEMC on sidis.dat
+---------------------
+
+
+Before running gemc, let's take a look at the gcard::
+
+ cat /jlab/work/clas12.gcard
+
+It contains the first experiment detectors, options for magnetic fields, etc.
+
+|br|
+
+Let's run gemc on 200 of those generated events inside sidis.dat:
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=200 -INPUT_GEN_FILE="lund, sidis.dat"  /jlab/work/clas12.gcard
+
+The above command take up to a minute to load the magnetic field and setup the necessary physics processes.
+You will see many warning messages while creating the tessellated geometry (due to non perfect cad import from engineering model).
+
+After the physics tables are setup each event will take between 500 to 1000 ms, depending on the speed of your computer.
+
+While gemc is running you will notice a lot of these warnings:
+
+.. code-block:: text
+
+ *** G4Exception : GeomNav1002
+		issued by : G4Navigator::ComputeStep()
+ Track stuck or not moving.
+          Track stuck, not moving for 10 steps
+          in volume -fc- at point (-68.61918500868757,-2456.519110449012,5124.921251660378)
+          direction: (0.2126864369939486,-0.8061501170556744,0.5521652545116739)
+          Potential geometry or navigation problem !
+          Trying pushing it of 1e-07 mm ...Potential overlap in geometry!
+
+While these are very annoying, they are harmless. There is still some small geometry overlap for some small passive volumes,
+and the tessellation of cad import is not perfect. We'll fix these warnings with time... or we'll silence them.
+
+Upon exit gemc will inform you on the the processing time. For example::
+
+ > Total gemc time: 203.73 seconds.  Events only time: 138.181 seconds.
+
+|br|
+
+The file out.ev is now ready to be analyzed. If you're curious, you can use evio2xml to peek inside::
+
+ [root@9a5bf4e761b4 clasdis]# evio2xml out.ev | more
+ <?xml version="1.0"?>
+ <evio-data>
+ <!-- ===================== Buffer 1 contains 1637 words (6548 bytes) ===================== -->
+ <event format="evio" count="1" content="bank" data_type="0xe" tag="5" padding="0" num="0" length="1636" ndata="1635">
+ <bank content="string" data_type="0x3" tag="5" padding="0" num="1" length="1634" ndata="1">
+ <![CDATA[FMT:   is loaded with factory na, variation main and run number 11  ]]>
+ <![CDATA[experiments/clas12/beamline/beamline:   is loaded with factory TEXT, variation FTOn and run number 11  ]]>
+ <![CDATA[experiments/clas12/beamline/cadBeamline/:   is loaded with factory CAD, variation main and run number 11  ]]>
+ <![CDATA[experiments/clas12/beamline/vacuumLine/:   is loaded with factory CAD, variation main and run number 11  ]]>
+ <![CDATA[experiments/clas12/bst/bst:   is loaded with factory TEXT, variation java and run number 11  ]]>
+ <![CDATA[experiments/clas12/bstShield/bstShield:   is loaded with factory TEXT, variation w51 and run number 11  ]]>
+ <![CDATA[experiments/clas12/cnd/cnd:   is loaded with factory TEXT, variation original and run number 11  ]]>
+ <![CDATA[experiments/clas12/ctof/ctof:   is loaded with factory TEXT, variation cad and run number 11  ]]>
+ <![CDATA[experiments/clas12/ctof/javacad/:   is loaded with factory CAD, variation main and run number 11  ]]>
+ <![CDATA[experiments/clas12/dc/dc:   is loaded with factory TEXT, variation java and run number 11  ]]>
+ <![CDATA[experiments/clas12/ec/ec:   is loaded with factory TEXT, variation java and run number 11  ]]>
+
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p3.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p5.html
+	:align: right

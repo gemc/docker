@@ -1,0 +1,110 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+==================================
+CLAS12 Workshop April 2020 - *1/6*
+==================================
+
+In this tutorial you will learn how to explore the clas12tags 4.3.2 container. In particular:
+
+|br|
+
+Docker Container:
+^^^^^^^^^^^^^^^^^
+
+- run the container interactively, using a working directory
+- see / run the available generator executables in the container
+- check out the different experiment configurations (e.g. rga spring, rgb winter)
+- run GEMC using the rga fall 2018 configuration
+- change the target material to vacuum
+- use container libraries (clhep, geant4, etc) to recompile gemc version 4.3.2
+- create and use a new dipole field
+
+|br|
+
+OSG:
+^^^^
+
+- OSG resources and priorities
+- current and future container contents
+- submit type 1 and 2 simulations jobs
+
+
+|br|
+
+Reminder: Running docker
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Use the following command to run docker for the first time:
+
+.. code-block:: ruby
+
+ docker run -it --rm jeffersonlab/clas12tags:4.3.2 bash
+
+|br|
+
+Note the container name and tag.
+
+
+
+|br|
+
+
+The image contains the necessary software to run simulation and reconstruction:
+
+- centos7 OS
+- clhep, xercesc, qt, geant4, ccdb, evio, cad libraries
+- gemc with the clas12 geometry clas12tags 4.3.2
+- CLARA version 4.3.12
+- Coatjava version 6.5.3
+- The CLAS12 magnetic fields
+- the sqlite file ccdb_2020-04-05.sqlite corresponding to the April 5 mysql-dump of CCDB
+
+|br|
+
+Once the download is complete, it will run the container. It will look like a normal shell:
+
+.. code-block:: text
+
+ > Common Environment Version: <2.3>  (Wed October 3 2018)
+ > Running as root on 18410416dff7
+ > OS Release:    Linux_CentOS7.5.1804-x86_64-gcc4.8.5
+ > JLAB_ROOT set to:     /jlab
+ > JLAB_SOFTWARE set to: /jlab/2.3/Linux_CentOS7.5.1804-x86_64-gcc4.8.5
+
+ > CCDB 	 version:  1.06.02
+ > CLHEP 	 version:  2.4.0.4
+ > GEANT4 	 version:  4.10.04.p02
+ > QT   	 using system installation
+ > XERCESC 	 version:  3.2.2
+ > GEMC 	 custom location:  /jlab/clas12Tags/4.3.2/source
+ > EVIO 	 version:  5.1
+ > MLIBRARY 	 version:  1.3
+ > SCONS 	 version:  1.7
+
+
+|br|
+
+At this point you should be able to run "gemc" and check that you indeed see both the GUI interface and the
+(empty for now) detector screen.
+
+Type `exit` to quit this docker image.
+
+|br|
+
+
+
+
+
+
+|
+
+.. image:: ../next.png
+	:target: 	p2.html
+	:align: right
+

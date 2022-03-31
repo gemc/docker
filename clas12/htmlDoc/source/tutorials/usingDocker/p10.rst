@@ -1,0 +1,40 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+
+=================================
+CLAS12 Docker Tutorial  - *10/10*
+=================================
+
+|br|
+
+Conclusions
+-----------
+
+1. Docker can be used to run generators, gemc, decoder, reconstruction withing CLARA and ced.
+2. All this software is packaged together using tags that work together.
+3. Docker can be used interactively
+4. By mounting your local directories, you can use docker to do actual work
+
+|br|
+
+Feedback
+--------
+
+1. Questions to add to FAQ.
+2. Is something missing or wrong?
+3. What can be improved?
+
+|br|
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p9.html
+	:align: left
+

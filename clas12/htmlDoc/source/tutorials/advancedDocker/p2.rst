@@ -1,0 +1,128 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+=======================
+Advanced Docker - *2/5*
+=======================
+
+
+Use a working directory
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's create a working directory on your computer so that any work can be saved for later use.
+In this tutorial we'll use a "mywork" directory inside your home dir. On your computer type:
+
+.. code-block:: ruby
+
+ mkdir -p ~/mywork
+
+
+Let's download the material for this demo, the clas12tag repository. You do this on your machine (not inside docker).
+
+.. code-block:: ruby
+
+ cd ~/mywork
+ git clone https://github.com/gemc/clas12Tags.git
+
+
+Now let's launch docker and mount this directory inside the jlab work dir. We do this by the **-v** option:
+
+.. code-block:: ruby
+
+ docker run -it --rm  -v ~/mywork:/jlab/work/mywork jeffersonlab/clas12software:production bash
+
+|br|
+
+
+Selecting an experiment
+^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, the docker gemc uses a default data directory inside the container, installed in /jlab/clas12Tags.
+
+We are going change that to use the clas12tags directory you just downloaded. In particular we want to point to the 4.3.1 tag release,
+which is not contained in tag 1.1.
+
+Inside your container let's go to the mounted directory and set the env variable GEMC_DATA_DIR:
+
+.. code-block:: ruby
+
+ export GEMC_DATA_DIR=/jlab/work/mywork/clas12Tags/4.3.1
+
+|br|
+
+Before selecting one experiment let's create a "clasdis" directory inside mywork and run clasdis to get 100 events:
+
+.. code-block:: ruby
+
+ cd /jlab/work/mywork
+ mkdir -p clasdis
+ cd clasdis
+ clasdis --trig 100 --docker --t 10 30
+ ls -lrt
+
+
+|br|
+
+Let's check the available gcards in the new 4.3.1 clas12tags directory:
+
+.. code-block:: ruby
+
+ ls -l /jlab/work/mywork/clas12Tags/gcards/*.gcard
+
+|br|
+
+We're ready to select the RGB winter 2019 configuration (rgb-winter2019.gcard) and use the 100 events we just generated:
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=100 -INPUT_GEN_FILE="lund, sidis.dat"  /jlab/work/mywork/clas12Tags/gcards/rgb-winter2019.gcard
+
+|br|
+
+The above command take up to a minute to load the magnetic field and setup the necessary physics processes.
+You will see many warning messages while creating the tessellated geometry (due to non perfect cad import from engineering model).
+While gemc is running you will notice warnings, mostly related to potential geometry overlap.
+
+
+|br|
+
+To decode this output and prepare to run CLARA using 2 cores (use the createClaraCook.csh second option to change that):
+
+.. code-block:: ruby
+
+ evio2hipo -r 11 -t -1.0 -s -1.0 -i out.ev -o gemc.hipo
+ createClaraCook.csh gemc.hipo 2
+
+Then run reconstruction using clara:
+
+.. code-block:: ruby
+
+ clara-shell cook.clara
+
+|br|
+
+The output file is called **out_gemc.hipo**.
+Since we're running in interactive mode, it contains all the banks (so it's quite big) so we can enjoy the complete information from simulation and reconstruction.
+
+
+Run hipo-utils to check the bank information on the reconstructed file::
+
+ hipo-utils -stats out_gemc.hipo
+
+The CLARA log is created within the log directory, take a look.
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p1.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p3.html
+	:align: right
+
+

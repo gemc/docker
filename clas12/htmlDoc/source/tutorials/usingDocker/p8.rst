@@ -1,0 +1,97 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+================================
+CLAS12 Docker Tutorial  - *8/10*
+================================
+
+Let's run the same generator > gemc > clara chain but with the dvcs generator.
+
+|br|
+
+Let's create a "clasdvcs" directory inside mywork and run clasdis to get 1000 events between 25 and 35 degrees (the dvcsgen option is in radians):
+
+.. code-block:: ruby
+
+ cd /jlab/work/mywork
+ mkdir -p clasdvcs
+ cd clasdvcs
+ dvcsgen --trig 1000 --docker --th 0.44 0.61
+ ls -lrt
+
+You should see the newly LUND file: **dvcs.dat**
+
+|br|
+
+Let's run gemc on 300 of those generated events inside dvcs.dat:
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=300 -INPUT_GEN_FILE="lund, dvcs.dat"  /jlab/work/clas12.gcard
+
+
+|br|
+
+Now let's run the decoder:
+
+.. code-block:: ruby
+
+ evio2hipo -r 11 -t -1.0 -s -1.0 -i out.ev -o gemc.hipo
+
+|br|
+
+Let's run createClaraCook.csh:
+
+.. code-block:: ruby
+
+ createClaraCook.csh gemc.hipo 2
+
+|br|
+
+And now run reconstruction within CLARA:
+
+.. code-block:: ruby
+
+ clara-shell cook.clara
+
+|br|
+
+The output file is called **out_gemc.hipo**.
+
+Run hipo-utils to check the bank information on the reconstructed file::
+
+ hipo-utils -stats out_gemc.hipo
+
+
+|br|
+
+
+Run CED or kpp-plots
+--------------------
+
+To run CED::
+
+ cd /jlab/work/cedbuild/
+ sh ced.sh
+
+To run kpp-plots::
+
+ kpp-plots
+
+In both cases open the hipo file **out_gemc.hipo** in /jlab/work/mywork/clasdvcs/.
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p7.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p9.html
+	:align: right

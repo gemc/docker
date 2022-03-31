@@ -1,0 +1,84 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+==================================
+CLAS12 Workshop April 2020 - *3/6*
+==================================
+
+Avaialable generators
+^^^^^^^^^^^^^^^^^^^^^
+
+
+We're ready to do something inside the container. Run it with the previous command.
+
+Let's check the available generators:
+
+.. code-block:: ruby
+
+ ls -l $CLAS12_BIN/
+
+
+These generators are collected at this page:
+
+
+https://github.com/JeffersonLab/clas12-mcgen
+
+
+Let's run the clasdis generator:
+
+.. code-block:: ruby
+
+ cd /jlab/work/mywork
+ clasdis --trig 100 --docker --t 10 30
+ ls -lrt
+
+You should see the output sidis.dat, ready to be fed into gemc.
+
+|br|
+
+Avaialable gcards
+^^^^^^^^^^^^^^^^^
+
+
+To check the available gcards:
+
+
+.. code-block:: ruby
+
+ ls -l /jlab/clas12Tags/gcards/
+
+The list of avaialable configurations can be found on the clas12tags github page:
+
+https://github.com/gemc/clas12Tags/tree/master/gcards
+
+
+|br|
+
+Run GEMC using the rga fall 2018 configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We're ready to select the RGA fall 2018 configuration (rga-fall2018.gcard) and use the 100 events we just generated:
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=100 -INPUT_GEN_FILE="lund, sidis.dat"  /jlab/clas12Tags/gcards/rga-fall2018.gcard
+
+You will see several "Track stuck or not moving" messages. While these are ugly, and due to a combination
+of bad tessellation of some CAD volumes and some geant4 navigation issues, generally speaking these are just warnings.
+It's important to notice however that the probability of any of these issues becoming serious increases with the
+statistics. That is why it is recommended to run gemc in batches of 10K events each.
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p2.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p4.html
+	:align: right

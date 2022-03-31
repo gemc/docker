@@ -1,0 +1,57 @@
+{#
+magogo/layout.html
+~~~~~~~~~~~~~~~~~
+Adapted from Agogo style
+#}
+{%- extends "basic/layout.html" %}
+
+{% block header %}
+<div class="header-wrapper" role="banner">
+	<div class="header">
+		
+		{%- block headertitle %}
+		<div class="headertitle"> {{_('CLAS12 Simulation Software Distribution') }} </div>
+		{%- endblock %}
+		
+		<div class="rel" role="navigation" aria-label="related navigation">
+			{% block rootrellink %}
+			<a href="{{ pathto('index') }}">       home</a>&nbsp;|
+			<a href="{{ pathto('examples') }}">    usage</a>&nbsp;|
+			<a href="{{ pathto('advanced') }}">    resources</a>&nbsp;
+			{% endblock %}
+		</div>
+
+		<div class="clearer"></div>
+		
+		
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div role="main">
+<div class="content-wrapper">
+	<div class="content">
+		<div class="document">
+			{%- block document %}
+			{{ super() }}
+			{%- endblock %}
+		</div>
+		<div class="clearer"></div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="footer-wrapper">
+	<div class="footer">
+		<div class="center">
+			{{ _('2020 Page Maintained by <a href="mailto: ungaro@jlab.org"> Maurizio Ungaro </a>') }}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}

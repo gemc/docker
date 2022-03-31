@@ -1,0 +1,79 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+==================================
+CLAS12 Workshop April 2020 - *4/6*
+==================================
+
+
+Create a new target using the GEMC api
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's download the clas12 detector sources.
+
+
+.. code-block:: ruby
+
+ git clone http://github.com/gemc/detectors
+
+This will download all the source code of various experiments. For clas12, some detectors use the native GEMC PERL
+API interface, some uses the coatjava geometry service. The latter is not supported in the container at the moment.
+Let's use the native API to produce the target geometry:
+
+.. code-block:: ruby
+
+ cd detectors/clas12/targets/
+ ./targets.pl config.dat
+
+
+
+This will create various target variations. The main player here is the file geometry.pl.
+I know, perl is old. Sorry about that. GEMC does have a python API as well that will be documented shortly.
+
+As an exercise, we'll change the cell amterial from LH2 to vacuum. Edit the file geometry.pl on lines 603:
+
+
+.. code-block:: ruby
+
+
+ nano -c geometry.pl
+
+ 602		$detector{"dimensions"}  = $dimen;
+ 603		$detector{"material"}    = "G4_lH2";
+ 604		if($thisVariation eq "lD2") {
+ 605			$detector{"material"}    = "LD2";
+ 606		}
+
+Change "G4_lH2" to "G4_Galactic".
+
+
+|br|
+
+
+Now re-run the perl script to define the new geometry and run gemc:
+
+.. code-block:: ruby
+
+ ./targets.pl config.dat
+ gemc target.gcard
+
+
+Use the camera button and slice X to show a nice cutview of the target.
+Use the detector tree button to double check that the material is indeed G4_Galactic.
+
+|br|
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p3.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p5.html
+	:align: right

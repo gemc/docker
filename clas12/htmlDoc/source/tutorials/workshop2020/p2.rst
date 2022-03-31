@@ -1,0 +1,108 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+==================================
+CLAS12 Workshop April 2020 - *2/6*
+==================================
+
+
+
+Use a working directory
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's create a working directory on your computer so that any work can be saved for later use.
+In this tutorial we'll use a "mywork" directory inside your home dir. On your computer type:
+
+.. code-block:: ruby
+
+ mkdir -p ~/mywork
+
+Now let's launch docker and mount this directory inside the jlab work dir. We do this by the **-v** option:
+
+.. code-block:: ruby
+
+ docker run -it --rm  -v ~/mywork:/jlab/work/mywork jeffersonlab/clas12tags:4.3.2 bash
+
+|br|
+
+
+
+Run the container interactively (MAC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First, open the XQuartz app and go to preferences and activate the option ‘Allow connections from network clients’ in XQuartz settings.
+This will allow XQuartz to receive display messages from network clients, such as docker.
+
+Second, from any terminal:
+
+.. code-block:: ruby
+
+ defaults write org.macosforge.xquartz.X11 enable_iglx -bool true
+
+This will be useful when running gemc: it will allow OPENGL to use your graphic card.
+
+|br|
+
+Restart XQuartz to activate these changes.
+
+|br|
+
+Finally, add your localhost to the list of accepted X11 connections:
+
+.. code-block:: ruby
+
+ xhost +127.0.0.1
+
+You should be able now to run docker and use the native X server to open windows application. For example:
+
+.. code-block:: ruby
+
+ docker run -it --rm -v ~/mywork:/jlab/work/mywork -e DISPLAY=docker.for.mac.localhost:0 jeffersonlab/clas12tags:4.3.2 bash
+
+That's a loooooong command isn't it? Good thing you can copy and paste it.
+
+|br|
+
+
+Run the container interactively (Linux)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add your localhost to the list of accepted X11 connections:
+
+.. code-block:: ruby
+
+ xhost +127.0.0.1
+
+Export the env variable DISPLAY:
+
+.. code-block:: ruby
+
+ export DISPLAY=:0
+
+Run the command using your local x11 tmp dir:
+
+.. code-block:: ruby
+
+ docker run -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/mywork:/jlab/work/mywork -e DISPLAY=$DISPLAY  jeffersonlab/clas12tags:4.3.2 /bin/bash
+
+|br|
+
+
+Please copy this long line somewhere: it's the docker command we'll be using from now on.
+
+|br|
+
+|
+
+.. image:: ../previous.png
+	:target: 	p1.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p3.html
+	:align: right
+
+

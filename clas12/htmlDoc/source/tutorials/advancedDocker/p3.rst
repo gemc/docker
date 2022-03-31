@@ -1,0 +1,118 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+=======================
+Advanced Docker - *3/5*
+=======================
+
+
+Let's now create a new gcard that is a copy of the RGA spring 2019 but has the following changes:
+
+- the target is empty
+- the FT configuration changes from ON to OFF
+- the FMT is removed
+
+
+While still inside mywork/clasdis, let's copy the rga-winter2019.gcard to a my.gcard:
+
+.. code-block:: ruby
+
+ cp /jlab/work/mywork/clas12Tags/gcards/rga-winter2019.gcard my.gcard
+
+|br|
+
+Changing the target
+^^^^^^^^^^^^^^^^^^^
+
+First, let's change the target to empty in "my.gcard". We can achieve this by adding this line just under the target directives:
+
+.. code-block:: ruby
+
+ <option name="SWITCH_MATERIALTO" value="G4_lH2, G4_Galactic"/>
+
+This is the current way of changing the target cell material to vacuum.
+Note that if we want to change the target cell to LD2, can can use variations instead:
+
+.. code-block:: ruby
+
+ <detector name="experiments/clas12/targets/target" factory="TEXT" variation="lD2"/>
+
+|br|
+
+What other targets are available?
+
+- Starting with 4.3.0 the polarized target, with elements imported from cad, is available,
+- Starting with 4.3.1 the solid targets, with elements imported from cad, are available with these variations:  "12C", "63Cu", "118Sn", "208Pb", "27Al".
+
+Details instructions on how to switch targets will be on the `clas12tags <https://github.com/gemc/clas12Tags>`_ page.
+
+
+|br|
+
+Changing beamline configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Change the following lines in "my.gcard"
+
+
+.. code-block:: ruby
+
+ <detector name="ft" factory="TEXT" variation="FTOn"/>
+ <detector name="beamline" factory="TEXT" variation="FTOn"/>
+ <detector name="cadBeamline/" factory="CAD"/>
+
+to:
+
+
+.. code-block:: ruby
+
+ <detector name="ft" factory="TEXT" variation="FTOff"/>
+ <detector name="beamline" factory="TEXT" variation="FTOff"/>
+ <detector name="cadBeamlineFTOFF/" factory="CAD"/>
+
+|br|
+
+Removing the FMT
+^^^^^^^^^^^^^^^^
+
+To remove the Forward Micromegas Tracker we can remove its geant4 mother volume, called "FMT" by adding these lines in "my.gcard"
+
+.. code-block:: ruby
+
+ <detector name="FMT">
+   <existence exist="no" />
+ </detector>
+
+|br|
+
+
+Run my.gcard
+^^^^^^^^^^^^
+
+
+We can run the same 100 clasdis events through my.gcard. I do suggest to change the output filename:
+
+.. code-block:: ruby
+
+ <option name="OUTPUT"   value="evio, myout.ev"/>
+
+To run gemc using the same generated events:
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=100 -INPUT_GEN_FILE="lund, sidis.dat"  my.gcard
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p2.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p4.html
+	:align: right

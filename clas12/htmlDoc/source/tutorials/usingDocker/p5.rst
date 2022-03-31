@@ -1,0 +1,82 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+================================
+CLAS12 Docker Tutorial  - *5/10*
+================================
+
+
+Running the decoder
+-------------------
+
+The evio file needs to be decoded and saved into hipo format in order to be used by reconstruction. This is easy to do:
+
+.. code-block:: ruby
+
+ evio2hipo -r 11 -t -1.0 -s -1.0 -i out.ev -o gemc.hipo
+
+|br|
+
+
+Here, you can see we're giving the options:
+
+- run number 11
+- torus and solenoid scales of -1
+- input file name: out.ev (the output of gemc)
+- output file name: gemc.hipo
+
+
+
+Running CLARA
+-------------
+
+The utility script **createClaraCook.csh** is provided to create a **cook.clara** configuration file to run reconstruction within the CLARA framework::
+
+ Usage:
+ >> createClaraCook <inputfilename> <nthreads>
+
+- inputfilename is what we just created: gemc.hipo
+- nthreads is how many threads you want to run CLARA on. Most modern computer have at least two cores so let's use 2. If you know you have more, use that number
+
+Let's run createClaraCook.csh like this:
+
+.. code-block:: ruby
+
+ createClaraCook.csh gemc.hipo 2
+
+|br|
+
+We're ready to run CLARA and the CLAS12 reconstruction code (aka COATJAVA):
+
+.. code-block:: ruby
+
+ clara-shell cook.clara
+
+|br|
+
+The output file is called **out_gemc.hipo**.
+Since we're running in interactive mode, it contains all the banks (so it's quite big) so we can enjoy the complete information from simulation and reconstruction.
+
+
+Run hipo-utils to check the bank information on the reconstructed file::
+
+ hipo-utils -stats out_gemc.hipo
+
+
+The CLARA log is created within the log directory, take a look.
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p4.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p6.html
+	:align: right

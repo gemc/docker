@@ -1,0 +1,63 @@
+:orphan:
+
+.. |br| raw:: html
+
+   <br>
+
+================================
+CLAS12 Docker Tutorial  - *3/10*
+================================
+
+
+Use a working directory
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The docker image will always start with the "pristine" image. In other words every work the the container filesystem will be lost when you exit from a docker container.
+
+Let's create a working directory on your computer so that any work can be saved for later use.
+In this tutorial we'll use a "mywork" directory inside your home dir. On your computer type:
+
+.. code-block:: ruby
+
+ mkdir -p ~/mywork
+
+Let's launch docker and mount this directory inside the jlab work dir. We do this by the **-v** option:
+
+.. code-block:: ruby
+
+ docker run -it --rm  -v ~/mywork:/jlab/work/mywork jeffersonlab/clas12software:production bash
+
+Now /jlab/work/mywork will point to your mywork homedir. Inside docker, try this:
+
+.. code-block:: ruby
+
+ echo Hello World > /jlab/work/mywork/hello.txt
+ exit
+
+Check it out on your local computer:
+
+.. code-block:: ruby
+
+ cat ~/mywork/hello.txt
+
+Congratulations: you are now able to access a local directory inside docker.
+
+|br|
+
+Throughout this tutorial we'll use ~/mywork to store data files.
+
+
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p2.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p4.html
+	:align: right
+
+

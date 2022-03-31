@@ -1,0 +1,117 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+================================
+CLAS12 Docker Tutorial  - *9/10*
+================================
+
+
+
+Let's do something a bit more advanced now:
+
+1. let's run the inclusive dis generator with radiative correction **generate-dis**
+2. let's switch the torus polarity to **positive** and run it at 50% strength.
+3. let's add a 3 nA beam current using the geant4 beam to the generated events
+4. let's remove the magnets passive materials and the beamline for fun.
+
+|br|
+
+We can do all this by modifying the gcard. First, let's create a new dir and copy the first experiment clas12.gcard there
+
+
+
+.. code-block:: ruby
+
+ cd /jlab/work/mywork
+ mkdir -p disrad
+ cd disrad
+ cp /jlab/work/clas12.gcard ./ptb.gcard
+
+
+Now edit the ptb.gcard with xemacs::
+
+ xemacs ptb.gcard
+
+1. remove these lines::
+
+   <!-- magnets -->
+   <detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+   <detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
+
+   <detector name="experiments/clas12/beamline/beamline"     factory="TEXT" variation="FTOn"/>
+
+2. switch torus polarity (-1 becomes 0.5)
+
+	<option name="SCALE_FIELD" value="TorusSymmetric, 0.5"/>
+
+3. at the bottom of the gcard uncomment the LUMI directives by removing the lines with ``<!--`` and ``<!--`` around them
+
+4. change the number of electrons / event from 124000 to 4960. This is equivalent of reducing the current from ~75nA to 3nA (factor of 25)
+
+
+|br|
+
+We're ready to run. Let's generate those radiated dis events (saved by default in **dis-rad.dat**) and run gemc with the new gcard:
+
+
+.. code-block:: ruby
+
+ generate-dis  --trig 1000 --docker --t 25 35
+ gemc -USE_GUI=0 -N=200 -INPUT_GEN_FILE="lund, dis-rad.dat"  ptb.gcard
+
+
+Now let's run the decoder:
+
+.. code-block:: ruby
+
+ evio2hipo -r 11 -t 0.5 -s -1.0 -i out.ev -o gemc.hipo
+
+|br|
+
+Let's run createClaraCook.csh:
+
+.. code-block:: ruby
+
+ createClaraCook.csh gemc.hipo 2
+
+|br|
+
+And now run reconstruction within CLARA:
+
+.. code-block:: ruby
+
+ clara-shell cook.clara
+
+|br|
+
+Run CED or kpp-plots
+--------------------
+
+To run CED::
+
+ cd /jlab/work/cedbuild/
+ sh ced.sh
+
+To run kpp-plots::
+
+ kpp-plots
+
+In both cases open the hipo file **out_gemc.hipo** in /jlab/work/mywork/disrad/.
+
+
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p8.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p10.html
+	:align: right

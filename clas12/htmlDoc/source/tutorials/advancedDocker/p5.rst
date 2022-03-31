@@ -1,0 +1,52 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+=======================
+Advanced Docker - *5/5*
+=======================
+
+
+As the final step in this tutorial, let's use the docker libraries to compile a custom version of gemc.
+
+Create a mygemc directory inside mywork and clone the gemc source code repository:
+
+.. code-block:: ruby
+
+
+ cd /jlab/work/mywork
+ git clone https://github.com/gemc/source.git mygemc
+ cd mygemc
+
+
+|br|
+
+Let's modify gemc.cc so the version used will be "99.99". You can compile gemc by typing:
+
+.. code-block:: ruby
+
+ scons -j4 OPT=1
+
+
+The -j4 means that you will use 4 cores to speed up the compilation. If you have more cores you should increase this number.
+
+|br|
+
+To verify that your changes have been implememted run the "./gemc" executable, you should see your version in the screen log.
+
+.. code-block:: ruby
+
+ ./gemc -USE_GUI=0
+
+
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p4.html
+	:align: left
+

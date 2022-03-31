@@ -1,0 +1,80 @@
+:orphan:
+
+
+.. |br| raw:: html
+
+   <br>
+
+=======================
+Advanced Docker - *4/5*
+=======================
+
+
+
+In this part of the tutorial we will make a copy of the target geometry and use this custom target with the rest of the CLAS12 detector.
+
+Just for demo purposes, let's exit docker and do this outside of it.
+
+Let's go to the work directory and create a new myTarget directory. Notice the work we're done so far is all saved.
+
+.. code-block:: ruby
+
+ exit
+
+ cd ~/mywork
+ ls -l
+ ls -l clasdis
+
+ mkdir myTarget
+ cp clas12Tags/4.3.1/experiments/clas12/targets/target__geometry_lH2.txt myTarget/target__geometry_mine.txt
+ cd myTarget
+
+Notice that we also change the variation of the geometry from "lH2" to "mine". The target cell is named  a polycone, a volume with cylindrical symmetry.
+By changing the second parameter we can limit the symmetry to 180 degrees instead of 360 degrees.
+
+|br|
+
+Let's now use the "mine" variation of the geometry. Let's run docker again and go back to the clasdis directory:
+
+.. code-block:: ruby
+
+ docker run -it --rm  -v ~/mywork:/jlab/work/mywork jeffersonlab/clas12software:production bash
+ cd mywork/clasdis/
+
+To use "mine" we need to specify the full path to the geometry. Change the line:
+
+.. code-block:: ruby
+
+ <detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+
+to:
+
+
+.. code-block:: ruby
+
+ <detector name="/jlab/work/mywork/myTarget/target" factory="TEXT" variation="mine"/>
+
+
+Remember to use the right experiment directory:
+
+.. code-block:: ruby
+
+ export GEMC_DATA_DIR=/jlab/work/mywork/clas12Tags/4.3.1
+
+
+When you run gemc, notice that the target is loaded from your custom version of the geometry.
+
+.. code-block:: ruby
+
+ gemc -USE_GUI=0 -N=100 -INPUT_GEN_FILE="lund, sidis.dat"  my.gcard
+
+
+|
+
+.. image:: ../previous.png
+	:target: 	p3.html
+	:align: left
+
+.. image:: ../next.png
+	:target: 	p5.html
+	:align: right
