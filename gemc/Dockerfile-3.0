@@ -1,10 +1,10 @@
 #
-# gemc docker 3.0 (jlab 2.5) libraries image
+# gemc docker 3.0 libraries image
 # --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker pull jeffersonlab/jlabce:2.5
+#  docker pull jeffersonlab/jlabce:2.5g3
 #  docker build --progress=plain            -f Dockerfile-3.0 -t gemc:3.0 .
 #  docker build --progress=plain --no-cache -f Dockerfile-3.0 -t gemc:3.0 .
 #
@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/jlabce:2.5mt
+FROM jeffersonlab/jlabce:2.5g3
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
@@ -30,21 +30,17 @@ ENV JLAB_VERSION 2.5
 
 WORKDIR $JLAB_ROOT
 
-RUN cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source /root/jlab-g3.sh \
 	&& ./go_glibrary src  \
 	&& ./go_glibrary cadmesh \
 	&& ./go_glibrary make \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
 
-# remove API tag needed for
-RUN  cd $JLAB_ROOT/$JLAB_VERSION \
- 	&& ./go_reload $JLAB_VERSION \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
- 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+# remove API tag
+RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source /root/jlab-g3.sh \
 	&& ./go_gemc 3.0 \
 	&& ln -s /usr/bin/python3 /usr/bin/python \
 	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5

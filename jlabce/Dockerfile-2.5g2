@@ -1,24 +1,24 @@
 #
-# jlabce docker 2.5 libraries image
+# jlabce docker 2.5g2 libraries image
 # --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
 #  docker pull jeffersonlab/base:centos8
-#  docker build --progress=plain            -f Dockerfile-2.5 -t jlabce:2.5 .
-#  docker build --progress=plain --no-cache -f Dockerfile-2.5 -t jlabce:2.5 .
+#  docker build --progress=plain            -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
 #
-#  docker tag jlabce:2.5 jeffersonlab/jlabce:2.5
+#  docker tag jlabce:2.5g2 jeffersonlab/jlabce:2.5g2
 #
-#  docker push jeffersonlab/jlabce:2.5
+#  docker push jeffersonlab/jlabce:2.5g2
 #
 # --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5g2 bash
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5g2 bash
 #
 # --------------------------------------------------------------------------
 
@@ -35,7 +35,6 @@ RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
 
-# copy the source line to RUN directives below if needed
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
@@ -52,6 +51,7 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 
 # geant4
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source /root/jlab-g2.sh \
 	&& ./go_geant4  \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
@@ -63,6 +63,7 @@ RUN yum install -y lz4-devel \
 
 # scons evio hipo and ccdb
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source /root/jlab-g2.sh \
 	&& ./go_sconsscript \
 	&& ./go_evio \
 	&& ./go_hipo \
@@ -76,6 +77,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 
 # root
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source /root/jlab-g2.sh \
 	&& ./go_root src \
 	&& ./go_root make \
 	&& rm -rf $JLAB_SOFTWARE/root/root-*-build

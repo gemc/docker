@@ -35,12 +35,11 @@ RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
 
-# copy the source line to RUN directives below if needed
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
-	&& source /root/jlab-g3.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source /root/jlab-g3.sh \
 	&& ./go_clhep \
 	&& ./go_xercesc \
 	&& ./go_qt system \
@@ -52,6 +51,7 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 
 # geant4
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source /root/jlab-g3.sh \
 	&& ./go_geant4  \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
@@ -63,12 +63,14 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 
 # scons and ccdb
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source /root/jlab-g3.sh \
 	&& ./go_sconsscript \
 	&& ./go_ccdb \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+
 
 
 
