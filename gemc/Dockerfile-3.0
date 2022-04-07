@@ -40,18 +40,14 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
 
+# remove API tag needed for
 RUN  cd $JLAB_ROOT/$JLAB_VERSION \
  	&& ./go_reload $JLAB_VERSION \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_gemc 3.0 \
-	&& ln -s /usr/bin/python3 /usr/bin/python
-
-
-
-
-
-
+	&& ln -s /usr/bin/python3 /usr/bin/python \
+	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
 
 
 WORKDIR $JLAB_ROOT
