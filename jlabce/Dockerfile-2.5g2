@@ -67,7 +67,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& ./go_sconsscript \
 	&& ./go_evio \
 	&& ./go_hipo \
-	&& ./go_ccdb \
+	&& ./go_ccdb  \
 	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
 	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \

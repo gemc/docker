@@ -25,7 +25,7 @@ env -i tcsh ${TCSH_ARG} -c "
     setenv PATH ${PATH} ;
     setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH} ;
     setenv DYLD_LIBRARY_PATH ${DYLD_LIBRARY_PATH} ;
-    source /root/jlab-g2.csh $1 ;
+    source /root/jlab-g3.csh $1 ;
     printenv" | perl -e '
   my %IGNORE;
   ## Add variables to ignore to the space-delimited list below

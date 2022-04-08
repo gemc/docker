@@ -5,7 +5,7 @@
 
 ### base
 
-Centos8 or Fedora34 images with rpm packages installed
+Centos8 or Fedora35 images with rpm packages installed
 
 [jeffersonlab/base](https://hub.docker.com/repository/docker/jeffersonlab/base)
 
@@ -13,14 +13,14 @@ Centos8 or Fedora34 images with rpm packages installed
 
 ### jlabce
 
-- 2.5s: Based on centos8, use geant4 compiled in single thread mode. Includes:
+- 2.5g2: Based on centos8. Includes geant4 and libraries needed for gemc2:
 
   - evio
   - ccdb
   - hipo
   - cadmesh
    
-- 2.5: Based on Fedora34, use geant4 compiled in multi-thread mode. Includes:
+- 2.5g3: Based on Fedora35. Includes geant4 and libraries needed for gemc3:
 
   - ccdb
   - cadmesh
@@ -31,8 +31,8 @@ Centos8 or Fedora34 images with rpm packages installed
 
 ### gemc
 
-- 2.9: based on jabce:2.5s
-- 3.0: based on jabce:2.5
+- 2.9: based on jabce:2.5g2
+- 3.0: based on jabce:2.5g3
 
 [jeffersonlab/gemc](https://hub.docker.com/repository/docker/jeffersonlab/gemc)
 

@@ -1,0 +1,46 @@
+#
+# gemc docker clas12 system for 3.0 libraries image
+# --------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker pull jeffersonlab/gemc:3.0
+#  docker build --progress=plain            -f Dockerfile-3.0-clas12 -t gemc:3.0-clas12 .
+#  docker build --progress=plain --no-cache -f Dockerfile-3.0-clas12 -t gemc:3.0-clas12 .
+#
+#  docker tag gemc:3.0-clas12 jeffersonlab/gemc:3.0-clas12
+#
+#  docker push jeffersonlab/gemc:3.0-clas12
+#
+# --------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:3.0 bash
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:3.0 bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc:3.0
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV JLAB_ROOT /jlab
+ENV JLAB_VERSION 2.5
+ENV CLAS12TAG 5.0
+
+WORKDIR $JLAB_ROOT
+
+# Checking out clas12Tags and compiling CLAS12TAG
+# Removing un-used tags and .git stuff
+RUN rm -rf clas12Tags \
+   && git clone https://github.com/gemc/clas12Tags.git \
+	&& cd $JLAB_ROOT/clas12Tags \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& rm -rf $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE/gemc \
+	&& ./goInstall $CLAS12TAG \
+	# delete unecessary files
+	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards` 
+
+WORKDIR $JLAB_ROOT
+CMD bash /container/utilities/xstart.sh && sleep infinity

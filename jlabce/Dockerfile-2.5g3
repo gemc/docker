@@ -4,7 +4,7 @@
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker pull jeffersonlab/base:fedora34
+#  docker pull jeffersonlab/base:fedora35
 #  docker build --progress=plain            -f Dockerfile-2.5g3 -t jlabce:2.5g3 .
 #  docker build --progress=plain --no-cache -f Dockerfile-2.5g3 -t jlabce:2.5g3 .
 #
@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/base:fedora34
+FROM jeffersonlab/base:fedora35
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 COPY jlab-g3.csh /root/
@@ -83,5 +83,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 
 
 # linking scripts and clean up
-RUN   ln -s /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
-	&& ln -s /root/jlab-g2.csh /etc/profile.d/jlab.csh
+RUN   cp /root/jlab-g3.sh  /etc/profile.d/jlab.sh \
+	&& cp /root/jlab-g3.csh /etc/profile.d/jlab.csh \
+	&& cp /root/jlab-g3.sh  $JLAB_ROOT/$JLAB_VERSION/jlab.sh \
+	&& cp /root/jlab-g3.csh $JLAB_ROOT/$JLAB_VERSION/jlab.csh
