@@ -83,5 +83,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& rm -rf $JLAB_SOFTWARE/root/root-*-build
 
 # linking scripts and clean up
-RUN   ln -s /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
-	&& ln -s /root/jlab-g2.csh /etc/profile.d/jlab.csh
+RUN   cp /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
+	&& cp /root/jlab-g2.csh /etc/profile.d/jlab.csh \
+	&& cp /root/jlab-g2.sh  $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cp /root/jlab-g2.csh $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
