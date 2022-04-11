@@ -31,6 +31,17 @@ ENV CLAS12TAG 5.0
 
 WORKDIR $JLAB_ROOT
 
+# ccdb for clas12 digitization
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source /root/jlab-g3.sh \
+	&& ./go_ccdb \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+
+
+
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
 RUN rm -rf clas12Tags \

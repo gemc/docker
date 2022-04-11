@@ -61,15 +61,10 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 
 
 
-# scons and ccdb
+# scons.  ccdb should not be there but in 3.0-clas1
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source /root/jlab-g3.sh \
 	&& ./go_sconsscript \
-	&& ./go_ccdb \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
 
 
@@ -82,8 +77,13 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 
 
 
-# linking scripts and clean up
-RUN   cp /root/jlab-g3.sh  /etc/profile.d/jlab.sh \
+
+
+
+
+
+# copy jlab-g3 onto /etc and replacing the version coming with ceInstall
+RUN    cp /root/jlab-g3.sh  /etc/profile.d/jlab.sh \
 	&& cp /root/jlab-g3.csh /etc/profile.d/jlab.csh \
 	&& cp /root/jlab-g3.sh  $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cp /root/jlab-g3.csh $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
