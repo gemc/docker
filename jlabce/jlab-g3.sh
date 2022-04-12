@@ -13,7 +13,7 @@
 #   - rework of script by Maurik Holtop
 
 # set JLAB_VERSION to the wanted tag if it's not set yet
-: ${JLAB_VERSION=2.6}
+: ${JLAB_VERSION=2.5}
 
 TMPF=`mktemp`
 env -i tcsh ${TCSH_ARG} -c "
@@ -25,7 +25,7 @@ env -i tcsh ${TCSH_ARG} -c "
     setenv PATH ${PATH} ;
     setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH} ;
     setenv DYLD_LIBRARY_PATH ${DYLD_LIBRARY_PATH} ;
-    source /root/jlab-g3.csh $1 ;
+    source ${JLAB_ROOT}/${JLAB_VERSION}/ce/jlab.csh $1 ;
     printenv" | perl -e '
   my %IGNORE;
   ## Add variables to ignore to the space-delimited list below

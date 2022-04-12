@@ -80,10 +80,11 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source /root/jlab-g2.sh \
 	&& ./go_root src \
 	&& ./go_root make \
-	&& rm -rf $JLAB_SOFTWARE/root/root-*-build
+	&& rm -rf $JLAB_SOFTWARE/root/root-* \
+	&& rm -rf $JLAB_SOFTWARE/root/*gz
 
 # copy jlab-g2 onto /etc and replacing the version coming with ceInstall
-RUN    cp /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
+RUN   cp /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
 	&& cp /root/jlab-g2.csh /etc/profile.d/jlab.csh \
 	&& cp /root/jlab-g2.sh  $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cp /root/jlab-g2.csh $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh

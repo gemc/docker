@@ -83,7 +83,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 
 
 # copy jlab-g3 onto /etc and replacing the version coming with ceInstall
-RUN    cp /root/jlab-g3.sh  /etc/profile.d/jlab.sh \
+RUN   cp /root/jlab-g3.sh  /etc/profile.d/jlab.sh \
 	&& cp /root/jlab-g3.csh /etc/profile.d/jlab.csh \
 	&& cp /root/jlab-g3.sh  $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cp /root/jlab-g3.csh $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
