@@ -17,7 +17,7 @@ set CE_DATE = "(Wed Feb 9 2022)"
 setenv PATH $JLAB_ROOT/$JLAB_VERSION/ce:$PATH
 
 # Software packages
-set packages = (clhep xercesc qt geant4 scons ccdb glibrary gemc root)
+set packages = (clhep xercesc qt geant4 scons glibrary gemc root)
 if ( -f ~/.jlab_software) then
 	set packages = `cat ~/.jlab_software`
 endif

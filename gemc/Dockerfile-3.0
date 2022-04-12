@@ -31,7 +31,7 @@ ENV JLAB_VERSION 2.5
 WORKDIR $JLAB_ROOT
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g3.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_glibrary src  \
 	&& ./go_glibrary cadmesh \
 	&& ./go_glibrary make \
@@ -40,7 +40,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 
 # remove API tag
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g3.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_gemc 3.0 \
 	&& ln -s /usr/bin/python3 /usr/bin/python \
 	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5

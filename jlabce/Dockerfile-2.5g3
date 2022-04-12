@@ -26,7 +26,7 @@ FROM jeffersonlab/base:fedora35
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 # stashing jlab-g2.csh onto /root
-COPY jlab-g2.csh /root/jlab.csh
+COPY jlab-g3.csh /root/jlab.csh
 
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.5

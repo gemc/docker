@@ -33,13 +33,13 @@ ENV JLAB_VERSION 2.5
 WORKDIR $JLAB_ROOT
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_mlibrary \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*.gz \
 	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh*
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_gemc src \
 	&& ./go_gemc make \
 	&& rm -rf $JLAB_SOFTWARE/gemc/*.gz
