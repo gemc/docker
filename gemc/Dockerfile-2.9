@@ -45,7 +45,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/gemc/*.gz
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_banks
 
 WORKDIR $JLAB_ROOT
