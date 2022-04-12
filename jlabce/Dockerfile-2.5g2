@@ -25,8 +25,8 @@
 FROM jeffersonlab/base:centos8
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-COPY jlab-g2.csh /root/
-COPY jlab-g2.sh /root/
+# stashing jlab-g2.csh onto /root
+COPY jlab-g2.csh /root/jlab.csh
 
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.5
@@ -38,20 +38,22 @@ WORKDIR $JLAB_ROOT
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
-	&& source /root/jlab-g2.sh \
+	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp /root/jlab.csh /etc/profile.d/jlab.csh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
 	&& ./go_xercesc \
-	&& ./go_qt system \
 	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
-	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share \
+	&& ./go_qt system 
 
 
 # geant4
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_geant4  \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
@@ -63,7 +65,7 @@ RUN yum install -y lz4-devel \
 
 # scons evio hipo and ccdb
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_sconsscript \
 	&& ./go_evio \
 	&& ./go_hipo \
@@ -77,14 +79,9 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 
 # root
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& source /root/jlab-g2.sh \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_root src \
 	&& ./go_root make \
 	&& rm -rf $JLAB_SOFTWARE/root/root-* \
 	&& rm -rf $JLAB_SOFTWARE/root/*gz
 
-# copy jlab-g2 onto /etc and replacing the version coming with ceInstall
-RUN   cp /root/jlab-g2.sh  /etc/profile.d/jlab.sh \
-	&& cp /root/jlab-g2.csh /etc/profile.d/jlab.csh \
-	&& cp /root/jlab-g2.sh  $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& cp /root/jlab-g2.csh $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
