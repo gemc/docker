@@ -60,6 +60,7 @@ echo " > OS Release:    "$OSRELEASE
 echo " > JLAB_ROOT set to:     "$green$JLAB_ROOT$reset
 
 source $JLAB_ROOT/$JLAB_VERSION/ce/versions.env
+set DEFAULT_GEMC_VERSION = 3.0
 if( -d $JLAB_SOFTWARE) then
 	echo " > JLAB_SOFTWARE set to: "$green$JLAB_SOFTWARE$reset
 else
