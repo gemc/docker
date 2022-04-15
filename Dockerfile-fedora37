@@ -1,27 +1,27 @@
 #
-# docker fedora35 base image
+# docker fedora37 base image
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain            -f Dockerfile-fedora35 -t base:fedora35 .
-#  docker build --progress=plain --no-cache -f Dockerfile-fedora35 -t base:fedora35 .
+#  docker build --progress=plain            -f Dockerfile-fedora37 -t base:fedora37 .
+#  docker build --progress=plain --no-cache -f Dockerfile-fedora37 -t base:fedora37 .
 #
-#  docker tag base:fedora35 jeffersonlab/base:fedora35
+#  docker tag base:fedora37 jeffersonlab/base:fedora37
 #
-#  docker push jeffersonlab/base:fedora35
+#  docker push jeffersonlab/base:fedora37
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm base:fedora35 bash
+#  docker run -it --rm base:fedora37 bash
 #
-#  docker run -it --rm jeffersonlab/base:fedora35 bash
+#  docker run -it --rm jeffersonlab/base:fedora37 bash
 #
 #--------------------------------------------------------------------------
 
-FROM fedora:35
+FROM fedora:37
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 RUN   yum -y update \
