@@ -25,6 +25,9 @@
 FROM jeffersonlab/gemc:3.0
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
+# stashing jlab-g3-clas12.csh onto /root
+COPY jlab-g3-clas12.csh /root/jlab.csh
+
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.5
 ENV CLAS12TAG 5.0
@@ -33,7 +36,9 @@ WORKDIR $JLAB_ROOT
 
 # ccdb for clas12 digitization
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& source /root/jlab-g3.sh \
+	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_ccdb \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
@@ -41,16 +46,12 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
 
-
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
 RUN rm -rf clas12Tags \
    && git clone https://github.com/gemc/clas12Tags.git \
-	&& cd $JLAB_ROOT/clas12Tags \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& rm -rf $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE/gemc \
-	&& ./goInstall $CLAS12TAG \
-	# delete unecessary files
+	&& cd clas12Tags \
+	# delete everything but $CLAS12TAG
 	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards` 
 
 WORKDIR $JLAB_ROOT
