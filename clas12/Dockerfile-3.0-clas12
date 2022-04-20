@@ -54,5 +54,11 @@ RUN rm -rf clas12Tags \
 	# delete everything but $CLAS12TAG
 	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards` 
 
+
+# Running update.sh to install coatjava
+RUN cd $JLAB_SOFTWARE \
+	&& git clone https://github.com/gemc/sci-g \
+
+
 WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity

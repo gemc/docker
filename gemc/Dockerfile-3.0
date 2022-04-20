@@ -41,7 +41,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 # remove API tag
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& ./go_gemc 3.0 \
+	&& ./go_gemc 3.0 
 
 
 WORKDIR $JLAB_ROOT
