@@ -34,6 +34,18 @@ ENV CLAS12TAG 5.0
 
 WORKDIR $JLAB_ROOT
 
+RUN yum install -y \
+	zsh \
+	java-11-openjdk-devel \
+	&& yum clean packages \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum
+
+# Groovy installation
+RUN curl -s get.sdkman.io | bash \
+	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
+	&& sdk install groovy
+
 # ccdb for clas12 digitization
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
@@ -52,12 +64,18 @@ RUN rm -rf clas12Tags \
    && git clone https://github.com/gemc/clas12Tags.git \
 	&& cd clas12Tags \
 	# delete everything but $CLAS12TAG
-	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards` 
+	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards`
+
 
 
 # Running update.sh to install coatjava
-RUN cd $JLAB_SOFTWARE \
-	&& git clone https://github.com/gemc/sci-g \
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& mkdir $JLAB_SOFTWARE/clas12-systems \
+	&& cd  $JLAB_SOFTWARE/clas12-systems \
+	&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
+	&& cd $G3CLAS12_VERSION \
+	&& ./update.sh
+
 
 
 WORKDIR $JLAB_ROOT

@@ -59,6 +59,7 @@ RUN yum install -y \
 	git \
 	which \
 	tcsh \
+	zsh \
 	psmisc \
 	procps \
 	hostname \
