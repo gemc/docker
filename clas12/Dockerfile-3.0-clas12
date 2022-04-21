@@ -35,13 +35,14 @@ ENV CLAS12TAG 5.0
 WORKDIR $JLAB_ROOT
 
 RUN yum install -y \
-	zsh \
 	java-11-openjdk-devel \
 	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum
 
 # Groovy installation
+# Warning: this does not work at JLAB due to certificate problems
+# Adding --insecure did not work
 RUN curl -s get.sdkman.io | bash \
 	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
 	&& sdk install groovy
