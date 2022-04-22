@@ -38,7 +38,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
 
-# remove API tag
+# install gemc
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_gemc 3.0 
