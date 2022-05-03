@@ -70,12 +70,16 @@ RUN rm -rf clas12Tags \
 
 
 # Running update.sh to install coatjava
+# Install clas12 geo/plugins to clas12-systems/systemsTxtDB (done by installCLAS12.sh)
+# Install streamer plugins to clas12-systems/systemsTxtDB (GPLUGIN_PATH)
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& mkdir $JLAB_SOFTWARE/clas12-systems \
 	&& cd  $JLAB_SOFTWARE/clas12-systems \
 	&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
 	&& cd $G3CLAS12_VERSION \
-	&& ./update.sh
+	&& ./update.sh \
+	&& ./installCLAS12.sh \
+	&& cp $GEMC/gstreamer* $GPLUGIN_PATH
 
 
 

@@ -77,7 +77,7 @@ foreach p ($packages)
 end
 
 # GPLUGIN_PATH to $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION
-setenv GPLUGIN_PATH $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION
+setenv GPLUGIN_PATH $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION/systemsTxtDB
 
 # for powerpcs: LIBPATH
 if ( $?LIBPATH ) then
