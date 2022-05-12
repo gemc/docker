@@ -77,7 +77,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd  $JLAB_SOFTWARE/clas12-systems \
 	&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
 	&& cd $G3CLAS12_VERSION \
-	&& ./update.sh \
+	&& ./installClas12Coatjava.sh \
 	&& ./installCLAS12.sh \
 	&& cp $GEMC/gstreamer* $GPLUGIN_PATH
 
