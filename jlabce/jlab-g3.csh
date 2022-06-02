@@ -39,14 +39,7 @@ if( ! $?PYTHONPATH) then
 endif
 
 # Looking for custom defined OSRELEASE
-set DEFAULT_OSRELEASE = `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
-if($?OSRELEASE) then
-	if($OSRELEASE != $DEFAULT_OSRELEASE) then
-		echo " >> User defined OSRELEASE set to:"  $OSRELEASE
-	endif
-	else
-        setenv OSRELEASE $DEFAULT_OSRELEASE
-endif
+setenv OSRELEASE `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
 
 # JLAB_SOFTWARE is where all the architecture software will be
 setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE
@@ -60,7 +53,6 @@ echo " > OS Release:    "$OSRELEASE
 echo " > JLAB_ROOT set to:     "$green$JLAB_ROOT$reset
 
 source $JLAB_ROOT/$JLAB_VERSION/ce/versions.env
-set DEFAULT_GEMC_VERSION = 3.0
 if( -d $JLAB_SOFTWARE) then
 	echo " > JLAB_SOFTWARE set to: "$green$JLAB_SOFTWARE$reset
 else
@@ -75,20 +67,6 @@ foreach p ($packages)
 		source $JLAB_ROOT/$JLAB_VERSION/ce/$p".env"
 	endif
 end
-
-
-# for powerpcs: LIBPATH
-if ( $?LIBPATH ) then
-  setenv LIBPATH ${LD_LIBRARY_PATH}:${LIBPATH}
-else
-  setenv LIBPATH ${LD_LIBRARY_PATH}
-endif
-# for Darwins systems: DYLD_LIBRARY_PATH
-if ( $?DYLD_LIBRARY_PATH ) then
-  setenv DYLD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${DYLD_LIBRARY_PATH}
-else
-  setenv DYLD_LIBRARY_PATH ${LD_LIBRARY_PATH}
-endif
 
 echo
 

@@ -16,9 +16,9 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:3.0 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              gemc:3.0 sh
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:3.0 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/gemc:3.0 sh
 #
 # --------------------------------------------------------------------------
 
