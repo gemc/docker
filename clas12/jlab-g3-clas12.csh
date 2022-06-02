@@ -18,9 +18,6 @@ setenv PATH $JLAB_ROOT/$JLAB_VERSION/ce:$PATH
 
 # Software packages
 set packages = (clhep xercesc qt geant4 scons glibrary gemc root ccdb)
-if ( -f ~/.jlab_software) then
-	set packages = `cat ~/.jlab_software`
-endif
 
 # Only print out if there's a prompt
 alias echo 'if($?prompt) echo \!*  '
@@ -38,15 +35,7 @@ if( ! $?PYTHONPATH) then
 	setenv PYTHONPATH "."
 endif
 
-# Looking for custom defined OSRELEASE
-set DEFAULT_OSRELEASE = `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
-if($?OSRELEASE) then
-	if($OSRELEASE != $DEFAULT_OSRELEASE) then
-		echo " >> User defined OSRELEASE set to:"  $OSRELEASE
-	endif
-	else
-        setenv OSRELEASE $DEFAULT_OSRELEASE
-endif
+setenv OSRELEASE `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
 
 # JLAB_SOFTWARE is where all the architecture software will be
 setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE
@@ -60,7 +49,7 @@ echo " > OS Release:    "$OSRELEASE
 echo " > JLAB_ROOT set to:     "$green$JLAB_ROOT$reset
 
 source $JLAB_ROOT/$JLAB_VERSION/ce/versions.env
-set DEFAULT_GEMC_VERSION = 3.0
+set DEFAULT_GEMC_VERSION = 3.0 # needed cause 2.5 has 2.9 by default
 if( -d $JLAB_SOFTWARE) then
 	echo " > JLAB_SOFTWARE set to: "$green$JLAB_SOFTWARE$reset
 else
@@ -78,21 +67,6 @@ end
 
 # GPLUGIN_PATH to $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION
 setenv GPLUGIN_PATH $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION/systemsTxtDB
-
-# for powerpcs: LIBPATH
-if ( $?LIBPATH ) then
-  setenv LIBPATH ${LD_LIBRARY_PATH}:${LIBPATH}
-else
-  setenv LIBPATH ${LD_LIBRARY_PATH}
-endif
-# for Darwins systems: DYLD_LIBRARY_PATH
-if ( $?DYLD_LIBRARY_PATH ) then
-  setenv DYLD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${DYLD_LIBRARY_PATH}
-else
-  setenv DYLD_LIBRARY_PATH ${LD_LIBRARY_PATH}
-endif
-
-echo
 
 unalias echo
 

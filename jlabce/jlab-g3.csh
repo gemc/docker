@@ -18,9 +18,6 @@ setenv PATH $JLAB_ROOT/$JLAB_VERSION/ce:$PATH
 
 # Software packages
 set packages = (clhep xercesc qt geant4 scons glibrary gemc root)
-if ( -f ~/.jlab_software) then
-	set packages = `cat ~/.jlab_software`
-endif
 
 # Only print out if there's a prompt
 alias echo 'if($?prompt) echo \!*  '
@@ -38,7 +35,6 @@ if( ! $?PYTHONPATH) then
 	setenv PYTHONPATH "."
 endif
 
-# Looking for custom defined OSRELEASE
 setenv OSRELEASE `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
 
 # JLAB_SOFTWARE is where all the architecture software will be
@@ -53,6 +49,7 @@ echo " > OS Release:    "$OSRELEASE
 echo " > JLAB_ROOT set to:     "$green$JLAB_ROOT$reset
 
 source $JLAB_ROOT/$JLAB_VERSION/ce/versions.env
+set DEFAULT_GEMC_VERSION = 3.0 # needed cause 2.5 has 2.9 by default
 if( -d $JLAB_SOFTWARE) then
 	echo " > JLAB_SOFTWARE set to: "$green$JLAB_SOFTWARE$reset
 else
