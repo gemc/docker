@@ -75,8 +75,8 @@ RUN rm -rf clas12Tags \
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& mkdir $JLAB_SOFTWARE/clas12-systems \
 	&& cd  $JLAB_SOFTWARE/clas12-systems \
-	&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
-	#	&& git clone https://github.com/maureeungaro/clas12-systems $G3CLAS12_VERSION \
+	#&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
+	&& git clone https://github.com/maureeungaro/clas12-systems $G3CLAS12_VERSION \
 	&& cd $G3CLAS12_VERSION \
 	&& ./installClas12Coatjava.sh \
 	&& cp $GEMC/gstreamer* $GPLUGIN_PATH
