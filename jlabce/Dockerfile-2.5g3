@@ -27,6 +27,7 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 # stashing jlab-g3.* onto /root
 # we still need root/jlab.sh because the GEMC and GLIBRARY are not set in the container
+# TODO: verify that now the standard jlab.sh can be used.
 COPY jlab-g3.csh /root/jlab.csh
 COPY jlab-g3.sh  /root/jlab.sh
 
@@ -40,7 +41,7 @@ WORKDIR $JLAB_ROOT
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
 	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
-	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/ \
 	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
