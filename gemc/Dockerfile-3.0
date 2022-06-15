@@ -30,11 +30,11 @@ ENV JLAB_VERSION 2.5
 
 WORKDIR $JLAB_ROOT
 
-# if go_reload is issued we need to re-copy the
-#RUN cd $JLAB_ROOT/$JLAB_VERSION \
+RUN cd $JLAB_ROOT/$JLAB_VERSION \
+	&& ./go_reload $JLAB_VERSION \
+	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/
+
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
-#	&& ./go_reload $JLAB_VERSION \
-#	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/ \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_glibrary src  \
