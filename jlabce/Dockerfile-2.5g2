@@ -31,6 +31,13 @@ COPY jlab-g2.csh /root/jlab.csh
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.5
 
+RUN yum install -y \
+	perl-Math-VectorReal \
+	perl-Math-MatrixReal \
+	perl-Math-Trig \
+	&& yum clean packages \
+	&& yum clean all 
+
 RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
 
 WORKDIR $JLAB_ROOT
