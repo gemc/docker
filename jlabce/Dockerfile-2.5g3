@@ -27,7 +27,6 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 # stashing jlab-g3.* onto /root
 # we still need root/jlab.sh because the GEMC and GLIBRARY are not set in the container
-# TODO: verify that now the standard jlab.sh can be used.
 COPY jlab-g3.csh /root/jlab.csh
 COPY jlab-g3.sh  /root/jlab.sh
 

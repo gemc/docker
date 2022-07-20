@@ -28,6 +28,12 @@ LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.5
 
+# remaking this copy so if these change we do not have to rebuild jlabce
+# notice: they cannot `be sym links - can temp copy them here when needed
+COPY jlab-g3.csh /root/jlab.csh
+COPY jlab-g3.sh  /root/jlab.sh
+
+
 WORKDIR $JLAB_ROOT
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
@@ -46,7 +52,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 # install gemc
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& ./go_gemc 3.0 
+	&& ./go_gemc 3.0
 
 
 WORKDIR $JLAB_ROOT
