@@ -27,11 +27,10 @@ alias echo 'if($?prompt) echo \!*  '
 #############################
 
 # Sourcing packages. This will set the LD_LIBRARY_PATH. 
-# Powerpcs and Darwins will be set right below
-if( ! $?LD_LIBRARY_PATH) then
+if( ! $?LD_LIBRARY_PATH ) then
 	setenv LD_LIBRARY_PATH ""
 endif
-if( ! $?PYTHONPATH) then
+if( ! $?PYTHONPATH ) then
 	setenv PYTHONPATH "."
 endif
 
