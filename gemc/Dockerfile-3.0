@@ -55,5 +55,13 @@ RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_gemc 3.0
 
 
+# install dawn
+RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_dawn
+
+
+
+
 WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity
