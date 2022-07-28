@@ -4,7 +4,7 @@
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker pull jeffersonlab/jlabce:2.5g3
+#  docker pull jeffersonlab/jlabce:2.6g3
 #  docker build --progress=plain            -f Dockerfile-3.0 -t gemc:3.0 .
 #  docker build --progress=plain --no-cache -f Dockerfile-3.0 -t gemc:3.0 .
 #
@@ -22,11 +22,11 @@
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/jlabce:2.5g3
+FROM jeffersonlab/jlabce:2.6g3
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 ENV JLAB_ROOT /jlab
-ENV JLAB_VERSION 2.5
+ENV JLAB_VERSION 2.6
 
 # remaking this copy so if these change we do not have to rebuild jlabce
 # notice: they cannot `be sym links - can temp copy them here when needed
@@ -39,6 +39,7 @@ WORKDIR $JLAB_ROOT
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_reload $JLAB_VERSION \
 	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/
+
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \

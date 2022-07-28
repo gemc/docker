@@ -66,3 +66,7 @@ env -i tcsh ${TCSH_ARG} -c "
 
 source "$TMPF"
 rm -f "$TMPF"
+
+alias l='ls -l'
+alias lt='ls -lrt'
+

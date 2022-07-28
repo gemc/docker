@@ -66,7 +66,7 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 
 
 
-# scons.  ccdb should not be there but in 3.0-clas1
+# scons build system
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_sconsscript \
