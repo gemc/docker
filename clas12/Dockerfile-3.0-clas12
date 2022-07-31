@@ -58,7 +58,6 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
-
 # Checking out clas12Tags and compiling CLAS12TAG
 # Removing un-used tags and .git stuff
 RUN rm -rf clas12Tags \
@@ -66,8 +65,6 @@ RUN rm -rf clas12Tags \
 	&& cd clas12Tags \
 	# delete everything but $CLAS12TAG
 	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards`
-
-
 
 # Running update.sh to install coatjava
 # Install clas12 geo/plugins to clas12-systems/systemsTxtDB (done by installCLAS12.sh)
@@ -80,8 +77,6 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $G3CLAS12_VERSION \
 	&& ./installClas12Coatjava.sh \
 	&& cp $GEMC/gstreamer* $GPLUGIN_PATH
-
-
 
 WORKDIR $JLAB_ROOT
 CMD bash /container/utilities/xstart.sh && sleep infinity

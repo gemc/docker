@@ -33,14 +33,20 @@ ENV JLAB_VERSION 2.6
 COPY jlab-g3.csh /root/jlab.csh
 COPY jlab-g3.sh  /root/jlab.sh
 
-
 WORKDIR $JLAB_ROOT
+
+# ghostscript installed for eps to pdf conversion of dawn outputs
+RUN yum install -y \
+	ghostscript \
+	&& yum clean packages \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum
 
 RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_reload $JLAB_VERSION \
 	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/
 
-
+# glibrary cadmesh
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
@@ -50,18 +56,15 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/build_log \
 	&& rm -rf $JLAB_SOFTWARE/glibrary/*/cadmesh*
 
-# install gemc
+# gemc
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_gemc 3.0
 
-
-# install dawn
+# dawn
 RUN  cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_dawn
-
-
 
 
 WORKDIR $JLAB_ROOT

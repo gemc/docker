@@ -62,10 +62,6 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
 
-
-
-
-
 # scons build system
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
