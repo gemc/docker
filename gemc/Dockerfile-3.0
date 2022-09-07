@@ -46,9 +46,13 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION \
 	&& ./go_reload $JLAB_VERSION \
 	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/
 
-# glibrary cadmesh
-RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+# scons build system
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_sconsscript \
+
+# glibrary cadmesh
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
  	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_glibrary src  \
 	&& ./go_glibrary cadmesh \
