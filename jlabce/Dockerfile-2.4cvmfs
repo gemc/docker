@@ -1,0 +1,95 @@
+#
+# jlabce docker 2.5g2 libraries image
+# --------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker pull jeffersonlab/base:centos8
+#  docker build --progress=plain            -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
+#
+#  docker tag jlabce:2.5g2 jeffersonlab/jlabce:2.5g2
+#
+#  docker push jeffersonlab/jlabce:2.5g2
+#
+# --------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5g2 bash
+#
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5g2 bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:centos8
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+# stashing jlab-g2.csh onto /root
+COPY jlab-g2.csh /root/jlab.csh
+
+ENV JLAB_ROOT /jlab
+ENV JLAB_VERSION 2.5
+
+RUN yum install -y \
+	perl-Math-VectorReal \
+	perl-Math-MatrixReal \
+	perl-Math-Trig \
+	&& yum clean packages \
+	&& yum clean all 
+
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
+
+WORKDIR $JLAB_ROOT
+
+RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
+	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
+	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& ./go_clhep \
+	&& ./go_xercesc \
+	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share \
+	&& ./go_qt system \
+	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5 
+
+
+# geant4
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_geant4  \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
+	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
+
+# for hipo
+RUN yum install -y lz4-devel \
+	&& yum clean packages \
+	&& yum clean all
+
+# scons evio hipo and ccdb
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_sconsscript \
+	&& ./go_evio \
+	&& ./go_hipo \
+	&& ./go_ccdb  \
+	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+
+# root
+RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_root src \
+	&& ./go_root make \
+	&& rm -rf $JLAB_SOFTWARE/root/root-* \
+	&& rm -rf $JLAB_SOFTWARE/root/*gz
+
