@@ -1,50 +1,50 @@
 #
-# jlabce docker 2.5g2 libraries image
+# jlabce docker 2.4cvmfs libraries image
 # --------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
 #  docker pull jeffersonlab/base:centos8
-#  docker build --progress=plain            -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
-#  docker build --progress=plain --no-cache -f Dockerfile-2.5g2 -t jlabce:2.5g2 .
+#  docker build --progress=plain            -f Dockerfile-2.4cvmfs -t jlabce:2.4cvmfs .
+#  docker build --progress=plain --no-cache -f Dockerfile-2.4cvmfs -t jlabce:2.4cvmfs .
 #
-#  docker tag jlabce:2.5g2 jeffersonlab/jlabce:2.5g2
+#  docker tag jlabce:2.4cvmfs jeffersonlab/jlabce:2.4cvmfs
 #
-#  docker push jeffersonlab/jlabce:2.5g2
+#  docker push jeffersonlab/jlabce:2.4cvmfs
 #
 # --------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.5g2 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork              jlabce:2.4cvmfs bash
 #
-#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.5g2 bash
+#  docker run -it --rm -v ~/mywork:/jlab/work/mywork jeffersonlab/jlabce:2.4cvmfs bash
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/base:centos8
+FROM jeffersonlab/base:fedora34
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-# stashing jlab-g2.csh onto /root
-COPY jlab-g2.csh /root/jlab.csh
+# stashing csh script onto /root for later copy in ce
+COPY jlab-24cvmfs.csh /root/jlab.csh
 
-ENV JLAB_ROOT /jlab
-ENV JLAB_VERSION 2.5
+# these must match the csh script
+ENV JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+ENV JLAB_VERSION 2.4
 
-RUN yum install -y \
-	perl-Math-VectorReal \
-	perl-Math-MatrixReal \
-	perl-Math-Trig \
-	&& yum clean packages \
-	&& yum clean all 
-
-RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION $JLAB_ROOT/work
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION 
 
 WORKDIR $JLAB_ROOT
 
+# current hacks:
+# load custom csh from /root/jlab.csh
+# using system go_qt did not detect linux
+# installation scripts using ceInstall_2.6.tar.gz
+ENV CEINSTALLFILE ceInstall_2.6.tar.gz
+
 RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
-	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz \
-	&& tar -zxpf ceInstall_$JLAB_VERSION.tar.gz --strip-components 1 -C $JLAB_VERSION \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/$CEINSTALLFILE \
+	&& tar -zxpf $CEINSTALLFILE --strip-components 1 -C $JLAB_VERSION \
 	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
 	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
@@ -55,8 +55,9 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share \
+	&& sed -i 's/set system = ""/set system = "Linux"/' go_qt \
 	&& ./go_qt system \
-	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5 
+	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
 
 
 # geant4
@@ -66,16 +67,16 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
+
 # for hipo
-RUN yum install -y lz4-devel \
+RUN yum install -y lz4-devel\
 	&& yum clean packages \
 	&& yum clean all
 
-# scons evio hipo and ccdb
+# scons hipo and ccdb
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_sconsscript \
-	&& ./go_evio \
 	&& ./go_hipo \
 	&& ./go_ccdb  \
 	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
@@ -85,11 +86,16 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
 	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
-# root
+# mlibrary
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& ./go_root src \
-	&& ./go_root make \
-	&& rm -rf $JLAB_SOFTWARE/root/root-* \
-	&& rm -rf $JLAB_SOFTWARE/root/*gz
+	&& ./go_mlibrary
+
+# root
+#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& ./go_root src \
+#	&& ./go_root make \
+#	&& rm -rf $JLAB_SOFTWARE/root/root-* \
+#	&& rm -rf $JLAB_SOFTWARE/root/*gz
 
