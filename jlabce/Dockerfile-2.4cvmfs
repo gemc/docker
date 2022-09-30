@@ -67,7 +67,6 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
-
 # for hipo
 RUN yum install -y lz4-devel\
 	&& yum clean packages \
