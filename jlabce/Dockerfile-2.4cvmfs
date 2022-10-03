@@ -68,27 +68,27 @@ RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
 # for hipo
-RUN yum install -y lz4-devel\
-	&& yum clean packages \
-	&& yum clean all
+#RUN yum install -y lz4-devel\
+#	&& yum clean packages \
+#	&& yum clean all
 
 # scons hipo and ccdb
-RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& ./go_sconsscript \
-	&& ./go_hipo \
-	&& ./go_ccdb  \
-	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
-	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
-	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& ./go_sconsscript \
+#	&& ./go_hipo \
+#	&& ./go_ccdb  \
+#	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
+#	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
 
 # mlibrary
-RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-	&& ./go_mlibrary
+#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& ./go_mlibrary
 
 # root
 #RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \

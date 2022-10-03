@@ -3,7 +3,7 @@
 setenv JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 setenv JLAB_VERSION 2.4
 setenv OSRELEASE fedora34-gcc11
-setenv JLAB_SOFTWARE $JLAB_ROOT/$OSRELEASE/$JLAB_VERSION/
+setenv JLAB_SOFTWARE $JLAB_ROOT/$OSRELEASE
 set CE_DATE = "(Wed Sept 28 2022)"
 set packages = ( clhep xercesc qt geant4 scons ccdb mlibrary hipo )
 setenv CLAS12TAG 5.1
@@ -24,7 +24,6 @@ if( ! $?PYTHONPATH) then
 	setenv PYTHONPATH "."
 endif
 
-# JLAB_SOFTWARE is where all the architecture software will be
 
 set red   = `tput setaf 1`
 set reset = `tput sgr0`
