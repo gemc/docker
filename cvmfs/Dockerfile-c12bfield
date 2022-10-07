@@ -1,22 +1,27 @@
 #
-# cvmfs docker cvmfs mlibrary build
+# cvmfs docker cvmfs c12bfield build
 # --------------------------------------------------------------------------
 #
-#  docker build --progress=plain --no-cache -f Dockerfile-mlibrary -t cvmfs:mlibrary .
+#  docker build --progress=plain --no-cache -f Dockerfile-c12bfield -t cvmfs:c12bfield .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs:hipo bash
 #  docker run -it --rm cvmfs:mlibrary bash
+#  docker run -it --rm cvmfs:c12bfield bash
 #
 # --------------------------------------------------------------------------
 
-FROM cvmfs:hipo
+FROM cvmfs:mlibrary
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV cmagTag 1.1
 
 RUN source /root/ce/jlab.sh \
 	&& cd /root/install \
-	&& ./go_mlibrary \
-	&& rm -rf $JLAB_SOFTWARE/mlibrary/*.gz \
-	&& rm -rf $JLAB_SOFTWARE/mlibrary/*/cadmesh*
+	&& cd $JLAB_SOFTWARE \
+	&& mkdir -p cmag/$cmagTag \
+	&& cd cmag \
+	&& git clone https://github.com/JeffersonLab/clas12-cmag $cmagTag \
+	&& cd $cmagTag/src \
+	&& make -j4 \
 

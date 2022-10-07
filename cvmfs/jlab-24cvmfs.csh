@@ -45,6 +45,7 @@ foreach p ($packages)
 	endif
 end
 
+setenv C12BFIELDS $JLAB_SOFTWARE/cmag/1.1
 echo
 
 alias l 'ls -l'
