@@ -46,8 +46,9 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/$CEINSTALLFILE \
 	&& tar -zxpf $CEINSTALLFILE --strip-components 1 -C $JLAB_VERSION \
 	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
-	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
-	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/
+
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
 	&& ./go_clhep \
 	&& ./go_xercesc \
@@ -59,39 +60,43 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& ./go_qt system \
 	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
 
-
 # geant4
-RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
+	RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd  $JLAB_ROOT/$JLAB_VERSION/install \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& ./go_geant4  \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/build* \
 	&& rm -rf $JLAB_SOFTWARE/geant4/*/source
 
 # for hipo
-#RUN yum install -y lz4-devel\
-#	&& yum clean packages \
-#	&& yum clean all
+RUN yum install -y lz4-devel\
+	&& yum clean packages \
+	&& yum clean all
 
 # scons hipo and ccdb
-#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-#	&& ./go_sconsscript \
-#	&& ./go_hipo \
-#	&& ./go_ccdb  \
-#	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
-#	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
-#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
-#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
-#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
-#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_sconsscript \
+	&& ./go_hipo \
+	&& ./go_ccdb  \
+	&& rm -rf $JLAB_SOFTWARE/hipo/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/evio/*.gz \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig \
+	&& rm -rf $JLAB_ROOT/noarch/scons_bm/*.gz
 
 # mlibrary
-#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
-#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
-#	&& ./go_mlibrary
+RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
+	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+	&& ./go_mlibrary
 
-# root
-#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+# root - required for some generators
+#RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& cd $JLAB_ROOT/$JLAB_VERSION/install  \
 #	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 #	&& ./go_root src \
 #	&& ./go_root make \
