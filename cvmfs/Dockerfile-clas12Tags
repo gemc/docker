@@ -1,0 +1,34 @@
+#
+# cvmfs docker cvmfs clas12Tags build
+# --------------------------------------------------------------------------
+#
+#  docker build --progress=plain --no-cache -f Dockerfile-clas12Tags -t cvmfs:clas12Tags .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:mlibrary bash
+#  docker run -it --rm cvmfs:clas12Tags bash
+#
+# --------------------------------------------------------------------------
+
+FROM cvmfs:2.4
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+ENV CTAGS 4.4.2 5.1
+
+#RUN source /root/ce/jlab.sh \
+#	&& cd $JLAB_ROOT \
+ #  && git clone https://github.com/gemc/clas12Tags.git
+   
+   
+RUN sh -x \
+    #
+    # execute a for loop
+    #
+    && for gt in $CTAGS ;  \
+       do \
+              echo  ; \
+              echo Compiling "$gt" ; \
+              echo  ; \
+       done \
+	&& echo done

@@ -1,0 +1,42 @@
+#
+# cvmfs docker 2.4 base image
+# --------------------------------------------------------------------------
+#
+#  docker pull jeffersonlab/base:fedora34
+#  docker build --progress=plain --no-cache -f Dockerfile-2.4 -t cvmfs:2.4 .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:2.4 bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:fedora34
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+# stashing scripts onto /root for later overwrite ce
+COPY jlab-24cvmfs.csh /root/jlab.csh
+COPY jlab-cvmfs.sh    /root/jlab.sh
+
+# these must match the csh script
+ENV JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/sim
+ENV JLAB_VERSION 2.4
+ENV CEINSTALLFILE ceInstall_2.6.tar.gz
+
+WORKDIR $JLAB_ROOT
+
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION
+
+# current hacks:
+# load custom csh from /root/jlab.csh
+# using system go_qt did not detect linux
+# installation scripts using ceInstall_2.6.tar.gz
+# need to overwrite csh and sh scripts to $JLAB_ROOT/$JLAB_VERSION/ce first before copying them to /root
+
+RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz  \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/$CEINSTALLFILE \
+	&& tar -zxpf $CEINSTALLFILE --strip-components 1 -C $JLAB_VERSION \
+	&& cp /root/jlab.* /etc/profile.d/ \
+	&& cp /root/jlab.* $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp -r $JLAB_VERSION/ce $JLAB_VERSION/install /root
+

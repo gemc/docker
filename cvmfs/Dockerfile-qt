@@ -1,0 +1,22 @@
+#
+# cvmfs docker cvmfs qt build
+# --------------------------------------------------------------------------
+#
+#  docker build --progress=plain --no-cache -f Dockerfile-qt -t cvmfs:qt .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:xercesc bash
+#  docker run -it --rm cvmfs:qt      bash
+#
+# --------------------------------------------------------------------------
+
+FROM cvmfs:xercesc
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+RUN source /root/ce/jlab.sh \
+	&& cd /root/install \
+	&& sed -i 's/set system = ""/set system = "Linux"/' go_qt \
+	&& ./go_qt system \
+	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
+

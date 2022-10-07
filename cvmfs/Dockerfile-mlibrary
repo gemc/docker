@@ -1,0 +1,20 @@
+#
+# cvmfs docker cvmfs mlibrary build
+# --------------------------------------------------------------------------
+#
+#  docker build --progress=plain --no-cache -f Dockerfile-mlibrary -t cvmfs:mlibrary .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:hipo bash
+#  docker run -it --rm cvmfs:mlibrary bash
+#
+# --------------------------------------------------------------------------
+
+FROM cvmfs:hipo
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+RUN source /root/ce/jlab.sh \
+	&& cd /root/install \
+	&& ./go_mlibrary
+

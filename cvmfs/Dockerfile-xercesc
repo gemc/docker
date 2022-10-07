@@ -1,0 +1,23 @@
+#
+# cvmfs docker cvmfs xercesc build
+# --------------------------------------------------------------------------
+#
+#  docker build --progress=plain --no-cache -f Dockerfile-xercesc -t cvmfs:xercesc .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:clhep   bash
+#  docker run -it --rm cvmfs:xercesc bash
+#
+# --------------------------------------------------------------------------
+
+FROM cvmfs:clhep
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+RUN source /root/ce/jlab.sh \
+	&& cd /root/install \
+	&& ./go_xercesc \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/source \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/build* \
+	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share
+

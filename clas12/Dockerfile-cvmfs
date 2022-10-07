@@ -1,0 +1,51 @@
+#
+# docker image for CLAS12 Software Development with cvmfs
+# --------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker pull jeffersonlab/base:fedora34
+#  docker build --progress=plain            -f Dockerfile-cvmfs -t clas12software:cvmfs .
+#  docker build --progress=plain --no-cache -f Dockerfile-cvmfs -t clas12software:cvmfs .
+#
+#  docker tag jlabce:cvmfs jeffersonlab/clas12software:cvmfs
+#
+#  docker push jeffersonlab/jlabce:cvmfs
+#
+# --------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm -v /cvmfs:/cvmfs -v ~/mywork:/jlab/work/mywork              clas12software:cvmfs bash
+#
+#  docker run -it --rm -v /cvmfs:/cvmfs -v ~/mywork:/jlab/work/mywork jeffersonlab/clas12software:cvmfs bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:fedora34
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+# stashing csh script onto /root for later copy in ce
+COPY jlab-24cvmfs.csh /root/jlab.csh
+
+# these must match the csh script
+ENV JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+ENV JLAB_VERSION 2.4
+
+RUN mkdir -p $JLAB_ROOT/$JLAB_VERSION 
+
+WORKDIR $JLAB_ROOT
+
+# current hacks:
+# load custom csh from /root/jlab.csh
+# using system go_qt did not detect linux
+# installation scripts using ceInstall_2.6.tar.gz
+ENV CEINSTALLFILE ceInstall_2.6.tar.gz
+
+RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
+	&& wget -c http://www.jlab.org/12gev_phys/packages/sources/ceInstall/$CEINSTALLFILE \
+	&& tar -zxpf $CEINSTALLFILE --strip-components 1 -C $JLAB_VERSION \
+	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
+	&& cp -r $JLAB_ROOT/$JLAB_VERSION/ce /root
+
