@@ -31,9 +31,10 @@ RUN source /root/ce/jlab.sh \
 
 # temp C12BFIELDS env
 RUN source /root/ce/jlab.sh \
-	&& mkdir -p /root/tmp \
 	&& mkdir -p $JLAB_SOFTWARE/clas12Tags \
 	&& export C12BFIELDS=$JLAB_SOFTWARE/cmag/1.1 \
+	&& mkdir -p /root/tmp \
+	&& cd /root/tmp \
 	&& git clone https://github.com/gemc/clas12Tags.git \
 	&& cd clas12Tags \
 	&& sh -x \
@@ -52,8 +53,10 @@ RUN source /root/ce/jlab.sh \
 	
 
 # for 4.4.2 can do this manually in the cvmfs:mlibrary container:
-# cd 2.4/install/
+# or can use the dockerfile evio and use that one as base in mlibrary
+# cd $JLAB_ROOT/2.4/install/
 # export EVIO_VERSION=5.1
 # export EVIO=$JLAB_SOFTWARE/evio/$EVIO_VERSION
 # ./go_evio
+# rm $JLAB_SOFTWARE/evio/*.gz
 # Then manually install 4.4.2 like above

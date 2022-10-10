@@ -1,21 +1,24 @@
 #
-# cvmfs docker cvmfs scons build
+# cvmfs docker cvmfs evio build
 # --------------------------------------------------------------------------
 #
-#  docker build --progress=plain --no-cache -f Dockerfile-scons -t cvmfs:scons .
+#  docker build --progress=plain --no-cache -f Dockerfile-evio -t cvmfs:hipo .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs:geant4 bash
-#  docker run -it --rm cvmfs:scons bash
+#  docker run -it --rm cvmfs:hipo bash
+#  docker run -it --rm cvmfs:evio bash
 #
 # --------------------------------------------------------------------------
 
-FROM cvmfs:geant4
+FROM cvmfs:ccdb
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 
 RUN source /root/ce/jlab.sh \
 	&& cd /root/install \
-	&& ./go_sconsscript \
-	$$ rm $JLAB_ROOT/noarch/scons_bm/*.gz
+	&& export EVIO_VERSION=5.1 \
+	&& export EVIO=$JLAB_SOFTWARE/evio/$EVIO_VERSION \
+	&& ./go_evio \
+	&& rm -rf $JLAB_SOFTWARE/evio/*.gz
+
