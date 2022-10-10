@@ -7,6 +7,7 @@ setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE
 set CE_DATE = "(Wed Sept 28 2022)"
 set packages = ( clhep xercesc qt geant4 scons ccdb mlibrary hipo )
 
+setenv PATH .:/root/ce/:$PATH
 
 # Do not edit below this line
 #############################
@@ -14,10 +15,10 @@ set packages = ( clhep xercesc qt geant4 scons ccdb mlibrary hipo )
 # need to pass this to the scripts
 setenv overwrite yes
 
-if( ! $?LD_LIBRARY_PATH) then
+if( ! $?LD_LIBRARY_PATH ) then
 	setenv LD_LIBRARY_PATH ""
 endif
-if( ! $?PYTHONPATH) then
+if( ! $?PYTHONPATH ) then
 	setenv PYTHONPATH "."
 endif
 
@@ -30,6 +31,7 @@ echo " > OS Release:    "$OSRELEASE
 echo " > JLAB_ROOT set to:     "$green$JLAB_ROOT$reset
 
 source /root/ce/versions.env
+
 if( -d $JLAB_SOFTWARE) then
 	echo " > JLAB_SOFTWARE set to: "$green$JLAB_SOFTWARE$reset
 else
@@ -38,15 +40,15 @@ else
 endif
 echo
 
-setenv PATH .:/root/ce/:$PATH
+
 foreach p ($packages)
 	if( -f /root/ce/$p".env") then
 		source /root/ce/$p".env"
 	endif
 end
+echo
 
 setenv C12BFIELDS $JLAB_SOFTWARE/cmag/1.1
-echo
 
 alias l 'ls -l'
 alias lt 'ls -lrt'

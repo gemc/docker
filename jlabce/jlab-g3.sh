@@ -1,19 +1,6 @@
 #!/bin/bash
 #
-# You must source this script.
-#   - It requires JLAB_ROOT and JLAB_VERSION to be set to something sensible
-#   - At your bash prompt type: ". <path>/jlab.sh"
-#
-# Get the JLAB environment variables by parsing the script in tcsh and then
-# printing the  environment.  We need to filter out the spaces, since that
-# confuses the for loop. We also need to drop some tcsh specific environment
-# variables from the export list.
-#
-# Maintainer:  Brad Sawatky <brads@jlab.org>  (Nov 17, 2016)
-#   - rework of script by Maurik Holtop
 
-# set JLAB_VERSION to the wanted tag if it's not set yet
-: ${JLAB_VERSION=2.5}
 
 TMPF=`mktemp`
 env -i tcsh ${TCSH_ARG} -c "

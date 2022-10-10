@@ -44,6 +44,8 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
 	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
 	&& cd $JLAB_ROOT/$JLAB_VERSION/install \
+	&& echo install dir: `pwd` \
+	&& echo contents: `ls -l` \
 	&& ./go_clhep \
 	&& ./go_xercesc \
 	&& rm -rf $JLAB_SOFTWARE/clhep/*/build* \
@@ -52,7 +54,8 @@ RUN rm -rf ceInstall_$JLAB_VERSION.tar.gz $JLAB_ROOT/$JLAB_VERSION/* \
 	&& rm -rf $JLAB_SOFTWARE/xercesc/*/share \
 	&& ./go_qt system \
 	&& strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5 \
-	&& ./go_root system 
+	&& ./go_root system
+
 
 # geant4
 RUN cd $JLAB_ROOT/$JLAB_VERSION/install \
