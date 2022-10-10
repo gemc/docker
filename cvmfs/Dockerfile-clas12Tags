@@ -30,9 +30,9 @@ RUN source /root/ce/jlab.sh \
 
 
 # temp C12BFIELDS env
-
 RUN source /root/ce/jlab.sh \
-	&& cd $JLAB_SOFTWARE \
+	&& mkdir -p /root/tmp \
+	&& mkdir -p $JLAB_SOFTWARE/clas12Tags \
 	&& export C12BFIELDS=$JLAB_SOFTWARE/cmag/1.1 \
 	&& git clone https://github.com/gemc/clas12Tags.git \
 	&& cd clas12Tags \
@@ -43,13 +43,17 @@ RUN source /root/ce/jlab.sh \
 			echo Compiling "$gt" ; \
 			echo  ; \
 			./goInstall "$gt" ; \
+			 find "$gt"/source -name \*.o -delete ; \
+			 cp -r "$gt" $JLAB_SOFTWARE/clas12Tags/ ; \
 		done \
-	&& echo done
+	&& echo done compiling clas12Tags, removing /root/tmp \
+	&& cd /root \
+	&& rm -rf tmp
+	
 
 # for 4.4.2 can do this manually in the cvmfs:mlibrary container:
 # cd 2.4/install/
 # export EVIO_VERSION=5.1
 # export EVIO=$JLAB_SOFTWARE/evio/$EVIO_VERSION
 # ./go_evio
-# cd $JLAB_ROOT/clas12Tags
-# goInstall 4.4.2
+# Then manually install 4.4.2 like above
