@@ -1,43 +1,26 @@
 #!/bin/csh -f
+# between this and the jlab-g3: packages and GPLUGIN_PATH
 
-setenv overwrite "yes"
-if($1 == "keepmine") then
-	setenv overwrite "no"
-endif
-
-if( ! $?JLAB_VERSION) then
-	setenv JLAB_VERSION 2.5
-endif
-
-# Get date from:
-# git log -1
+setenv JLAB_VERSION 2.6
+setenv OSRELEASE `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
+setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE
 set CE_DATE = "(Wed Feb 9 2022)"
-
-
-setenv PATH $JLAB_ROOT/$JLAB_VERSION/ce:$PATH
-
-# Software packages
 set packages = (clhep xercesc qt geant4 scons glibrary gemc root ccdb)
 
-# Only print out if there's a prompt
-alias echo 'if($?prompt) echo \!*  '
-
+setenv PATH .:$JLAB_ROOT/$JLAB_VERSION/ce:$PATH
 
 # Do not edit below this line
 #############################
 
-# Sourcing packages. This will set the LD_LIBRARY_PATH. 
+# need to pass this to the scripts
+setenv overwrite yes
+
 if( ! $?LD_LIBRARY_PATH ) then
 	setenv LD_LIBRARY_PATH ""
 endif
 if( ! $?PYTHONPATH ) then
 	setenv PYTHONPATH "."
 endif
-
-setenv OSRELEASE `$JLAB_ROOT/$JLAB_VERSION/ce/osrelease.py`
-
-# JLAB_SOFTWARE is where all the architecture software will be
-setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION/$OSRELEASE
 
 set red   = `tput setaf 1`
 set reset = `tput sgr0`
@@ -67,5 +50,4 @@ end
 # GPLUGIN_PATH to $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION
 setenv GPLUGIN_PATH $JLAB_SOFTWARE/clas12-systems/$G3CLAS12_VERSION/systemsTxtDB
 
-unalias echo
 

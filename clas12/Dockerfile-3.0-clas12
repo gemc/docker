@@ -30,6 +30,8 @@ COPY jlab-g3-clas12.csh /root/jlab.csh
 
 ENV JLAB_ROOT /jlab
 ENV JLAB_VERSION 2.6
+
+# CLAS12TAG is needed to compare the geometry
 ENV CLAS12TAG 5.1
 
 WORKDIR $JLAB_ROOT
