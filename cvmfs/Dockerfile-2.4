@@ -19,7 +19,8 @@ COPY jlab-24cvmfs.csh /root/jlab.csh
 COPY jlab-cvmfs.sh    /root/jlab.sh
 
 # these must match the csh script
-ENV JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/sim
+ENV OSRELEASE fedora34-gcc11
+ENV JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/$OSRELEASE/sim
 ENV JLAB_VERSION 2.4
 ENV CEINSTALLFILE ceInstall_2.6.tar.gz
 
