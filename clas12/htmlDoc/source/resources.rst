@@ -16,6 +16,7 @@ Useful Links
 * `CLAS12 docker hub <https://hub.docker.com/repository/docker/jeffersonlab/clas12software>`_
 * `CLAS12 generators <https://github.com/JeffersonLab/clas12-mcgen>`_
 * `CLAS12 OSG Portal <https://gemc.jlab.org/web_interface/index.php>`_
+* `CLAS12 Software Center <https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Simulation>`_
 
 
 Singularity

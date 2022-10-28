@@ -15,9 +15,10 @@ Adapted from Agogo style
 		
 		<div class="rel" role="navigation" aria-label="related navigation">
 			{% block rootrellink %}
-			<a href="{{ pathto('index') }}">       home</a>&nbsp;|
-			<a href="{{ pathto('examples') }}">    usage</a>&nbsp;|
-			<a href="{{ pathto('advanced') }}">    resources</a>&nbsp;
+			<a href="{{ pathto('index')       }}"> home          </a>&nbsp;|
+			<a href="{{ pathto('submitToOSG') }}"> submit to OSG </a>&nbsp;|
+			<a href="{{ pathto('useDocker')   }}"> use docker    </a>&nbsp;|
+			<a href="{{ pathto('resources')   }}"> resources     </a>&nbsp;
 			{% endblock %}
 		</div>
 
@@ -47,7 +48,7 @@ Adapted from Agogo style
 <div class="footer-wrapper">
 	<div class="footer">
 		<div class="center">
-			{{ _('2020 Page Maintained by <a href="mailto: ungaro@jlab.org"> Maurizio Ungaro </a>') }}
+			{{ _('2022 Page Maintained by <a href="mailto: ungaro@jlab.org"> Maurizio Ungaro </a>') }}
 		</div>
 	</div>
 </div>
