@@ -1,15 +1,23 @@
-# Docker builds
-# Notice no container is pushed to docker hub
-# This is just to copy the builds to jlab
+# CVMFS Docker build for CLAS12
+No container is pushed to docker hub
 
-# first prepare the dirs on the farm:
+- JLAB_ROOT: /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/$OSRELEASE/sim
+- OSRELEASE: fedora34-gcc11
 
+The local container are used copy the builds to jlab
+
+
+# Steps to copy the files:
+
+### Prepare the dirs on the farm:
+
+```
 cd /volatile/clas12/ungaro
-
 export SIM_VERSION=2.4
 export OSRELEASE=fedora34-gcc11
 export INSTL=$OSRELEASE/sim/$SIM_VERSION
 mkdir -p $INSTL/clas12Tags
+```
 
 # qt will create top dir too
 # need to make symlinks like in the container
