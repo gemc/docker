@@ -6,12 +6,12 @@
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs:ccdb bash
+#  docker run -it --rm cvmfs:evio bash
 #  docker run -it --rm cvmfs:hipo bash
 #
 # --------------------------------------------------------------------------
 
-FROM cvmfs:ccdb
+FROM cvmfs:evio
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 RUN yum install -y lz4-devel\

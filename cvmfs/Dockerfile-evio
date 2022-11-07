@@ -2,11 +2,11 @@
 # cvmfs docker cvmfs evio build
 # --------------------------------------------------------------------------
 #
-#  docker build --progress=plain --no-cache -f Dockerfile-evio -t cvmfs:hipo .
+#  docker build --progress=plain --no-cache -f Dockerfile-evio -t cvmfs:evio .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs:hipo bash
+#  docker run -it --rm cvmfs:ccdb bash
 #  docker run -it --rm cvmfs:evio bash
 #
 # --------------------------------------------------------------------------
