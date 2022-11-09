@@ -91,18 +91,8 @@ export INSTL=$OSRELEASE/sim/$SIM_VERSION
 mkdir -p $INSTL/clas12Tags
 ```
 
-### qt will create top dir too, need to make symlinks like in the container
 
-```
-mkdir -p $INSTL/qt/system/gcc_64/lib
-cd  $INSTL/qt/system/gcc_64
-ln -s /usr/lib64/qt5/bin     bin
-ln -s /usr/include/qt5       include
-ln -s /usr/lib64/qt5/mkspecs mkspecs
-ln -s /usr/lib64/qt5/plugins plugins
-```
-
-# Docker
+# Create the containers:
 
 Notice starting with 5.1 we don't need evio anymore. 
 Change the dependencies in the docker files as well.
@@ -117,8 +107,8 @@ docker build --progress=plain --no-cache -f Dockerfile-qt         -t cvmfs:qt .
 docker build --progress=plain --no-cache -f Dockerfile-geant4     -t cvmfs:geant4 .
 docker build --progress=plain --no-cache -f Dockerfile-scons      -t cvmfs:scons .
 docker build --progress=plain --no-cache -f Dockerfile-ccdb       -t cvmfs:ccdb .
-docker build --progress=plain --no-cache -f Dockerfile-hipo       -t cvmfs:hipo .
 docker build --progress=plain --no-cache -f Dockerfile-evio       -t cvmfs:evio .
+docker build --progress=plain --no-cache -f Dockerfile-hipo       -t cvmfs:hipo .
 docker build --progress=plain --no-cache -f Dockerfile-mlibrary   -t cvmfs:mlibrary .
 docker build --progress=plain --no-cache -f Dockerfile-c12bfield  -t cvmfs:c12bfield .
 docker build --progress=plain --no-cache -f Dockerfile-clas12Tags -t cvmfs:clas12Tags .
@@ -141,16 +131,17 @@ export OSRELEASE=fedora34-gcc11
 export INSTL=$OSRELEASE/sim/$SIM_VERSION
 export REMOTED=ungaro@ftp.jlab.org:/volatile/clas12/ungaro/$INSTL
 export REMOTEN=ungaro@ftp.jlab.org:/volatile/clas12/ungaro
-```
-
-Notice: we copy these one by one because of qt 
-
-```
 cd $JLAB_ROOT/../../
+```
+
+Notice1 : we copy these one by one because of qt 
+Notice 2: the geant4 are a gazillion files, perhaps make tarball
+
+```
 scp -r noarch          $REMOTEN
 scp -r $INSTL/clhep    $REMOTED
 scp -r $INSTL/xercesc  $REMOTED
-scp    $INSTL/qt/system/gcc_64/lib/* $REMOTED"/qt/system/gcc_64/lib"
+scp -r $INSTL/qt       $REMOTED
 scp -r $INSTL/geant4   $REMOTED
 scp -r $INSTL/ccdb     $REMOTED
 scp -r $INSTL/evio     $REMOTED
