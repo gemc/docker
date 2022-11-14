@@ -14,7 +14,7 @@
 FROM cvmfs:c12bfield
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-ENV CTAGS 5.1
+ENV CTAGS 4.4.2 5.1
 
 # 5.1 won't compile with g4 10.6 unless the g4ptl is removed from
 # $JLAB_ROOT/noarch/scons_bm/1.10/loadgeant4.py

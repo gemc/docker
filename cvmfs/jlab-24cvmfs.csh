@@ -5,7 +5,7 @@ setenv JLAB_ROOT /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/$OSRELE
 setenv JLAB_VERSION 2.4
 setenv JLAB_SOFTWARE $JLAB_ROOT/$JLAB_VERSION
 set CE_DATE = "(Wed Oct 19 2022)"
-set packages = ( clhep xercesc qt geant4 scons ccdb mlibrary hipo )
+set packages = ( clhep xercesc qt geant4 scons ccdb evio hipo mlibrary )
 
 setenv PATH .:/root/ce/:$PATH
 

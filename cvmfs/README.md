@@ -129,15 +129,17 @@ Notice: the env must match what we have above.
 export SIM_VERSION=2.4
 export OSRELEASE=fedora34-gcc11
 export INSTL=$OSRELEASE/sim/$SIM_VERSION
-export REMOTED=ungaro@ftp.jlab.org:/volatile/clas12/ungaro/$INSTL
-export REMOTEN=ungaro@ftp.jlab.org:/volatile/clas12/ungaro
+export REMOTED=ungaro@ftp.jlab.org:/work/clas12/ungaro/$INSTL
+export REMOTEN=ungaro@ftp.jlab.org:/work/clas12/ungaro
 cd $JLAB_ROOT/../../
 ```
 
-Notice1 : we copy these one by one because of qt 
+Notice 1: we copy these one by one because of qt 
 Notice 2: the geant4 are a gazillion files, perhaps make tarball
+Notice 2: this needs to be run in zsh cause bash sucks at arrays
 
 ```
+zsh
 scp -r noarch          $REMOTEN
 scp -r $INSTL/clhep    $REMOTED
 scp -r $INSTL/xercesc  $REMOTED
@@ -149,7 +151,7 @@ scp -r $INSTL/hipo     $REMOTED
 scp -r $INSTL/mlibrary $REMOTED
 scp -r $INSTL/cmag     $REMOTED
 
-export CTAGS=(5.1)
+CTAGS=(4.4.2 5.1)
 for ct in $CTAGS
 do
 	echo $ct
