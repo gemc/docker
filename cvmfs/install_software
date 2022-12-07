@@ -1,0 +1,33 @@
+#!/bin/zsh -i
+
+export PHYS_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+
+. /root/ceInstall/modules/setup.sh
+
+module avail
+
+export TERM=${TERM:-xterm}
+
+
+# parse argument. If no argument given, set version to all available
+# module test may be different in modules/5.0 so here we are installing packages
+# one by one
+if [[ $# -eq 1 ]]; then
+ 	echo " > Installing version $1 "
+	# install_all_clas12 $1
+ 	module load physlibs/$1 -s
+ 	install_clhep
+ 	install_xercesc
+ 	copy_qt
+ 	install_geant4_data
+ 	install_geant4
+ 	install_scons_bm
+ 	install_ccdb
+ 	install_evio
+ 	install_mlibrary
+ 	# install_hipo
+
+else
+ 	echo " > No argument given. "
+fi
+

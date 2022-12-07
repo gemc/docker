@@ -1,0 +1,21 @@
+#
+# cvmfs docker cvmfs base image
+# --------------------------------------------------------------------------
+#
+#  docker pull jeffersonlab/base:fedora36
+#  docker build --progress=plain --no-cache -f Dockerfile-cvmfs -t cvmfs:cvmfs .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:cvmfs bash
+#  docker run -it --rm -v /cvmfs:/cvmfs  cvmfs:cvmfs bash
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:fedora36
+LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+
+WORKDIR /root
+
+RUN git clone http://github.com/JeffersonLab/ceInstall
+
