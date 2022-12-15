@@ -22,18 +22,12 @@
 #--------------------------------------------------------------------------
 
 FROM fedora:36
-LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
 RUN   yum -y update \
 	&& yum -y check-update \
 	&& yum clean packages \
 	&& yum clean all
-
-
-
-
-
-
 
 # xrandr added so we could change resolutions
 RUN yum install -y \
@@ -52,8 +46,6 @@ RUN yum install -y \
 	libXrender-devel \
 	expat-devel \
 	bzip2 \
-	qt5-qtbase-devel \
-	qt5-linguist \
 	wget \
 	nano \
 	git \
@@ -76,6 +68,7 @@ RUN yum install -y \
 	perl-CPAN \
 	glibc-langpack-en \
 	xrandr \
+    root \
     environment-modules \
 	&& yum clean packages \
 	&& yum clean all \
