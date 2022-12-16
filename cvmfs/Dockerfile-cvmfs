@@ -11,8 +11,16 @@
 #  docker run -it --rm -v /cvmfs:/cvmfs  cvmfs:cvmfs bash
 #
 # --------------------------------------------------------------------------
+#
+#  docker tag cvmfs:cvmfs jeffersonlab/clas12software:production
+#  docker tag cvmfs:cvmfs jeffersonlab/clas12software:devel
+#
+#  docker push jeffersonlab/clas12software:production
+#  docker push jeffersonlab/clas12software:devel
+#
+# --------------------------------------------------------------------------
 
-FROM jeffersonlab/base:fedora36
+FROM base:fedora36
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
 WORKDIR /root

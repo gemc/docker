@@ -15,12 +15,12 @@
 # --------------------------------------------------------------------------
 
 
-FROM jeffersonlab/base:fedora36
+FROM base:fedora36
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 ARG PHYS_VERSION="na"
 
 
-RUN   yum -y update \
+RUN    yum -y update \
 	&& yum -y check-update \
 	&& yum clean packages \
 	&& yum clean all
@@ -30,12 +30,11 @@ RUN yum install -y \
 	qt5-qtbase-devel \
 	qt5-linguist
 
-
 COPY install_software /root/install_software
 
 ENV PHYS_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 RUN mkdir -p $PHYS_HOME
 WORKDIR /root
 
-#RUN git clone http://github.com/JeffersonLab/ceInstall \
-#    && /root/install_software $PHYS_VERSION
+RUN git clone http://github.com/JeffersonLab/ceInstall \
+    && /root/install_software $PHYS_VERSION

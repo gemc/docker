@@ -14,18 +14,19 @@ export TERM=${TERM:-xterm}
 # one by one
 if [[ $# -eq 1 ]]; then
  	echo " > Installing version $1 "
-	# install_all_clas12 $1
  	module load physlibs/$1 -s
- 	install_clhep
- 	install_xercesc
- 	copy_qt
- 	install_geant4_data
- 	install_geant4
- 	install_scons_bm
- 	install_ccdb
- 	install_evio
- 	install_mlibrary
- 	# install_hipo
+	install_all_clas12 $1
+ 	#install_clhep
+ 	#install_xercesc
+ 	#copy_qt
+ 	#install_geant4_data
+ 	#install_geant4
+ 	#install_scons_bm
+ 	#install_ccdb
+ 	#install_evio
+ 	#install_mlibrary
+ 	#install_hipo
+ 	#install_cmag
 
 else
  	echo " > No argument given. "

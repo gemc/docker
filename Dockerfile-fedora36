@@ -34,6 +34,7 @@ RUN yum install -y \
 	cmake3 \
 	make \
 	gcc-c++ \
+    gfortran \
 	mysql-devel \
 	python3-devel \
 	python3-scons \

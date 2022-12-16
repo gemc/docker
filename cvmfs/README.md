@@ -1,5 +1,5 @@
 # CVMFS Docker build for CLAS12
-No container is pushed to docker hub
+The almost empty cvmfs:cvmfs is pushed to docker hub
 
 - JLAB_ROOT: /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/$OSRELEASE/sim/$SIM_VERSION
 - OSRELEASE: fedora34-gcc11
@@ -9,7 +9,7 @@ No container is pushed to docker hub
 The local container are used copy the builds to jlab
 
 <ul style='list-style-type: "⦿ ";'>
-	<li>fedora8-gcc10
+	<li>fedora36-gcc12
 	 <ul style='list-style-type: "❖ "'>
 		<li>sim
 	 <ul style='list-style-type:square'>
@@ -17,7 +17,7 @@ The local container are used copy the builds to jlab
 			<ul style='list-style-type: "‣ ︎"'>
 				<li>clhep
 				<ul style='list-style-type: "‣ ︎"'>
-					<li>2.4.5.1
+					<li>2.4.1.3
 					</li>
 				</ul>
 				</li>
@@ -47,7 +47,7 @@ The local container are used copy the builds to jlab
 			<ul style='list-style-type: "‣ ︎"'>
 				<li>clhep
 				<ul style='list-style-type: "‣ ︎"'>
-					<li>2.4.5.1
+					<li>2.4.4.2
 					</li>
 				</ul>
 				</li>
@@ -59,7 +59,7 @@ The local container are used copy the builds to jlab
 				</li>
 				<li>geant4
 				<ul style='list-style-type: "‣ ︎"'>
-					<li>10.6.03
+					<li>10.6.02
 					</li>
 					<li>10.7.03
 					</li>
@@ -86,7 +86,7 @@ The local container are used copy the builds to jlab
 ```
 cd /volatile/clas12/ungaro
 export SIM_VERSION=2.4
-export OSRELEASE=fedora34-gcc11
+export OSRELEASE=fedora36-gcc12
 export INSTL=$OSRELEASE/sim/$SIM_VERSION
 mkdir -p $INSTL/clas12Tags
 ```
@@ -100,25 +100,14 @@ Change the dependencies in the docker files as well.
 ### Build in order:
 
 ```
-docker build --progress=plain --no-cache -f Dockerfile-2.4        -t cvmfs:2.4 .
-docker build --progress=plain --no-cache -f Dockerfile-clhep      -t cvmfs:clhep .
-docker build --progress=plain --no-cache -f Dockerfile-xercesc    -t cvmfs:xercesc .
-docker build --progress=plain --no-cache -f Dockerfile-qt         -t cvmfs:qt .
-docker build --progress=plain --no-cache -f Dockerfile-geant4     -t cvmfs:geant4 .
-docker build --progress=plain --no-cache -f Dockerfile-scons      -t cvmfs:scons .
-docker build --progress=plain --no-cache -f Dockerfile-ccdb       -t cvmfs:ccdb .
-docker build --progress=plain --no-cache -f Dockerfile-evio       -t cvmfs:evio .
-docker build --progress=plain --no-cache -f Dockerfile-hipo       -t cvmfs:hipo .
-docker build --progress=plain --no-cache -f Dockerfile-mlibrary   -t cvmfs:mlibrary .
-docker build --progress=plain --no-cache -f Dockerfile-c12bfield  -t cvmfs:c12bfield .
-docker build --progress=plain --no-cache -f Dockerfile-clas12Tags -t cvmfs:clas12Tags .
+docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build .
 ```
 
 
 ### Run last container:
 
 ```
-docker run -it --rm cvmfs:clas12Tags bash
+docker run -it --rm cvmfs-build:cvmfs-build bash
 ```
 
 ### Copy the files to jlab
