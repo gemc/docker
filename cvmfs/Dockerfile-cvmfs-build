@@ -3,17 +3,16 @@
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build .
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.5 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build .
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.6 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build .
+#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.4 .
+#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.5 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.5 .
+#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.6 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.6 .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs-build:cvmfs-build bash
-#  docker run -it --rm -v /cvmfs:/cvmfs  cvmfs-build:cvmfs-build bash
+#  docker run -it --rm cvmfs-build:cvmfs-build-2.4 bash
+#  docker run -it --rm -v /cvmfs:/cvmfs  cvmfs-build:cvmfs-build-2.4 bash
 #
 # --------------------------------------------------------------------------
-
 
 FROM base:fedora36
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
@@ -34,7 +33,7 @@ COPY install_software /root/install_software
 
 ENV PHYS_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 RUN mkdir -p $PHYS_HOME
-WORKDIR /root
+WORKDIR /work
 
 RUN git clone http://github.com/JeffersonLab/ceInstall \
     && /root/install_software $PHYS_VERSION
