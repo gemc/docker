@@ -34,7 +34,7 @@ RUN yum install -y \
 	cmake3 \
 	make \
 	gcc-c++ \
-    gfortran \
+	gfortran \
 	mysql-devel \
 	python3-devel \
 	python3-scons \
@@ -69,8 +69,8 @@ RUN yum install -y \
 	perl-CPAN \
 	glibc-langpack-en \
 	xrandr \
-    root \
-    environment-modules \
+	root \
+	environment-modules \
 	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
