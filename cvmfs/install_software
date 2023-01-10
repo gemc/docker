@@ -13,21 +13,14 @@ export TERM=${TERM:-xterm}
 # parse argument. If no argument given, set version to all available
 # module test may be different in modules/5.0 so here we are installing packages
 # one by one
-if [[ $# -eq 1 ]]; then
- 	echo " > Installing version $1 "
- 	module load physlibs/$1 -s
-	install_all_clas12 $1
- 	#install_clhep
- 	#install_xercesc
- 	#copy_qt
- 	#install_geant4_data
- 	#install_geant4
- 	#install_scons_bm
- 	#install_ccdb
- 	#install_evio
- 	#install_mlibrary
- 	#install_hipo
- 	#install_cmag
+if [[ $# -eq 2 ]]; then
+ 	echo " > Installing $2 for version $1 "
+
+ 	if [[ $2 == "geant4" ]]; then
+ 		install_geant4_base $1
+ 	elif [[ $2 == "clas12" ]]; then
+	  install_all_clas12 $1
+ 	fi
 
 else
  	echo " > No argument given. "

@@ -1,5 +1,7 @@
 # CVMFS Docker build for CLAS12
-The almost empty cvmfs:cvmfs is pushed to docker hub
+The almost empty cvmfs:cvmfs is pushed to docker hub. This points to the CVMFS installation 
+below:
+
 
 - JLAB_ROOT: /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/$OSRELEASE/sim/$SIM_VERSION
 - OSRELEASE: fedora34-gcc11
@@ -79,7 +81,7 @@ The local container are used copy the builds to jlab
 	</li>
 </ul>
 
-# On ifarm
+# ifarm installation
 
 ### Create the installation directory:
 
@@ -92,19 +94,11 @@ mkdir -p $INSTL/clas12Tags
 ```
 
 
-# Create the containers:
+### Create the containers:
 
-Notice starting with 5.1 we don't need evio anymore. 
-Change the dependencies in the docker files as well.
+- Build the cvmfs-build image using the lines inside the Dockerfile ```/docker/cvmfs/Dockerfile-cvmfs-build``` 
 
-### Build in order:
-
-```
-docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build .
-```
-
-
-### Run last container:
+### Run the cvmfs-build container:
 
 ```
 docker run -it --rm cvmfs-build:cvmfs-build bash
