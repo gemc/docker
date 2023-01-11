@@ -23,7 +23,5 @@
 FROM base:fedora36
 LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
 
-WORKDIR /work
-
 RUN git clone http://github.com/JeffersonLab/ceInstall
 

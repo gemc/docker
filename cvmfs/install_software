@@ -1,12 +1,9 @@
 #!/bin/zsh -i
 
-
 export WORKDIR=/work
 export PHYS_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 
 . $WORKDIR/ceInstall/modules/setup.sh
-
-module avail
 
 export TERM=${TERM:-xterm}
 
@@ -19,10 +16,8 @@ if [[ $# -eq 2 ]]; then
  	if [[ $2 == "geant4" ]]; then
  		install_geant4_base $1
  	elif [[ $2 == "clas12" ]]; then
-	  install_all_clas12 $1
+		install_all_clas12 $1
  	fi
 
-else
- 	echo " > No argument given. "
 fi
 
