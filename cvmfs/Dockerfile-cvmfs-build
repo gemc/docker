@@ -29,15 +29,13 @@ RUN yum install -y \
 	qt5-qtbase-devel \
 	qt5-linguist
 
-ENV WDIR=/work
-WORKDIR $WDIR
-
-COPY install_software $WDIR
 
 ENV PHYS_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 RUN mkdir -p $PHYS_HOME
+WORKDIR $PHYS_HOME
+COPY install_software $PHYS_HOME
 
 RUN git clone https://github.com/JeffersonLab/ceInstall \
-    && $WDIR/install_software $PHYS_VERSION geant4
+    && $PHYS_HOME/install_software $PHYS_VERSION geant4
 
-RUN $WDIR/install_software $PHYS_VERSION clas12
+RUN $PHYS_HOME/install_software $PHYS_VERSION clas12

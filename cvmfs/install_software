@@ -1,9 +1,8 @@
 #!/bin/zsh -i
 
-export WORKDIR=/work
 export PHYS_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 
-. $WORKDIR/ceInstall/modules/setup.sh
+. $PHYS_HOME/ceInstall/modules/setup.sh
 
 export TERM=${TERM:-xterm}
 
