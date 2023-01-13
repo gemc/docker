@@ -30,6 +30,7 @@ RUN   yum -y update \
 	&& yum clean all
 
 # xrandr added so we could change resolutions
+# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
 RUN yum install -y \
 	cmake3 \
 	make \
@@ -38,7 +39,6 @@ RUN yum install -y \
 	mysql-devel \
 	python3-devel \
 	python3-scons \
-	mesa-libGL-devel \
 	mesa-libGLU-devel \
 	libX11-devel \
 	libXpm-devel \
