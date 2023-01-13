@@ -38,6 +38,7 @@ RUN yum install -y \
 	mysql-devel \
 	python3-devel \
 	python3-scons \
+	mesa-libGL-devel \
 	mesa-libGLU-devel \
 	libX11-devel \
 	libXpm-devel \
