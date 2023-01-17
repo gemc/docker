@@ -117,8 +117,10 @@ export JLAB_INSTALL=/work/clas12/ungaro
 export REMOTED=ungaro@ftp.jlab.org:$JLAB_INSTALL/$OSRELEASE/sim/$PHYS_VERSION
 export REMOTEN=ungaro@ftp.jlab.org:$JLAB_INSTALL
 
+
+
 cd $PHYS_HOME
-scp -r noarch          $REMOTEN
+scp -r noarch ceInstall $REMOTEN
 
 cd $PHYS_HOME/$OSRELEASE/$PHYS_SUB_DIR/$PHYS_VERSION
 
