@@ -86,11 +86,10 @@ The local container are used copy the builds to jlab
 ### Create the installation directory:
 
 ```
-cd /volatile/clas12/ungaro
-export SIM_VERSION=2.4
+export PHYS_VERSION=2.4
 export OSRELEASE=fedora36-gcc12
-export INSTL=$OSRELEASE/sim/$SIM_VERSION
-mkdir -p $INSTL/clas12Tags
+export JLAB_INSTALL=/work/clas12/ungaro
+mkdir -p $JLAB_INSTALL/$OSRELEASE/sim/$PHYS_VERSION
 ```
 
 
@@ -98,47 +97,49 @@ mkdir -p $INSTL/clas12Tags
 
 - Build the cvmfs-build image using the lines inside the Dockerfile ```/docker/cvmfs/Dockerfile-cvmfs-build``` 
 
-### Run the cvmfs-build container:
+### Run the cvmfs-build container and copy the files to jlab:
 
 ```
 docker run -it --rm cvmfs-build:cvmfs-build bash
 ```
 
-### Copy the files to jlab
-
-Notice: the env must match what we have above.
-
-```
-export SIM_VERSION=2.4
-export OSRELEASE=fedora34-gcc11
-export INSTL=$OSRELEASE/sim/$SIM_VERSION
-export REMOTED=ungaro@ftp.jlab.org:/work/clas12/ungaro/$INSTL
-export REMOTEN=ungaro@ftp.jlab.org:/work/clas12/ungaro
-cd $JLAB_ROOT/../../
-```
-
-Notice 1: we copy these one by one because of qt 
-Notice 2: the geant4 are a gazillion files, perhaps make tarball
-Notice 2: this needs to be run in zsh cause bash sucks at arrays
+Notice: better to run in zsh cause arrays
 
 ```
 zsh
-scp -r noarch          $REMOTEN
-scp -r $INSTL/clhep    $REMOTED
-scp -r $INSTL/xercesc  $REMOTED
-scp -r $INSTL/qt       $REMOTED
-scp -r $INSTL/geant4   $REMOTED
-scp -r $INSTL/ccdb     $REMOTED
-scp -r $INSTL/evio     $REMOTED
-scp -r $INSTL/hipo     $REMOTED
-scp -r $INSTL/mlibrary $REMOTED
-scp -r $INSTL/cmag     $REMOTED
-
-CTAGS=(4.4.2 5.1)
-for ct in $CTAGS
-do
-	echo $ct
-	scp -r $INSTL/clas12Tags/$ct $REMOTED/clas12Tags
-done
 ```
 
+```
+alias l='ls -l'
+source ceInstall/modules/setup.sh 
+module load physlibs/2.4
+export JLAB_INSTALL=/work/clas12/ungaro
+export REMOTED=ungaro@ftp.jlab.org:$JLAB_INSTALL/$OSRELEASE/sim/$PHYS_VERSION
+export REMOTEN=ungaro@ftp.jlab.org:$JLAB_INSTALL
+
+cd $PHYS_HOME
+scp -r noarch          $REMOTEN
+
+cd $PHYS_HOME/$OSRELEASE/$PHYS_SUB_DIR/$PHYS_VERSION
+
+for s in clhep xercesc qt geant4 ccdb evio hipo mlibrary cmag clas12Tags; do
+    echo
+    echo "> ZTar and SCP: $s"
+    echo
+    tar -czf $s.tar.gz $s
+done
+
+scp *.tar.gz $REMOTED
+
+```
+
+On the ifarm tab:
+
+```
+cd $JLAB_INSTALL/$OSRELEASE/sim/$PHYS_VERSION
+for s in clhep xercesc qt geant4 ccdb evio hipo mlibrary cmag clas12Tags; do
+    echo "> Spackaging: $s"
+    tar -xzf $s.tar.gz
+done
+rm *.tar.gz 
+```
