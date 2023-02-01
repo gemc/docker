@@ -70,7 +70,6 @@ RUN yum install -y \
 	perl-CPAN \
 	glibc-langpack-en \
 	xrandr \
-	root \
 	environment-modules \
 	&& yum clean packages \
 	&& yum clean all \

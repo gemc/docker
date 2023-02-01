@@ -2,7 +2,6 @@
 # cvmfs docker cvmfs base image
 # --------------------------------------------------------------------------
 #
-#  docker pull jeffersonlab/base:fedora36
 #  docker build --progress=plain --no-cache -f Dockerfile-cvmfs -t cvmfs:cvmfs .
 #
 # --------------------------------------------------------------------------
@@ -21,7 +20,15 @@
 # --------------------------------------------------------------------------
 
 FROM base:fedora36
-LABEL maintainer "Maurizio Ungaro <ungaro@jlab.org>"
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
-RUN git clone http://github.com/JeffersonLab/ceInstall
+RUN   yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
 
+# flexiblas-devel added for mcgen support
+# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
+RUN yum install -y \
+	flexiblas-devel \
+    liburing
