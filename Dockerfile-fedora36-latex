@@ -1,0 +1,71 @@
+#
+# docker fedora36 base image
+#--------------------------------------------------------------------------
+#
+# To manually build and push the container (use --no-cache to force rebuild):
+#
+#  docker build --progress=plain            -f Dockerfile-fedora36-latex -t base:fedora36-latex .
+#  docker build --progress=plain --no-cache -f Dockerfile-fedora36-latex -t base:fedora36-latex .
+#
+#  docker tag base:fedora36-latex jeffersonlab/base:fedora36-latex
+#
+#  docker push jeffersonlab/base:fedora36-latex
+#
+#--------------------------------------------------------------------------
+#
+# To run in batch mode:
+#
+#  docker run -it --rm base:fedora36-latex bash
+#
+#  docker run -it --rm jeffersonlab/base:fedora36-latex bash
+#
+#--------------------------------------------------------------------------
+
+FROM fedora:36
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+
+RUN   yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
+
+# xrandr added so we could change resolutions
+# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
+RUN yum install -y \
+	python3-scons \
+	bzip2 \
+	wget \
+	nano \
+	git \
+	which \
+	zsh \
+	hostname \
+	tigervnc-server \
+	xfce4-session \
+	xfce4-panel \
+	xfce4-terminal \
+	xfwm4 \
+	mailcap \
+	xterm \
+	nedit \
+    texlive-latex \
+    texlive-biblatex \
+	&& yum clean packages \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum \
+	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
+	&& git clone https://github.com/novnc/noVNC /opt/noVNC \
+	&& cd /opt/noVNC \
+	&& ln -s vnc.html index.html \
+	&& rm -rf .git* \
+	&& mkdir -p /container/utilities
+
+
+# These define an alias and a script for easily starting up the
+# servers from either bash or tcsh.
+COPY scripts/xstart_alias.sh  /etc/profile.d
+COPY scripts/xstart_alias.csh /etc/profile.d
+COPY scripts/xstart.sh  /container/utilities
+COPY scripts/xstart.csh /container/utilities
+COPY scripts/xstop /usr/bin
+ADD  dot_config /root/.config
