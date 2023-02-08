@@ -4,12 +4,11 @@
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain            -f Dockerfile-fedora36-latex -t base:fedora36-latex .
 #  docker build --progress=plain --no-cache -f Dockerfile-fedora36-latex -t base:fedora36-latex .
 #
-#  docker tag base:fedora36-latex jeffersonlab/base:fedora36-latex
+#  docker tag base:fedora36-latex maureeungaro/base:fedora36-latex
 #
-#  docker push jeffersonlab/base:fedora36-latex
+#  docker push maureeungaro/base:fedora36-latex
 #
 #--------------------------------------------------------------------------
 #
@@ -17,7 +16,7 @@
 #
 #  docker run -it --rm base:fedora36-latex bash
 #
-#  docker run -it --rm jeffersonlab/base:fedora36-latex bash
+#  docker run -it --rm maureeungaro/base:fedora36-latex bash
 #
 #--------------------------------------------------------------------------
 
@@ -31,6 +30,7 @@ RUN   yum -y update \
 
 # xrandr added so we could change resolutions
 # Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
+# latex: see https://docs.fedoraproject.org/en-US/neurofedora/latex/
 RUN yum install -y \
 	python3-scons \
 	bzip2 \
@@ -48,8 +48,9 @@ RUN yum install -y \
 	mailcap \
 	xterm \
 	nedit \
-    texlive-latex \
-    texlive-biblatex \
+    texlive-scheme-basic \
+    texlive-wrapfig \
+    texlive-multirow \
 	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
