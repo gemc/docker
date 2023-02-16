@@ -1,0 +1,29 @@
+#!/bin/zsh -i
+
+# argument is gemc version, SIM_HOME and what to install (sim or gemc)
+if [[ $# -eq 3 ]]; then
+
+  version=$1
+  export SIM_HOME=$2
+  what=$3
+
+  # if version is 2.9 or 2.10, sim_version is 2.5
+  if [[ $version == "2.9" || $version == "2.10" ]]; then
+    sim_version="2.5"
+  else
+    sim_version=$version
+  fi
+
+  . $SIM_HOME/ceInstall/modules/setup.sh
+  export TERM=${TERM:-xterm}
+
+  # if what is sim, install_sim, else if it's gemc use install_gemc
+  if [[ $what == "sim" ]]; then
+    echo " > Installing sim version $sim_version - SIM_HOME is $SIM_HOME"
+    install_sim $sim_version
+  elif [[ $what == "gemc" ]]; then
+    echo " > Installing gemc version $version - SIM_HOME is $SIM_HOME"
+    install_gemc $version
+  fi
+
+fi

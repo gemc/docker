@@ -1,0 +1,47 @@
+#
+#  jlabce module image - containing gemc
+# --------------------------------------------------------------------------
+#
+#  docker pull jeffersonlab/base:fedora36
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-jlabce -t jlabce:2.5m .
+#
+# --------------------------------------------------------------------------
+#
+#  docker tag jlabce:2.5m jeffersonlab/jlabce:2.5m
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm jlabce:2.5m bash
+#
+# --------------------------------------------------------------------------
+
+FROM base:fedora36
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+ARG GEMC_VERSION="na"
+
+RUN echo "GEMC_VERSION=$GEMC_VERSION"
+
+RUN    yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
+
+# qt added for geant4 / gemc
+# root added for banks
+RUN yum install -y \
+	qt5-qtbase-devel \
+	qt5-linguist \
+    root
+
+
+ENV SIM_HOME /work
+RUN mkdir -p $SIM_HOME
+WORKDIR $SIM_HOME
+
+COPY install_software $SIM_HOME
+
+RUN git clone https://github.com/JeffersonLab/ceInstall \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
+
+
+RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME gemc

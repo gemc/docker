@@ -1,8 +1,8 @@
 #!/bin/zsh -i
 
-export PHYS_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+export SIM_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 
-. $PHYS_HOME/ceInstall/modules/setup.sh
+. $SIM_HOME/ceInstall/modules/setup.sh
 
 export TERM=${TERM:-xterm}
 
@@ -13,9 +13,9 @@ if [[ $# -eq 2 ]]; then
  	echo " > Installing $2 for version $1 "
 
  	if [[ $2 == "geant4" ]]; then
- 		install_geant4_base $1
+ 		install_sim $1
  	elif [[ $2 == "clas12" ]]; then
-		install_all_clas12 $1
+		install_gemc $1
  	fi
 
 fi

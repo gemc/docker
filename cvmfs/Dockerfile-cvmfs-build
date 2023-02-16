@@ -3,9 +3,9 @@
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.4 .
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.5 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.5 .
-#  docker build --progress=plain --no-cache --build-arg PHYS_VERSION=2.6 -f Dockerfile-cvmfs-build -t cvmfs-build:cvmfs-build-2.6 .
+#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.4 .
+#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.5 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.5 .
+#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.6 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.6 .
 #
 # --------------------------------------------------------------------------
 #

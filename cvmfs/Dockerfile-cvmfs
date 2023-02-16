@@ -2,7 +2,7 @@
 # cvmfs docker cvmfs base image
 # --------------------------------------------------------------------------
 #
-#  docker build --progress=plain --no-cache -f Dockerfile-cvmfs -t cvmfs:cvmfs .
+#  docker build --progress=auto --no-cache -f Dockerfile-cvmfs -t cvmfs:cvmfs .
 #
 # --------------------------------------------------------------------------
 #
