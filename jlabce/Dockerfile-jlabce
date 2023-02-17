@@ -1,21 +1,29 @@
 #
-#  jlabce module image - containing gemc
+# jlabce module image - containing gemc
+# 1.0 refers to the gemc3 line - jlabce tagged accordingly
+# the gemc version to sim version is taken care of in install_software
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-jlabce -t jlabce:2.5m .
+#  docker build --progress=auto --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-jlabce -t jlabce:2.5m .
+#  docker build --progress=auto --no-cache --build-arg GEMC_VERSION=1.0  -f Dockerfile-jlabce -t gemc3:1.0 .
+#
+#  docker scan jlabce:2.5m
+#  docker scan gemc3:1.0
 #
 # --------------------------------------------------------------------------
 #
 #  docker tag jlabce:2.5m jeffersonlab/jlabce:2.5m
+#  docker tag gemc3:1.0 jeffersonlab/gemc3:1.0
 #
 # --------------------------------------------------------------------------
 #
 #  docker run -it --rm jlabce:2.5m bash
+#  docker run -it --rm gemc3:1.0 bash
 #
 # --------------------------------------------------------------------------
 
-FROM base:fedora36
+FROM jeffersonlab/base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 ARG GEMC_VERSION="na"
 

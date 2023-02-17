@@ -3,27 +3,39 @@
 # argument is gemc version, SIM_HOME and what to install (sim or gemc)
 if [[ $# -eq 3 ]]; then
 
-  version=$1
-  export SIM_HOME=$2
-  what=$3
+	gemc_version=$1
+	export SIM_HOME=$2
+	what=$3
 
-  # if version is 2.9 or 2.10, sim_version is 2.5
-  if [[ $version == "2.9" || $version == "2.10" ]]; then
-    sim_version="2.5"
-  else
-    sim_version=$version
-  fi
+	# sim version from gemc_version
+	if [[ $gemc_version == "4.4.2" || $gemc_version == "5.1" ]]; then
+		sim_version="2.4"
+	elif [[ $gemc_version == "2.9" || $gemc_version == "2.10" ]]; then
+		sim_version="2.5"
+	elif [[ $gemc_version == "1.0" ]]; then
+		sim_version="2.6"
+	fi
 
-  . $SIM_HOME/ceInstall/modules/setup.sh
-  export TERM=${TERM:-xterm}
+	. $SIM_HOME/ceInstall/modules/setup.sh
+	export TERM=${TERM:-xterm}
 
-  # if what is sim, install_sim, else if it's gemc use install_gemc
-  if [[ $what == "sim" ]]; then
-    echo " > Installing sim version $sim_version - SIM_HOME is $SIM_HOME"
-    install_sim $sim_version
-  elif [[ $what == "gemc" ]]; then
-    echo " > Installing gemc version $version - SIM_HOME is $SIM_HOME"
-    install_gemc $version
-  fi
+	# if what is sim, install_sim, else if it's gemc use install_gemc
+	if [[ $what == "sim" ]]; then
+		echo " > Installing sim version $sim_version - SIM_HOME is $SIM_HOME"
+		install_sim $sim_version
+	elif [[ $what == "gemc" ]]; then
+		if [[ $gemc_version == "2.9" || $gemc_version == "2.10" ]]; then
+			echo " > Installing gemc version $gemc_version - SIM_HOME is $SIM_HOME"
+			install_gemc $gemc_version
+		elif [[ $gemc_version == "1.0" ]]; then
+			echo " > Installing gemc version $gemc_version - SIM_HOME is $SIM_HOME"
+			install_gemc3 $gemc_version
+		else
+			echo " > ERROR: gemc version $gemc_version is not supported. Exiting."
+			exit 1
+		fi
+
+
+	fi
 
 fi
