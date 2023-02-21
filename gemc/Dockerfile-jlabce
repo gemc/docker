@@ -38,12 +38,11 @@ RUN    yum -y update \
 	&& yum clean all
 
 # qt added for geant4 / gemc
-# root added for banks
+# root added for banks / gstreamer plugins
 RUN yum install -y \
 	qt5-qtbase-devel \
 	qt5-linguist \
     root
-
 
 ENV SIM_HOME /work
 RUN mkdir -p $SIM_HOME
@@ -53,6 +52,5 @@ COPY install_software $SIM_HOME
 
 RUN git clone https://github.com/JeffersonLab/ceInstall \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
-
 
 RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc

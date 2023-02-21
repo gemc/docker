@@ -16,7 +16,7 @@ if [[ $# -eq 3 ]]; then
 		sim_version="2.6"
 	fi
 
-	. $SIM_HOME/ceInstall/modules/setup.sh
+	. $SIM_HOME/ceInstall/setup.sh
 	export TERM=${TERM:-xterm}
 
 	# if what is sim, install_sim, else if it's gemc use install_gemc
@@ -34,8 +34,6 @@ if [[ $# -eq 3 ]]; then
 			echo " > ERROR: gemc version $gemc_version is not supported. Exiting."
 			exit 1
 		fi
-
-
 	fi
 
 fi

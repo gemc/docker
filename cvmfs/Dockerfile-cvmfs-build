@@ -1,41 +1,56 @@
 #
 # cvmfs docker cvmfs-build base image
+# the gemc versions are dash-separated (if multiple)
+# the gemc version to sim version is taken care of in install_software
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.4 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.4 .
-#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.5 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.5 .
-#  docker build --progress=auto --no-cache --build-arg SIM_VERSION=2.6 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build-2.6 .
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=4.4.2-5.1 -f Dockerfile-cvmfs-build -t cvmfs:cvmfs-build .
+#
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs-build:cvmfs-build-2.4 bash
+#  docker scan cvmfs:cvmfs-build
+#
+#
+#
+#
+#
+#
+#
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm cvmfs:cvmfs-build bash
+#
 #
 # --------------------------------------------------------------------------
 
-FROM base:fedora36
+FROM jeffersonlab/base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
-#ARG PHYS_VERSION="na"
-#
-#RUN    yum -y update \
-#	&& yum -y check-update \
-#	&& yum clean packages \
-#	&& yum clean all
-#
-## qt added for geant4 / gemc
-## notice we copy all QT files to the installation dir in cvmfs
-## so they are not needed in the image that mounts cvmfs
-#RUN yum install -y \
-#	qt5-qtbase-devel \
-#	qt5-linguist
-#
-#
-#ENV PHYS_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
-#RUN mkdir -p $PHYS_HOME
-#WORKDIR $PHYS_HOME
-#COPY install_software $PHYS_HOME
-#
-#RUN git clone https://github.com/JeffersonLab/ceInstall \
-#    && $PHYS_HOME/install_software $PHYS_VERSION geant4
+ARG GEMC_VERSION="na"
 
-#RUN $PHYS_HOME/install_software $PHYS_VERSION clas12
+RUN echo "GEMC_VERSIONs=$GEMC_VERSION"
+
+RUN    yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
+
+# qt added for geant4 / gemc
+
+RUN yum install -y \
+	qt5-qtbase-devel \
+	qt5-linguist
+
+
+ENV SIM_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+RUN mkdir -p $SIM_HOME
+WORKDIR $SIM_HOME
+
+COPY install_software $SIM_HOME
+
+RUN git clone https://github.com/JeffersonLab/ceInstall \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
+
+RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME ctag

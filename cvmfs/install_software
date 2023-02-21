@@ -1,22 +1,40 @@
 #!/bin/zsh -i
 
-export SIM_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+# argument is gemc versions (tag separated),  SIM_HOME and what to install (sim or gemc)
 
-. $SIM_HOME/ceInstall/modules/setup.sh
+# split tags from first argument which is dash-separated tags
+# e.g. 4.4.2-5.1  will give 4.4.2 and 5.1
 
-export TERM=${TERM:-xterm}
+tags=(${(s/-/)1})
 
-# parse argument. If no argument given, set version to all available
-# module test may be different in modules/5.0 so here we are installing packages
-# one by one
-if [[ $# -eq 2 ]]; then
- 	echo " > Installing $2 for version $1 "
+if [[ $# -eq 3 ]]; then
 
- 	if [[ $2 == "geant4" ]]; then
- 		install_sim $1
- 	elif [[ $2 == "clas12" ]]; then
-		install_gemc $1
- 	fi
+	export SIM_HOME=$2
+	what=$3
+
+	. $SIM_HOME/ceInstall/setup.sh
+	export TERM=${TERM:-xterm}
+
+
+	for g in $=tags
+	do
+	  # sim version from gemc_version
+	  if [[ $g == "4.4.2" || $g == "5.1" ]]; then
+		  sim_version="2.4"
+	  fi
+
+	  # if what is sim, install_sim, else if it's gemc use install_gemc
+	  if [[ $what == "sim" ]]; then
+		  echo " > Installing sim version $sim_version - SIM_HOME is $SIM_HOME"
+		  install_sim $sim_version
+	  elif [[ $what == "ctag" ]]; then
+		  echo " > Installing clas12Tag $g - SIM_HOME is $SIM_HOME"
+	    install_gemc $g
+	  fi
+
+	done
+
 
 fi
+
 
