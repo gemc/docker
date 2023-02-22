@@ -4,8 +4,8 @@
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=auto            -f Dockerfile-fedora36 -t base:fedora36 .
-#  docker build --progress=auto --no-cache -f Dockerfile-fedora36 -t base:fedora36 .
+#  docker build --progress=plain            -f Dockerfile-fedora36 -t base:fedora36 .
+#  docker build --progress=plain --no-cache -f Dockerfile-fedora36 -t base:fedora36 .
 #
 #  docker scan base:fedora36
 #
