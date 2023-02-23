@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+#set -ex
 
 RUN_FLUXBOX=${RUN_FLUXBOX:-yes}
 RUN_XTERM=${RUN_XTERM:-yes}
@@ -16,4 +16,11 @@ case $RUN_XTERM in
     ;;
 esac
 
-exec supervisord -c /app/supervisord.conf
+echo
+echo
+echo Browse to http://localhost:8080/vnc.html
+echo
+echo
+[[ -f /app/localSetup.sh ]] && source /app/localSetup.sh
+echo
+exec supervisord -c /app/supervisord.conf > /app/entrypoint.log 2>&1

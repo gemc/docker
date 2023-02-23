@@ -17,7 +17,8 @@
 #
 # To run in batch mode:
 #
-#  docker run -it --rm base:fedora36 bash
+#  docker run -it --rm              base:fedora36 bash
+#  docker run -it --rm -p 8080:8080 base:fedora36
 #
 #  docker run -it --rm jeffersonlab/base:fedora36 bash
 #
@@ -32,7 +33,7 @@ RUN   yum -y update \
 	&& yum clean all
 
 # xrandr added so we could change resolutions
-# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
+# removed: glx-utils - hardware acceleration hard to support (to be revised?)
 RUN yum install -y \
 	cmake3 \
 	make \
@@ -54,41 +55,44 @@ RUN yum install -y \
 	nano \
 	git \
 	which \
+    bash \
 	tcsh \
 	zsh \
 	psmisc \
 	procps \
 	hostname \
-	tigervnc-server \
-	xfce4-session \
-	xfce4-panel \
-	xfce4-terminal \
-	xfwm4 \
 	mailcap \
 	net-tools \
-	glx-utils \
 	xterm \
 	nedit \
 	perl-CPAN \
 	glibc-langpack-en \
 	xrandr \
 	environment-modules \
+    fluxbox \
+    novnc \
+    supervisor \
+    x11vnc \
+    xorg-x11-server-Xvfb \
 	&& yum clean packages \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum \
-	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
-	&& git clone https://github.com/novnc/noVNC /opt/noVNC \
-	&& cd /opt/noVNC \
-	&& ln -s vnc.html index.html \
-	&& rm -rf .git* \
-	&& mkdir -p /container/utilities
+	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake
 
 
-# These define an alias and a script for easily starting up the
-# servers from either bash or tcsh.
-COPY scripts/xstart_alias.sh  /etc/profile.d
-COPY scripts/xstart_alias.csh /etc/profile.d
-COPY scripts/xstart.sh  /container/utilities
-COPY scripts/xstart.csh /container/utilities
-COPY scripts/xstop /usr/bin
-ADD  dot_config /root/.config
+# Setup demo environment variables
+ENV HOME=/root \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    DISPLAY=:0.0 \
+    DISPLAY_WIDTH=1400 \
+    DISPLAY_HEIGHT=1000 \
+    RUN_XTERM=yes \
+    RUN_FLUXBOX=yes
+
+COPY conf.d /app/conf.d
+COPY supervisord.conf entrypoint.sh /app/
+
+CMD ["/app/entrypoint.sh"]
+EXPOSE 8080

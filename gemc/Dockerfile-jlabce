@@ -22,7 +22,9 @@
 # --------------------------------------------------------------------------
 #
 #  docker run -it --rm jlabce:2.5m bash
-#  docker run -it --rm gemc3:1.0 bash
+#
+#  docker run -it --rm              gemc3:1.0 bash
+#  docker run -it --rm -p 8080:8080 gemc3:1.0
 #
 # --------------------------------------------------------------------------
 
@@ -50,7 +52,9 @@ WORKDIR $SIM_HOME
 
 COPY install_software $SIM_HOME
 
-RUN git clone https://github.com/JeffersonLab/ceInstall \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
+#RUN git clone https://github.com/JeffersonLab/ceInstall \
+#    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
+#
+#RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
 
-RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
+RUN git clone https://github.com/JeffersonLab/ceInstall
