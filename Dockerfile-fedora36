@@ -20,7 +20,8 @@
 #  docker run -it --rm              base:fedora36 bash
 #  docker run -it --rm -p 8080:8080 base:fedora36
 #
-#  docker run -it --rm jeffersonlab/base:fedora36 bash
+#  docker run -it --rm              jeffersonlab/base:fedora36 bash
+#  docker run -it --rm -p 8080:8080 jeffersonlab/base:fedora36 bash
 #
 #--------------------------------------------------------------------------
 

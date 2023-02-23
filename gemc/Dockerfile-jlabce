@@ -10,13 +10,12 @@
 #
 # --------------------------------------------------------------------------
 #
-#  docker scan jlabce:2.5m
-#  docker scan gemc3:1.0
-#
 #  docker tag jlabce:2.5m jeffersonlab/jlabce:2.5m
-#  docker tag gemc3:1.0 jeffersonlab/gemc3:1.0
-#
+#  docker scan jeffersonlab/jlabce:2.5m
 #  docker push jeffersonlab/jlabce:2.5m
+#
+#  docker tag gemc3:1.0 jeffersonlab/gemc3:1.0
+#  docker scan jeffersonlab/gemc3:1.0
 #  docker push jeffersonlab/gemc3:1.0
 #
 # --------------------------------------------------------------------------
@@ -28,7 +27,7 @@
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/base:fedora36
+FROM base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 ARG GEMC_VERSION="na"
 
@@ -51,10 +50,9 @@ RUN mkdir -p $SIM_HOME
 WORKDIR $SIM_HOME
 
 COPY install_software $SIM_HOME
+COPY localSetup.sh /app
 
-#RUN git clone https://github.com/JeffersonLab/ceInstall \
-#    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
-#
-#RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
+RUN git clone https://github.com/JeffersonLab/ceInstall \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
 
-RUN git clone https://github.com/JeffersonLab/ceInstall
+RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
