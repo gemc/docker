@@ -5,6 +5,5 @@ source /work/ceInstall/setup.sh
 
 module load gemc3/1.0
 
-export GPLUGIN_PATH=$GLIBRARY/lib
 
 

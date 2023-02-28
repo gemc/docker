@@ -16,7 +16,7 @@ if [[ $# -eq 3 ]]; then
 		sim_version="2.6"
 	fi
 
-	. $SIM_HOME/ceInstall/setup.sh
+	. $SIM_HOME/ceInstall/setup.sh install
 	export TERM=${TERM:-xterm}
 
 	# if what is sim, install_sim, else if it's gemc use install_gemc

@@ -10,6 +10,14 @@
 #
 # --------------------------------------------------------------------------
 #
+#  docker run -it --rm              jlabce:2.5m bash
+#  docker run -it --rm -p 8080:8080 jlabce:2.5m
+#
+#  docker run -it --rm              gemc3:1.0 bash
+#  docker run -it --rm -p 8080:8080 gemc3:1.0
+#
+# --------------------------------------------------------------------------
+#
 #  docker tag jlabce:2.5m jeffersonlab/jlabce:2.5m
 #  docker scan jeffersonlab/jlabce:2.5m
 #  docker push jeffersonlab/jlabce:2.5m
@@ -19,15 +27,8 @@
 #  docker push jeffersonlab/gemc3:1.0
 #
 # --------------------------------------------------------------------------
-#
-#  docker run -it --rm jlabce:2.5m bash
-#
-#  docker run -it --rm              gemc3:1.0 bash
-#  docker run -it --rm -p 8080:8080 gemc3:1.0
-#
-# --------------------------------------------------------------------------
 
-FROM base:fedora36
+FROM jeffersonlab/base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 ARG GEMC_VERSION="na"
 
