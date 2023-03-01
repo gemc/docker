@@ -1,0 +1,84 @@
+#
+# gemc docker clas12 system for gemc 3.0
+#
+# --------------------------------------------------------------------------
+#
+#  docker pull jeffersonlab/gemc3/1.0
+#  docker build --progress=plain --no-cache --build-arg CLAS12_SYSTEMS_VERSION=1.0  -f Dockerfile-c12s -t gemc3:1.0c12s .
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm              gemc3:1.0c12s bash
+#  docker run -it --rm -p 8080:8080 gemc3:1.0c12s
+#
+# --------------------------------------------------------------------------
+#
+#  docker tag c12s:1.0 jeffersonlab/gemc3:1.0c12s
+#  docker push jeffersonlab/gemc3:1.0c12s
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/gemc3:1.0
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+ARG CLAS12_SYSTEMS_VERSION="na"
+
+# CLAS12TAG is needed to compare the geometry
+ENV CLAS12TAG 5.1
+
+RUN echo "CLAS12_SYSTEMS_VERSION=$CLAS12_SYSTEMS_VERSION"
+
+COPY localSetupC12S.sh /app/localSetup.sh
+COPY localSetupC12S.sh /etc/profile.d/localSetup.sh
+
+# Java installation
+#RUN yum install -y \
+#	java-11-openjdk-devel \
+#	&& yum clean packages \
+#	&& yum clean all \
+#	&& rm -rf /var/cache/yum
+
+# Groovy installation
+# Warning: this does not work at JLAB due to certificate problems
+# Adding --insecure did not work
+#RUN curl -s get.sdkman.io | bash \
+#	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
+#	&& sdk install groovy
+
+# ensures ceInstall is at the latest version
+RUN cd /work/ceInstall \
+    && git pull \
+    && source /app/localSetup.sh \
+    && install_clas12_systems \
+    && install_ccdb
+
+# ccdb for clas12 digitization
+#RUN cd $JLAB_ROOT/$JLAB_VERSION/install  \
+#	&& cp /root/jlab.csh $JLAB_ROOT/$JLAB_VERSION/ce/ \
+#	&& cp $JLAB_ROOT/$JLAB_VERSION/ce/jlab.* /etc/profile.d/ \
+#	&& source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& ./go_ccdb \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/tmp \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/java \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/doc \
+#	&& rm -rf $JLAB_SOFTWARE/ccdb/*/swig
+
+# Checking out clas12Tags and compiling CLAS12TAG
+# Removing un-used tags and .git stuff
+#RUN rm -rf clas12Tags \
+#   && git clone https://github.com/gemc/clas12Tags.git \
+#	&& cd clas12Tags \
+#	# delete everything but $CLAS12TAG
+#	&& rm -rf .git* `ls | grep -v goIns | grep -v $CLAS12TAG | grep -v env | grep -v REA | grep -v gcards`
+
+# Running update.sh to install coatjava
+# Install clas12 geo/plugins to clas12-systems/systemsTxtDB (done by installCLAS12.sh)
+# Install streamer plugins to clas12-systems/systemsTxtDB (GPLUGIN_PATH)
+#RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh \
+#	&& mkdir $JLAB_SOFTWARE/clas12-systems \
+#	&& cd  $JLAB_SOFTWARE/clas12-systems \
+#	#&& git clone https://github.com/gemc/clas12-systems $G3CLAS12_VERSION \
+#	&& git clone https://github.com/maureeungaro/clas12-systems $G3CLAS12_VERSION \
+#	&& cd $G3CLAS12_VERSION \
+#	&& ./installClas12Coatjava.sh \
+#	&& cp $GEMC/gstreamer* $GPLUGIN_PATH
+#

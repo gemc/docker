@@ -7,8 +7,6 @@
 #  docker build --progress=plain            -f Dockerfile-fedora36 -t base:fedora36 .
 #  docker build --progress=plain --no-cache -f Dockerfile-fedora36 -t base:fedora36 .
 #
-#  docker scan base:fedora36
-#
 #  docker tag base:fedora36 jeffersonlab/base:fedora36
 #
 #  docker push jeffersonlab/base:fedora36

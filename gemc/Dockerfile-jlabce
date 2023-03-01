@@ -19,11 +19,9 @@
 # --------------------------------------------------------------------------
 #
 #  docker tag jlabce:2.5m jeffersonlab/jlabce:2.5m
-#  docker scan jeffersonlab/jlabce:2.5m
 #  docker push jeffersonlab/jlabce:2.5m
 #
 #  docker tag gemc3:1.0 jeffersonlab/gemc3:1.0
-#  docker scan jeffersonlab/gemc3:1.0
 #  docker push jeffersonlab/gemc3:1.0
 #
 # --------------------------------------------------------------------------
