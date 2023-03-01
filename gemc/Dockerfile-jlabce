@@ -1,7 +1,7 @@
 #
-# jlabce module image - containing gemc
-# 1.0 refers to the gemc3 line - jlabce tagged accordingly
+# jlabce module image - containing gemc, clas12_tags or gemc3
 # the gemc version to sim version is taken care of in install_software
+#
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
@@ -47,11 +47,12 @@ RUN yum install -y \
     root
 
 ENV SIM_HOME /work
-RUN mkdir -p $SIM_HOME
+RUN mkdir -p $SIM_HOME /app
 WORKDIR $SIM_HOME
 
 COPY install_software $SIM_HOME
-COPY localSetup.sh /app
+COPY localSetup.sh /app/
+COPY localSetup.sh /etc/profile.d/
 
 RUN git clone https://github.com/JeffersonLab/ceInstall \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
