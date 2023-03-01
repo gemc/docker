@@ -31,18 +31,18 @@ COPY localSetupC12S.sh /app/localSetup.sh
 COPY localSetupC12S.sh /etc/profile.d/localSetup.sh
 
 # Java installation
-#RUN yum install -y \
-#	java-11-openjdk-devel \
-#	&& yum clean packages \
-#	&& yum clean all \
-#	&& rm -rf /var/cache/yum
+RUN yum install -y \
+	java-11-openjdk-devel \
+	&& yum clean packages \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum
 
 # Groovy installation
 # Warning: this does not work at JLAB due to certificate problems
 # Adding --insecure did not work
-#RUN curl -s get.sdkman.io | bash \
-#	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
-#	&& sdk install groovy
+RUN curl -s get.sdkman.io | bash \
+	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
+	&& sdk install groovy
 
 # ensures ceInstall is at the latest version
 RUN cd /work/ceInstall \
