@@ -60,6 +60,7 @@ RUN cd /work \
     && tar -xzf $CLAS12TAG.tar.gz --strip-components=1 -C $CLAS12TAG
 
 # Run installClas12Coatjava.sh to install coatjava and build the geo and plugins
-RUN source /app/localSetup.sh \
+RUN cd /work/ceInstall \
+    && source /app/localSetup.sh \
     && cd $CLAS12_SYSTEMS \
     && ./installClas12Coatjava.sh

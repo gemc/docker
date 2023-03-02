@@ -59,4 +59,6 @@ RUN git clone https://github.com/JeffersonLab/ceInstall \
     && source /app/localSetup.sh \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
 
-RUN $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
+RUN cd /work/ceInstall \
+    && source /app/localSetup.sh \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
