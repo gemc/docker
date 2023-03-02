@@ -1,4 +1,4 @@
-#!/bin/zsh -i
+#!/bin/zsh
 
 # argument is gemc version, SIM_HOME and what to install (sim or gemc)
 if [[ $# -eq 3 ]]; then

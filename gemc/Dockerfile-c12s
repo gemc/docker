@@ -44,7 +44,7 @@ RUN curl -s https://get.sdkman.io | bash \
 	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
 	&& sdk install groovy
 
-# ensures ceInstall is at the latest version
+## ensures ceInstall is at the latest version
 RUN cd /work/ceInstall \
     && git pull \
     && source /app/localSetup.sh \

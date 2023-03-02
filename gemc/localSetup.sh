@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
-source /usr/share/Modules/init/bash
-source /work/ceInstall/setup.sh
+source /usr/share/Modules/init/sh
+
+source /work/ceInstall/setup.sh install
+
+export TERM=xterm-256color
 
 module load gemc3/1.0
-
-
 
 
 
