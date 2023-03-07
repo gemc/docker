@@ -2,9 +2,10 @@
 
 source /usr/share/Modules/init/sh
 
-source /work/ceInstall/setup.sh install
-
 export TERM=xterm-256color
+export SIM_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+
+source $SIM_HOME/ceInstall/setup.sh install
 
 module load gemc3/1.0
 module load .c12s/1.0

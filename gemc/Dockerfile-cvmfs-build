@@ -1,0 +1,63 @@
+#
+# cvmfs docker cvmfs-build base image
+# the gemc versions are dash-separated - installation uses install_c12tags
+#
+# --------------------------------------------------------------------------
+#
+#  docker pull jeffersonlab/base:fedora36
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=4.4.2-5.1 -f Dockerfile-cvmfs-build -t gemc:cvmfs-build .
+#
+#
+# --------------------------------------------------------------------------
+#
+#  docker run -it --rm              gemc:cvmfs-build bash
+#  docker run -it --rm -p 8080:8080 gemc:cvmfs-build
+#
+#
+#
+#
+# --------------------------------------------------------------------------
+#
+#  docker tag gemc3:1.0c12s jeffersonlab/gemc:cvmfs-build
+#  docker push              jeffersonlab/gemc:cvmfs-build
+#
+#
+#
+#
+# --------------------------------------------------------------------------
+
+FROM jeffersonlab/base:fedora36
+LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+ARG GEMC_VERSION="na"
+
+RUN echo "GEMC_VERSIONs=$GEMC_VERSION"
+
+RUN    yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
+
+
+# qt added for geant4 / gemc
+RUN yum install -y \
+	qt5-qtbase-devel \
+	qt5-linguist
+
+
+ENV SIM_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+RUN mkdir -p $SIM_HOME
+WORKDIR $SIM_HOME
+
+COPY install_c12tags $SIM_HOME
+COPY install_software $SIM_HOME
+COPY localSetupC12cvmfsbuild.sh /app/localSetup.sh
+COPY localSetupC12cvmfsbuild.sh /etc/profile.d/localSetup.sh
+
+# sourcing localSetup.sh calls ceInstall/setup.sh confusing $0
+# need to cd to /work/ceInstall
+RUN git clone https://github.com/JeffersonLab/ceInstall \
+    && source /app/localSetup.sh \
+    && $SIM_HOME/install_c12tags $GEMC_VERSION $SIM_HOME sim
+
+RUN source /app/localSetup.sh \
+    && $SIM_HOME/install_c12tags $GEMC_VERSION $SIM_HOME ctag
