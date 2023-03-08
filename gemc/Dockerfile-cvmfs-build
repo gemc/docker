@@ -1,5 +1,5 @@
 #
-# cvmfs docker cvmfs-build base image
+# cvmfs-build image - containing clas12_tags to be copied to cvmfs
 # the gemc versions are dash-separated - installation uses install_c12tags
 #
 # --------------------------------------------------------------------------

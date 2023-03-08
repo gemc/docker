@@ -1,5 +1,5 @@
 #
-# jlabce module image - containing gemc, clas12_tags or gemc3
+# jlabce image - containing gemc2 or gemc3
 # the gemc version to sim version is taken care of in install_software
 #
 # --------------------------------------------------------------------------
@@ -48,9 +48,17 @@ ENV SIM_HOME /work
 RUN mkdir -p $SIM_HOME /app
 WORKDIR $SIM_HOME
 
+# if $GEMC_VERSION is 1.0 copy gemc3 install_software
+if [ "$GEMC_VERSION" = "1.0" ]; then
+    COPY localSetupG3.sh /app/localSetup.sh
+    COPY localSetupG3.sh /etc/profile.d/localSetup.sh
+else
+    COPY localSetupG2.sh /app/localSetup.sh
+    COPY localSetupG2.sh /etc/profile.d/localSetup.sh
+fi
+
+
 COPY install_software $SIM_HOME
-COPY localSetup.sh /app/
-COPY localSetup.sh /etc/profile.d/
 
 
 # sourcing localSetup.sh calls ceInstall/setup.sh confusing $0
