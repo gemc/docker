@@ -18,8 +18,8 @@
 #
 # --------------------------------------------------------------------------
 #
-#  docker tag gemc3:1.0c12s jeffersonlab/gemc:cvmfs-build
-#  docker push              jeffersonlab/gemc:cvmfs-build
+#
+#
 #
 #
 #
