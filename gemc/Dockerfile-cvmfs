@@ -1,35 +1,50 @@
 #
-# cvmfs docker cvmfs base image
-# --------------------------------------------------------------------------
+# cvmfs docker cvmfs base image - this relies on software installed on /cvmfs
 #
-#  docker build --progress=auto --no-cache -f Dockerfile-cvmfs -t cvmfs:cvmfs .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm cvmfs:cvmfs bash
-#  docker run -it --rm -v /cvmfs:/cvmfs  cvmfs:cvmfs bash
+#  docker pull jeffersonlab/base:fedora36
+#  docker build --progress=plain --no-cache -f Dockerfile-cvmfs -t gemc:cvmfs .
+#
 #
 # --------------------------------------------------------------------------
 #
-#  docker tag cvmfs:cvmfs jeffersonlab/clas12software:production
-#  docker tag cvmfs:cvmfs jeffersonlab/clas12software:devel
+#  docker run -it --rm -v /cvmfs:/cvmfs              gemc:cvmfs bash
+#  docker run -it --rm -v /cvmfs:/cvmfs -p 8080:8080 gemc:cvmfs
+#
+#
+#
+#
+# --------------------------------------------------------------------------
+#
+#  docker tag gemc:cvmfs jeffersonlab/clas12software:production
+#  docker tag gemc:cvmfs jeffersonlab/clas12software:devel
 #
 #  docker push jeffersonlab/clas12software:production
 #  docker push jeffersonlab/clas12software:devel
 #
 # --------------------------------------------------------------------------
 
-FROM base:fedora36
+FROM jeffersonlab/base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
-RUN   yum -y update \
+
+
+
+RUN    yum -y update \
 	&& yum -y check-update \
 	&& yum clean packages \
 	&& yum clean all
 
+ENV SIM_HOME /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+WORKDIR $SIM_HOME
+
+COPY localSetupC12cvmfs.sh /app/localSetup.sh
+COPY localSetupC12cvmfs.sh /etc/profile.d/localSetup.sh
+
 # flexiblas-devel added for mcgen support
 # Added all root mandetary and optional dependencies from https://root.cern/install/dependencies/
-# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
 
 RUN yum install -y \
 	flexiblas-devel \
