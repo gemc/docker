@@ -1,45 +1,48 @@
 #
-# docker fedora36 base image
+# docker ubuntu22 base image
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain            -f Dockerfile-fedora36 -t base:fedora36 .
-#  docker build --progress=plain --no-cache -f Dockerfile-fedora36 -t base:fedora36 .
+#  docker build --progress=plain            -f Dockerfile-ubuntu22 -t base:ubuntu22 .
+#  docker build --progress=plain --no-cache -f Dockerfile-ubuntu22 -t base:ubuntu22 .
 #
-#  docker tag base:fedora36 jeffersonlab/base:fedora36
+#  docker tag base:ubuntu22 jeffersonlab/base:ubuntu22
 #
-#  docker push jeffersonlab/base:fedora36
+#  docker push jeffersonlab/base:ubuntu22
 #
 #--------------------------------------------------------------------------
 #
 # To run in batch mode:
 #
-#  docker run -it --rm              base:fedora36 bash
-#  docker run -it --rm -p 8080:8080 base:fedora36
+#  docker run -it --rm              base:ubuntu22 bash
+#  docker run -it --rm -p 8080:8080 base:ubuntu22
 #
-#  docker run -it --rm              jeffersonlab/base:fedora36 bash
-#  docker run -it --rm -p 8080:8080 jeffersonlab/base:fedora36 bash
+#  docker run -it --rm              jeffersonlab/base:ubuntu22 bash
+#  docker run -it --rm -p 8080:8080 jeffersonlab/base:ubuntu22 bash
 #
 #--------------------------------------------------------------------------
 
-FROM fedora:36
+FROM ubuntu:jammy
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
-RUN    yum -y update \
-	&& yum -y check-update \
-	&& yum clean packages \
-	&& yum clean all
+RUN    apt-get update \
+	&& apt-get  autoclean \
+
+
 
 # xrandr added so we could change resolutions
 # removed: glx-utils - hardware acceleration hard to support (to be revised?)
-RUN yum install -y \
-	cmake3 \
+RUN apt-get  install -y \
+	cmake \
 	make \
-	gcc-c++ \
+	g++ \
 	gfortran \
-	expat-devel \
-	mysql-devel \
+	expat \
+    libexpat1-dev \
+	 \
+    \
+    mysql-devel \
 	python3-devel \
 	python3-scons \
 	mesa-libGLU-devel \
