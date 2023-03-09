@@ -20,9 +20,11 @@
 #
 #  docker tag gemc:cvmfs jeffersonlab/clas12software:production
 #  docker tag gemc:cvmfs jeffersonlab/clas12software:devel
+#  docker tag gemc:cvmfs jeffersonlab/clas12software:cvmfs
 #
 #  docker push jeffersonlab/clas12software:production
 #  docker push jeffersonlab/clas12software:devel
+#  docker push jeffersonlab/clas12software:cvmfs
 #
 # --------------------------------------------------------------------------
 
