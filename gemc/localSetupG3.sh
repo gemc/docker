@@ -3,7 +3,7 @@
 source /usr/share/Modules/init/sh
 
 export TERM=xterm-256color
-export SIM_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+export SIM_HOME=/work
 
 source $SIM_HOME/ceInstall/setup.sh install
 
