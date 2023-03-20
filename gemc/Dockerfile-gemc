@@ -66,9 +66,11 @@ COPY install_software $SIM_HOME
 
 # sourcing localSetup.sh calls ceInstall/setup.sh confusing $0
 # need to cd to /work/ceInstall
-RUN git clone https://github.com/JeffersonLab/ceInstall
+RUN git clone https://github.com/JeffersonLab/ceInstall \
     && source /app/localSetup.sh \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
 
 RUN source /app/localSetup.sh \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME  gemc
+#    && cd $SIM_HOME/ceInstall \
+#    && git pull \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME   gemc
