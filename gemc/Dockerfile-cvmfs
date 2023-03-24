@@ -44,6 +44,7 @@ WORKDIR $SIM_HOME
 
 COPY localSetupC12cvmfs.sh /app/localSetup.sh
 COPY localSetupC12cvmfs.sh /etc/profile.d/localSetup.sh
+COPY bgMerginFilename.sh   /usr/bin/bgMerginFilename.sh
 
 # flexiblas-devel added for mcgen support
 # Added all root mandetary and optional dependencies from https://root.cern/install/dependencies/
