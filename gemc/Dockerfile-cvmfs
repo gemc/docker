@@ -48,10 +48,14 @@ COPY bgMerginFilename.sh   /usr/bin/bgMerginFilename.sh
 
 # flexiblas-devel added for mcgen support
 # Added all root mandetary and optional dependencies from https://root.cern/install/dependencies/
+# xrootd-client for xrootd
+# lsof for tcsh modules
+
 
 RUN yum install -y \
 	flexiblas-devel \
     liburing \
+    xrootd-client lsof \
     git make cmake gcc-c++ gcc binutils \
     libX11-devel libXpm-devel libXft-devel libXext-devel python openssl-devel \
     redhat-lsb-core gcc-gfortran pcre-devel \
