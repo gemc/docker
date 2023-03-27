@@ -64,13 +64,14 @@ RUN rm -f  $SIM_HOME/localSetup* \
 
 COPY install_software $SIM_HOME
 
-# sourcing localSetup.sh calls ceInstall/setup.sh confusing $0
-# need to cd to /work/ceInstall
+# geant4 base install
 RUN git clone https://github.com/JeffersonLab/ceInstall \
     && source /app/localSetup.sh \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
 
+# the strip is needed to run the image on old kernels
 RUN source /app/localSetup.sh \
-#    && cd $SIM_HOME/ceInstall \
-#    && git pull \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME   gemc
+    && cd $SIM_HOME/ceInstall \
+    && git pull \
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME   gemc \
+    && strip --remove-section=.note.ABI-tag $QTDIR/lib/libQt5Core.so.5
