@@ -44,7 +44,7 @@ RUN yum install -y \
 	qt5-linguist \
     root
 
-ENV SIM_HOME /work
+ENV SIM_HOME /usr/local
 RUN mkdir -p $SIM_HOME /app
 WORKDIR $SIM_HOME
 

@@ -3,7 +3,7 @@
 source /usr/share/Modules/init/sh
 
 export TERM=xterm-256color
-export SIM_HOME=/work
+export SIM_HOME=/usr/local
 
 source $SIM_HOME/ceInstall/setup.sh install
 
