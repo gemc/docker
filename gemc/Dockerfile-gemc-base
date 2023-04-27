@@ -1,28 +1,28 @@
 #
-# gemc image - containing gemc2 or gemc3
+# gemc image - contains geant4 base container for gemc2 or gemc3
 # the gemc version to sim version is taken care of in install_software
 #
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-gemc -t gemc:2.10 .
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=1.0  -f Dockerfile-gemc -t gemc3:1.0 .
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-gemc-base -t gemc:baseg4 .
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=1.0  -f Dockerfile-gemc-base -t gemc3:baseg4 .
 #
 # --------------------------------------------------------------------------
 #
-#  docker run -it --rm              gemc:2.10 bash
-#  docker run -it --rm -p 8080:8080 gemc:2.10
+#  docker run -it --rm              gemc:baseg4 bash
+#  docker run -it --rm -p 8080:8080 gemc:baseg4
 #
-#  docker run -it --rm              gemc3:1.0 bash
-#  docker run -it --rm -p 8080:8080 gemc3:1.0
+#  docker run -it --rm              gemc3:baseg4 bash
+#  docker run -it --rm -p 8080:8080 gemc3:baseg4
 #
 # --------------------------------------------------------------------------
 #
-#  docker tag gemc:2.10 jeffersonlab/gemc:2.10
-#  docker push jeffersonlab/gemc:2.10
+#  docker tag gemc:2.10 jeffersonlab/gemc:baseg4
+#  docker push jeffersonlab/gemc:baseg4
 #
-#  docker tag gemc3:1.0 jeffersonlab/gemc3:1.0
-#  docker push jeffersonlab/gemc3:1.0
+#  docker tag gemc3:1.0 jeffersonlab/gemc3:baseg4
+#  docker push jeffersonlab/gemc3:baseg4
 #
 # --------------------------------------------------------------------------
 
@@ -70,9 +70,3 @@ RUN git clone https://github.com/JeffersonLab/ceInstall \
     && source /app/localSetup.sh \
     && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
 
-# the strip is needed to run the image on old kernels
-RUN source /app/localSetup.sh \
-    && cd $SIM_HOME/ceInstall \
-    && git pull \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME   gemc \
-    && strip --remove-section=.note.ABI-tag $QTDIR/lib/libQt5Core.so.5
