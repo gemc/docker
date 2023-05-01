@@ -24,6 +24,7 @@ ARG CLAS12_SYSTEMS_VERSION="na"
 
 # CLAS12TAG is needed to compare the geometry
 ENV CLAS12TAG 5.1
+ENV SIM_HOME /usr/local
 
 RUN echo "CLAS12_SYSTEMS_VERSION=$CLAS12_SYSTEMS_VERSION"
 
@@ -45,7 +46,7 @@ RUN curl -s https://get.sdkman.io | bash \
 	&& sdk install groovy
 
 ## ensures ceInstall is at the latest version
-RUN cd /work/ceInstall \
+RUN cd $SIM_HOME/ceInstall \
     && git pull \
     && source /app/localSetup.sh \
     && install_clas12_systems \
@@ -53,14 +54,14 @@ RUN cd /work/ceInstall \
 
 
 # Getting
-RUN cd /work \
+RUN cd $SIM_HOME \
     && mkdir -p clas12_tags/$CLAS12TAG \
     && cd clas12_tags \
     && wget https://github.com/gemc/clas12_tags/archive/refs/tags/$CLAS12TAG.tar.gz \
     && tar -xzf $CLAS12TAG.tar.gz --strip-components=1 -C $CLAS12TAG
 
 # Run installClas12Coatjava.sh to install coatjava and build the geo and plugins
-RUN cd /work/ceInstall \
+RUN cd $SIM_HOME/ceInstall \
     && source /app/localSetup.sh \
     && cd $CLAS12_SYSTEMS \
     && ./installClas12Coatjava.sh

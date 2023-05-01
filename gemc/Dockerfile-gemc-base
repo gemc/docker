@@ -18,10 +18,10 @@
 #
 # --------------------------------------------------------------------------
 #
-#  docker tag gemc:2.10 jeffersonlab/gemc:baseg4
+#  docker tag gemc:gemc:baseg4 jeffersonlab/gemc:baseg4
 #  docker push jeffersonlab/gemc:baseg4
 #
-#  docker tag gemc3:1.0 jeffersonlab/gemc3:baseg4
+#  docker tag gemc3:baseg4 jeffersonlab/gemc3:baseg4
 #  docker push jeffersonlab/gemc3:baseg4
 #
 # --------------------------------------------------------------------------
