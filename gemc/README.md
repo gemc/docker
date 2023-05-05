@@ -1,6 +1,6 @@
 # Docker build for gemc
 
-
+Remember to use Rosetta (docker settings) to accelerte emulation on apple silicon
 
 
 ## CVMFS Installation
