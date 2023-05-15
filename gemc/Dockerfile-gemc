@@ -27,7 +27,7 @@
 # --------------------------------------------------------------------------
 
 # Options do not work before the from statement, need to switch this manyally
-#FROM jeffersonlab/gemc3:baseg4
+#FROM jeffersonlab/gemc:baseg4
 FROM jeffersonlab/gemc3:baseg4
 
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
@@ -56,5 +56,4 @@ COPY install_software $SIM_HOME
 RUN source /app/localSetup.sh \
     && cd $SIM_HOME/ceInstall \
     && git pull \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME gemc \
-    && strip --remove-section=.note.ABI-tag $QTDIR/lib/libQt5Core.so.5
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME gemc

@@ -7,8 +7,8 @@ export SIM_HOME=/usr/local
 
 source $SIM_HOME/ceInstall/setup.sh install
 
-module load gemc3/1.0
-module load .c12s/1.0
+module load gemc3/1.1
+module load .c12s/1.1
 module load .ccdb
 
 alias l='ls -l'

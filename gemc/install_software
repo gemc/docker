@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+source /usr/share/Modules/init/sh
+
 # argument is gemc version, SIM_HOME and what to install (sim or gemc)
 if [[ $# -eq 3 ]]; then
 
@@ -12,8 +14,8 @@ if [[ $# -eq 3 ]]; then
 		sim_version="2.4"
 	elif [[ $gemc_version == "2.9" || $gemc_version == "2.10" ]]; then
 		sim_version="2.5"
-	elif [[ $gemc_version == "1.0" ]]; then
-		sim_version="2.6"
+	elif [[ $gemc_version == "1.1" ]]; then
+		sim_version="2.7"
 	fi
 
 	. $SIM_HOME/ceInstall/setup.sh install

@@ -8,7 +8,7 @@ export SIM_HOME=/usr/local
 source $SIM_HOME/ceInstall/setup.sh install
 
 
-module load gemc3/1.0
+module load gemc3/1.1
 
 
 alias l='ls -l'

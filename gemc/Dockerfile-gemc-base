@@ -6,7 +6,7 @@
 #
 #  docker pull jeffersonlab/base:fedora36
 #  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10 -f Dockerfile-gemc-base -t gemc:baseg4 .
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=1.0  -f Dockerfile-gemc-base -t gemc3:baseg4 .
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=1.1  -f Dockerfile-gemc-base -t gemc3:baseg4 .
 #
 # --------------------------------------------------------------------------
 #
@@ -52,8 +52,8 @@ WORKDIR $SIM_HOME
 # copy both files, decide which to keep below
 COPY localSetupG2.sh localSetupG3.sh $SIM_HOME/
 
-# if $GEMC_VERSION is 1.0 mv localSetupG3.sh otherwise mv localSetupG2.sh to /app
-RUN if [ "$GEMC_VERSION" = "1.0" ] ; then \
+# if $GEMC_VERSION is 1.1 mv localSetupG3.sh otherwise mv localSetupG2.sh to /app
+RUN if [ "$GEMC_VERSION" = "1.1" ] ; then \
     mv $SIM_HOME/localSetupG3.sh /app/localSetup.sh ; \
 else  \
     mv $SIM_HOME/localSetupG2.sh /app/localSetup.sh ; \
@@ -65,8 +65,12 @@ RUN rm -f  $SIM_HOME/localSetup* \
 
 COPY install_software $SIM_HOME
 
-# geant4 base install
+# geant4 base install - sim
 RUN git clone https://github.com/JeffersonLab/ceInstall \
     && source /app/localSetup.sh \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim
+    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME sim \
+    && strip --remove-section=.note.ABI-tag $QTDIR/lib/libQt5Core.so.5
 
+
+#RUN git clone https://github.com/JeffersonLab/ceInstall \
+#    && source /app/localSetup.sh
