@@ -18,8 +18,9 @@ esac
 
 
 echo
-[[ -f /app/localSetup.sh ]] && source /app/localSetup.sh || echo "No localSetup.sh found"
+[[ -f /app/localSetup.sh ]] && source /app/localSetup.sh
+echo Browse to:
+echo http://localhost:8080/vnc.html
 echo
-echo Browse to http://localhost:8080/vnc.html
 echo
-echoexec supervisord -c /app/supervisord.conf > /app/entrypoint.log 2>&1
+exec supervisord -c /app/supervisord.conf > /app/entrypoint.log 2>&1

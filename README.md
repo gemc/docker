@@ -1,62 +1,50 @@
-# Docker configuration files for various docker hubs:
+# Docker configuration files for geant4 simulations
 
+The containers work in batch mode or interactively using novnc:
 
----
-
-### base
-
-Centos8 or Fedora35 images with rpm packages installed
-
-[jeffersonlab/base](https://hub.docker.com/repository/docker/jeffersonlab/base)
+* batch mode:  `docker run -it --rm container  bash`
+* interactive: `docker run -it --rm -p 8080:8080 container`
 
 ---
 
-### jlabce
+### Available containers:
 
-- 2.5g2: Based on centos8. Includes geant4 and libraries needed for gemc2:
+- Fedora:
+  - base:fedora36
 
-  - evio
-  - ccdb
-  - hipo
-  - cadmesh
-   
-- 2.5g3: Based on Fedora35. Includes geant4 and libraries needed for gemc3:
-
-  - ccdb
-  - cadmesh
- 
-
-[jeffersonlab/jlabce](https://hub.docker.com/repository/docker/jeffersonlab/jlabce)
-
-
-### gemc
-
-- 2.9: based on jabce:2.5g2
-- 3.0: based on jabce:2.5g3
-
-[jeffersonlab/gemc](https://hub.docker.com/repository/docker/jeffersonlab/gemc)
+  
+- Ubuntu:
+  - base:ubuntu22
 
 ---
 
-### clas12tags
 
 
-[jeffersonlab/clas12tags](https://hub.docker.com/repository/docker/jeffersonlab/clas12tags)
+| M. Ungaro |   [![Homepage](https://cdn3.iconfinder.com/data/icons/feather-5/24/home-64.png)](https://maureeungaro.github.io/home/)   |        [![email](https://cdn4.iconfinder.com/data/icons/aiga-symbol-signs/439/aiga_mail-64.png)](mailto:ungaro@jlab.org)         | [![github](https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-github-64.png)](https://github.com/maureeungaro)  | 
+|:---------:|:------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
 
 
-####
 
-Contact: ungaro@jlab.org
+### Notes
 
-
-### Notes:
-
-The github username or organization should be linked to docker hub:
-On the ACCOUNT settings go to applications and click on Docker Hub Builder.
-Grant access to the organizations if needed.
-
-
-#### Missing Packages:
-
+- The github username or organization should be linked to docker hub:
+  on the ACCOUNT settings go to applications and click on Docker Hub Builder.
+  Grant access to the organizations if needed.
 - CentOS8 notes:  https://fedoraproject.org/wiki/EPEL
 
+
+## Dockerfile Commands
+
+![Alt dockerfile commands](dockerfile-commands.png?raw=true "dockerfile commands")
+
+
+# Interactive packages requirements:
+
+See https://github.com/theasp/docker-novnc/
+
+- Xvfb - X11 in a virtual framebuffer
+- x11vnc - A VNC server that scrapes the above X11 server
+- noNVC - A HTML5 canvas vnc viewer
+- Fluxbox - a small window manager
+- xterm - to demo that it works
+- supervisord - to keep it all running

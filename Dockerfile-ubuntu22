@@ -1,85 +1,48 @@
+# ubuntu base image
+#-----------------------------------------------------------------------------------------
 #
-# docker ubuntu22 base image
-#--------------------------------------------------------------------------
+# docker_build_and_tag_image ubuntu:jammy  Dockerfile-ubuntu22  base:ubuntu22  "--no-cache"
+# docker_run_image base:ubuntu22 [i]
+# docker push jeffersonlab/base:ubuntu22
 #
-# To manually build and push the container (use --no-cache to force rebuild):
-#
-#  docker build --progress=plain            -f Dockerfile-ubuntu22 -t base:ubuntu22 .
-#  docker build --progress=plain --no-cache -f Dockerfile-ubuntu22 -t base:ubuntu22 .
-#
-#  docker tag base:ubuntu22 jeffersonlab/base:ubuntu22
-#
-#  docker push jeffersonlab/base:ubuntu22
-#
-#--------------------------------------------------------------------------
-#
-# To run in batch mode:
-#
-#  docker run -it --rm              base:ubuntu22 bash
-#  docker run -it --rm -p 8080:8080 base:ubuntu22
-#
-#  docker run -it --rm              jeffersonlab/base:ubuntu22 bash
-#  docker run -it --rm -p 8080:8080 jeffersonlab/base:ubuntu22 bash
-#
-#--------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
 
-FROM ubuntu:jammy
+FROM imagetemplate
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
-RUN    apt-get update \
-	&& apt-get  autoclean \
+# run shell instead of sh
+SHELL ["/bin/bash", "-c"]
+
+RUN    apt update \
+	&& apt  autoclean
 
 
+# no interactive session to identify the timezone
+RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
+    && DEBIAN_FRONTEND=noninteractive apt  install -y --no-install-recommends tzdata \
+	cmake make g++ \
+    expat libexpat1-dev \
+    libmysqlclient-dev \
+	libpython3-dev scons \
+	libglu1-mesa-dev   libx11-dev   libxpm-dev   libxft-dev   libxt-dev   libxmu-dev   libxrender-dev \
+	bzip2 wget curl nano git bash tcsh zsh hostname gedit environment-modules \
+	psmisc procps mailcap net-tools \
+	libcpandb-perl \
+    xvfb x11vnc novnc fluxbox xterm supervisor  \
+    qtbase5-dev libsqlite3-dev \
+	&& apt  autoclean
 
-# xrandr added so we could change resolutions
-# removed: glx-utils - hardware acceleration hard to support (to be revised?)
-RUN apt-get  install -y \
-	cmake \
-	make \
-	g++ \
-	gfortran \
-	expat \
-    libexpat1-dev \
-	 \
-    \
-    mysql-devel \
-	python3-devel \
-	python3-scons \
-	mesa-libGLU-devel \
-	libX11-devel \
-	libXpm-devel \
-	libXft-devel \
-	libXt-devel \
-	libXmu-devel \
-	libXrender-devel \
-	bzip2 \
-	wget \
-	nano \
-	git \
-	which \
-    bash \
-	tcsh \
-	zsh \
-	psmisc \
-	procps \
-	hostname \
-	mailcap \
-	net-tools \
-	xterm \
-	nedit \
-	perl-CPAN \
-	glibc-langpack-en \
-	xrandr \
-	environment-modules \
-    fluxbox \
-    novnc \
-    supervisor \
-    x11vnc \
-    xorg-x11-server-Xvfb \
-	&& yum clean packages \
-	&& yum clean all \
-	&& rm -rf /var/cache/yum \
-	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+
+# root not available yet on ubuntu22, see https://root.cern/install/#conda
+# so using conda for now. Notice 'ame' environment is used not sure how
+ENV CONDA_INSTALLER_FILE Miniconda3-py310_23.3.1-0-Linux-aarch64.sh
+
+RUN curl https://repo.anaconda.com/miniconda/$CONDA_INSTALLER_FILE -O \
+    && bash $CONDA_INSTALLER_FILE -b \
+    && source /root/miniconda3/etc/profile.d/conda.sh \
+    && conda config --set channel_priority strict \
+    && conda create -c conda-forge --name myroot root \
+    && conda activate myroot
 
 
 # Setup demo environment variables
@@ -94,7 +57,9 @@ ENV HOME=/root \
     RUN_FLUXBOX=yes
 
 COPY conf.d /app/conf.d
-COPY supervisord.conf entrypoint.sh /app/
+COPY supervisord.conf entrypoint.sh ubuntu_conda.sh /app/
+
+RUN cat /app/ubuntu_conda.sh >> /root/.bashrc
 
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080

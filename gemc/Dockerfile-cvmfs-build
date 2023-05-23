@@ -5,7 +5,7 @@
 # --------------------------------------------------------------------------
 #
 #  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=4.4.2-5.1 -f Dockerfile-cvmfs-build -t gemc:cvmfs-build .
+#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=4.4.2-5.3 -f Dockerfile-cvmfs-build -t gemc:cvmfs-build .
 #
 #
 # --------------------------------------------------------------------------
