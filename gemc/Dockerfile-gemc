@@ -1,59 +1,34 @@
-#
 # gemc image - containing gemc2 or gemc3
-# the gemc version to sim version is taken care of in install_software
-#
 # --------------------------------------------------------------------------
 #
-#  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=2.10  -f Dockerfile-gemc -t gemc:2.10 .
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=1.1   -f Dockerfile-gemc -t gemc3:1.1 .
-#
-# --------------------------------------------------------------------------
-#
-#  docker run -it --rm              gemc:2.10 bash
-#  docker run -it --rm -p 8080:8080 gemc:2.10
-#
-#  docker run -it --rm              gemc3:1.1 bash
-#  docker run -it --rm -p 8080:8080 gemc3:1.1
-#
-# --------------------------------------------------------------------------
-#
-#  docker tag gemc:2.10 jeffersonlab/gemc:2.10
-#  docker push jeffersonlab/gemc:2.10
-#
-#  docker tag gemc3:1.1 jeffersonlab/gemc3:1.1
-#  docker push jeffersonlab/gemc3:1.1
+# docker_build_gemc_image 2.11 fedora36
+# docker_run_gemc_image   2.11 fedora36 [i]
+# docker_push_gemc_image  2.11 fedora36
 #
 # --------------------------------------------------------------------------
 
-# Options do not work before the from statement, need to switch this manyally
-#FROM jeffersonlab/gemc:baseg4
-FROM jeffersonlab/gemc3:baseg4
-
+FROM imagetemplate
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+
+# run shell instead of sh
+SHELL ["/bin/bash", "-c"]
+
 ARG GEMC_VERSION="na"
-RUN echo "GEMC_VERSION=$GEMC_VERSION"
+ARG MODULE_TO_LOAD="na"
+RUN echo "GEMC_VERSION=$GEMC_VERSION, MODULE_TO_LOAD=$MODULE_TO_LOAD"
 
 ENV SIM_HOME /usr/local
 
-# steps done again in case local setup changed
-# copy both files, decide which to keep below
-COPY localSetupG2.sh localSetupG3.sh $SIM_HOME/
+WORKDIR $SIM_HOME
 
-# if $GEMC_VERSION is 1.1 mv localSetupG3.sh otherwise mv localSetupG2.sh to /app
-RUN if [ "$GEMC_VERSION" = "1.1" ] ; then \
-    mv $SIM_HOME/localSetupG3.sh /app/localSetup.sh ; \
-else  \
-    mv $SIM_HOME/localSetupG2.sh /app/localSetup.sh ; \
-fi
+COPY install_gemc $SIM_HOME
 
-RUN rm -f  $SIM_HOME/localSetup* \
-    && cp /app/localSetup.sh /etc/profile.d/localSetup.sh
+RUN echo "module load $MODULE_TO_LOAD" >> $SIM_HOME/localSetup.sh \
+    && cp $SIM_HOME/localSetup.sh /app/localSetup.sh \
+    && cp $SIM_HOME/localSetup.sh /etc/profile.d/localSetup.sh
 
-COPY install_software $SIM_HOME
-
-# the strip is needed to run the image on old kernels
+# gemc installation
 RUN source /app/localSetup.sh \
     && cd $SIM_HOME/ceInstall \
     && git pull \
-    && $SIM_HOME/install_software $GEMC_VERSION $SIM_HOME gemc
+    && $SIM_HOME/install_gemc $GEMC_VERSION $SIM_HOME

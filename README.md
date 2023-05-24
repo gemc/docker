@@ -1,5 +1,3 @@
-# Docker configuration files for geant4 simulations
-
 The containers work in batch mode or interactively using novnc:
 
 * batch mode:  `docker run -it --rm container  bash`
@@ -7,7 +5,7 @@ The containers work in batch mode or interactively using novnc:
 
 ---
 
-### Available containers:
+## Available containers:
 
 - Fedora:
   - base:fedora36
@@ -18,12 +16,21 @@ The containers work in batch mode or interactively using novnc:
 
 ---
 
+## Container content:
 
+- root
+- x11 package to support geant4
+- novnc to run interactive sessions through fluxbox
+- qt5
+- basic utilities like cmake, python3, git, curl, etc.
+
+---
 
 | M. Ungaro |   [![Homepage](https://cdn3.iconfinder.com/data/icons/feather-5/24/home-64.png)](https://maureeungaro.github.io/home/)   |        [![email](https://cdn4.iconfinder.com/data/icons/aiga-symbol-signs/439/aiga_mail-64.png)](mailto:ungaro@jlab.org)         | [![github](https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-github-64.png)](https://github.com/maureeungaro)  | 
 |:---------:|:------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
 
 
+---
 
 ### Notes
 
