@@ -1,9 +1,9 @@
 # fedora base image
 #-----------------------------------------------------------------------------------------
 #
-# docker_build_and_tag_image fedora:36     Dockerfile-fedora36  base:fedora36  "--no-cache"
+# docker_build_image fedora:36     Dockerfile-fedora36  base:fedora36  "--no-cache"
 # docker_run_image base:fedora36 [i]
-# docker push jeffersonlab/base:fedora36
+# docker_tag_and_push_image base:fedora36
 #
 #-----------------------------------------------------------------------------------------
 

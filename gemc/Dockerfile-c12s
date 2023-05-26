@@ -1,67 +1,54 @@
-#
 # gemc docker clas12 system for gemc 3.0
-#
 # --------------------------------------------------------------------------
 #
-#  docker pull effersonlab/gemc3:1.1
-#  docker build --progress=plain --no-cache --build-arg CLAS12_SYSTEMS_VERSION=1.1  -f Dockerfile-c12s -t gemc3:1.1c12s .
-#
-# --------------------------------------------------------------------------
-#
-#  docker run -it --rm              gemc3:1.1c12s bash
-#  docker run -it --rm -p 8080:8080 gemc3:1.1c12s
-#
-# --------------------------------------------------------------------------
-#
-#  docker tag gemc3:1.1c12s jeffersonlab/gemc3:1.1c12s
-#  docker push              jeffersonlab/gemc3:1.1c12s
+# docker_build_c12s_image 1.1 5.1 fedora36
+# docker_run_c12s_image   1.1 fedora36 [i]
+# docker_push_c12s_image  1.1 fedora36
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/gemc3:1.1
+FROM imagetemplate
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
-ARG CLAS12_SYSTEMS_VERSION="na"
 
-# CLAS12TAG is needed to compare the geometry
-ENV CLAS12TAG 5.1
+# run shell instead of sh
+SHELL ["/bin/bash", "-c"]
+
+ARG C12S_VERSION="na"
+ARG C12T_VERSION="na"
+RUN echo "C12S_VERSION=$C12S_VERSION, C12T_VERSION=$C12T_VERSION "
+
 ENV SIM_HOME /usr/local
 
-RUN echo "CLAS12_SYSTEMS_VERSION=$CLAS12_SYSTEMS_VERSION"
+RUN javainstallationtemplate
 
-COPY localSetupC12S.sh /app/localSetup.sh
-COPY localSetupC12S.sh /etc/profile.d/localSetup.sh
-
-# Java installation
-RUN yum install -y \
-	java-11-openjdk-devel \
-	&& yum clean packages \
-	&& yum clean all \
-	&& rm -rf /var/cache/yum
+RUN    echo "module load .c12s/$C12S_VERSION" >> $SIM_HOME/localSetup.sh \
+    && echo "module load .ccdb"               >> $SIM_HOME/localSetup.sh \
+    && cp $SIM_HOME/localSetup.sh /app/localSetup.sh \
+    && cp $SIM_HOME/localSetup.sh /etc/profile.d/localSetup.sh
 
 # Groovy installation
 # Warning: this does not work at JLAB due to certificate problems
 # Adding --insecure did not work
-RUN curl -s https://get.sdkman.io | bash \
+RUN curl -SL https://get.sdkman.io | bash \
 	&& source "$HOME/.sdkman/bin/sdkman-init.sh" \
 	&& sdk install groovy
 
 ## ensures ceInstall is at the latest version
-RUN cd $SIM_HOME/ceInstall \
+RUN source /app/localSetup.sh \
+    && cd $SIM_HOME/ceInstall \
     && git pull \
-    && source /app/localSetup.sh \
     && install_clas12_systems \
     && install_ccdb
 
-
-# Getting
+# Getting clas12Tags
 RUN cd $SIM_HOME \
-    && mkdir -p clas12_tags/$CLAS12TAG \
+    && mkdir -p clas12_tags/$C12T_VERSION \
     && cd clas12_tags \
-    && wget https://github.com/gemc/clas12_tags/archive/refs/tags/$CLAS12TAG.tar.gz \
-    && tar -xzf $CLAS12TAG.tar.gz --strip-components=1 -C $CLAS12TAG
+    && curl -SL -O https://github.com/gemc/clas12_tags/archive/refs/tags/$C12T_VERSION.tar.gz \
+    && tar -xzf $C12T_VERSION.tar.gz --strip-components=1 -C $C12T_VERSION \
+    && rm -f $C12T_VERSION.tar.gz
 
 # Run installClas12Coatjava.sh to install coatjava and build the geo and plugins
-RUN cd $SIM_HOME/ceInstall \
-    && source /app/localSetup.sh \
+RUN source /app/localSetup.sh \
     && cd $CLAS12_SYSTEMS \
     && ./installClas12Coatjava.sh

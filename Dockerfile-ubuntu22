@@ -1,9 +1,9 @@
 # ubuntu base image
 #-----------------------------------------------------------------------------------------
 #
-# docker_build_and_tag_image ubuntu:jammy  Dockerfile-ubuntu22  base:ubuntu22  "--no-cache"
+# docker_build_image ubuntu:jammy  Dockerfile-ubuntu22  base:ubuntu22  "--no-cache"
 # docker_run_image base:ubuntu22 [i]
-# docker push jeffersonlab/base:ubuntu22
+# docker_tag_and_push_image base:ubuntu22
 #
 #-----------------------------------------------------------------------------------------
 

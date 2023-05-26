@@ -13,7 +13,7 @@ if [[ $# -eq 2 ]]; then
   if [[ $gemc_version == "2.11" ]]; then
     echo " > Installing gemc version $gemc_version - SIM_HOME is $SIM_HOME"
     $SIM_HOME/ceInstall/install/install_gemc  $gemc_version
-  elif [[ $gemc_version == "1.1" ]]; then
+  elif [[ $gemc_version == "1.1" || $gemc_version == "dev" ]]; then
     echo " > Installing gemc3 version $gemc_version - SIM_HOME is $SIM_HOME"
     $SIM_HOME/ceInstall/install/install_gemc3 $gemc_version
   else

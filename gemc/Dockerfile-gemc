@@ -1,9 +1,9 @@
 # gemc image - containing gemc2 or gemc3
 # --------------------------------------------------------------------------
 #
-# docker_build_gemc_image 2.11 fedora36
-# docker_run_gemc_image   2.11 fedora36 [i]
-# docker_push_gemc_image  2.11 fedora36
+# docker_build_gemc_image        2.11 fedora36
+# docker_run_gemc_image          2.11 fedora36 [i]
+# docker_tag_and_push_gemc_image 2.11 fedora36
 #
 # --------------------------------------------------------------------------
 
