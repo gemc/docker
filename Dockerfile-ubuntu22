@@ -34,7 +34,7 @@ RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
 
 
 # root not available yet on ubuntu22, see https://root.cern/install/#conda
-# so using conda for now. Notice 'ame' environment is used not sure how
+# so using conda for now. 
 ENV CONDA_INSTALLER_FILE Miniconda3-py310_23.3.1-0-Linux-aarch64.sh
 # this will not work within the JLAB firewall
 RUN curl -SL https://repo.anaconda.com/miniconda/$CONDA_INSTALLER_FILE -O \
