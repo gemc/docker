@@ -1,32 +1,13 @@
-#
 # cvmfs-build image - containing clas12_tags to be copied to cvmfs
-# the gemc versions are dash-separated - installation uses install_c12tags
-#
 # --------------------------------------------------------------------------
 #
-#  docker pull jeffersonlab/base:fedora36
-#  docker build --progress=plain --no-cache --build-arg GEMC_VERSION=4.4.2-5.3 -f Dockerfile-cvmfs-build -t gemc:cvmfs-build .
-#
-#
-# --------------------------------------------------------------------------
-#
-#  docker run -it --rm              gemc:cvmfs-build bash
-#  docker run -it --rm -p 8080:8080 gemc:cvmfs-build
-#
-#
-#
-#
-# --------------------------------------------------------------------------
-#
-#
-#
-#
-#
-#
+# docker_build_gemc_image        4.4.2-5.1 fedora36
+# docker_run_gemc_image          4.4.2-5.1 fedora36 [i]
+# docker_tag_and_push_gemc_image 4.4.2-5.1 fedora36
 #
 # --------------------------------------------------------------------------
 
-FROM jeffersonlab/base:fedora36
+FROM base:fedora36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 ARG GEMC_VERSION="na"
 
