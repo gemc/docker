@@ -18,14 +18,14 @@ The containers work in batch mode or interactively using novnc:
 ## Sim containers: includes clhep, xercesc, qt and geant4: 
 
 - Fedora:
-  - sim-10.6.2-fedora36
-  - sim-10.7.4-fedora36
-  - sim-11.1.1-fedora36
-
+  - 10.6.2-fedora36
+  - 10.7.4-fedora36
+  - 11.1.1-fedora36
+``
 - Ubuntu:
-  - sim-10.6.2-ubuntu22
-  - sim-10.7.4-ubuntu22
-  - sim-11.1.1-ubuntu22
+  - 10.6.2-ubuntu22
+  - 10.7.4-ubuntu22
+  - 11.1.1-ubuntu22
 
 ---
 

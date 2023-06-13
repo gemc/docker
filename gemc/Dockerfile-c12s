@@ -1,9 +1,9 @@
 # gemc docker clas12 system for gemc 3.0
 # --------------------------------------------------------------------------
 #
-# docker_build_c12s_image 1.1 5.1 fedora36
-# docker_run_c12s_image   1.1 fedora36 [i]
-# docker_push_c12s_image  1.1 fedora36
+# docker_build_c12s_image        1.1 5.1 fedora36
+# docker_run_c12s_image          1.1 fedora36 [i]
+# docker_tag_and_push_c12s_image 1.1 fedora36
 #
 # --------------------------------------------------------------------------
 
