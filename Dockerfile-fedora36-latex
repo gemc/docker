@@ -1,27 +1,22 @@
-#
-# docker fedora36 base image
+# docker fedora36 base image - TODO: needs update to use fluxbox
 #--------------------------------------------------------------------------
 #
 # To manually build and push the container (use --no-cache to force rebuild):
 #
-#  docker build --progress=plain --no-cache -f Dockerfile-fedora36-latex -t base:fedora36-latex .
-#
+#  docker buildx build --platform linux/amd64  --progress=plain --no-cache -f Dockerfile-fedora36-latex -t base:fedora36-latex .
 #  docker tag base:fedora36-latex maureeungaro/base:fedora36-latex
-#
 #  docker push maureeungaro/base:fedora36-latex
 #
-#--------------------------------------------------------------------------
-#
-# To run in batch mode:
-#
 #  docker run -it --rm base:fedora36-latex bash
-#
-#  docker run -it --rm maureeungaro/base:fedora36-latex bash
 #
 #--------------------------------------------------------------------------
 
 FROM fedora:36
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
+
+# run shell instead of sh
+SHELL ["/bin/bash", "-c"]
+
 
 RUN   yum -y update \
 	&& yum -y check-update \
@@ -29,44 +24,42 @@ RUN   yum -y update \
 	&& yum clean all
 
 # xrandr added so we could change resolutions
-# Notice: although this is identical to the previous CentoS8 image, it is not interactive. Why!!!
-# latex: see https://docs.fedoraproject.org/en-US/neurofedora/latex/
 RUN yum install -y \
-	python3-scons \
-	bzip2 \
-	wget \
-	nano \
-	git \
-	which \
-	zsh \
-	hostname \
-	tigervnc-server \
-	xfce4-session \
-	xfce4-panel \
-	xfce4-terminal \
-	xfwm4 \
-	mailcap \
-	xterm \
-	nedit \
+	python3-devel python3-scons \
+	bzip2 wget curl nano git which bash tcsh zsh hostname  gedit environment-modules \
+	psmisc procps mailcap net-tools \
+	perl-CPAN glibc-langpack-en \
+    xorg-x11-server-Xvfb x11vnc novnc fluxbox xterm supervisor \
     texlive-scheme-basic \
     texlive-wrapfig \
     texlive-multirow \
+    texlive-sidecap \
+    texlive-fancyhdr \
+    texlive-everysel \
+    texlive-collection-fontsrecommended \
+    texlive-sauter \
 	&& yum clean packages \
 	&& yum clean all \
-	&& rm -rf /var/cache/yum \
-	&& ln -s /usr/bin/cmake3 /usr/local/bin/cmake \
-	&& git clone https://github.com/novnc/noVNC /opt/noVNC \
-	&& cd /opt/noVNC \
-	&& ln -s vnc.html index.html \
-	&& rm -rf .git* \
-	&& mkdir -p /container/utilities
+	&& rm -rf /var/cache/yum
 
 
-# These define an alias and a script for easily starting up the
-# servers from either bash or tcsh.
-COPY scripts/xstart_alias.sh  /etc/profile.d
-COPY scripts/xstart_alias.csh /etc/profile.d
-COPY scripts/xstart.sh  /container/utilities
-COPY scripts/xstart.csh /container/utilities
-COPY scripts/xstop /usr/bin
-ADD  dot_config /root/.config
+
+
+# Setup demo environment variables
+ENV HOME=/root \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    DISPLAY=:0.0 \
+    DISPLAY_WIDTH=1400 \
+    DISPLAY_HEIGHT=1000 \
+    RUN_XTERM=yes \
+    RUN_FLUXBOX=yes
+
+COPY conf.d /app/conf.d
+COPY supervisord.conf entrypoint.sh /app/
+
+
+
+CMD ["/app/entrypoint.sh"]
+EXPOSE 8080
