@@ -1,10 +1,20 @@
-# gemc image - containing gemc2 or gemc3
+# gemc image - containing gemc2 (including clas12tags), gemc3
 # --------------------------------------------------------------------------
 #
-# docker_build_gemc_image        2.11 fedora36
-# docker_run_gemc_image          2.11 fedora36 [i]
-# docker_tag_and_push_gemc_image 2.11 fedora36
+# docker_build_sim_image        2.4 fedora36  /usr/local
+# docker_run_sim_image          2.4 fedora36 [i]
+# docker_tag_and_push_sim_image 2.4 fedora36
 #
+# docker_build_gemc_image        2.11      fedora36  /usr/local
+# docker_build_gemc_image        1.1       fedora36  /usr/local
+# docker_run_gemc_image          2.11      fedora36 [i]
+# docker_tag_and_push_gemc_image 2.11      fedora36
+#
+# To build clas12Tags, sim image must be installed on /cvmfs first
+# docker_build_sim_image         2.4 fedora36                /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+# docker_build_gemc_image        4.4.2-5.1-5.2-5.3 fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+# docker_run_gemc_image          4.4.2-5.1-5.2-5.3 fedora36
+# docker_tag_and_push_gemc_image 4.4.2-5.1-5.2-5.3 fedora36
 # --------------------------------------------------------------------------
 
 FROM imagetemplate
@@ -13,22 +23,26 @@ LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 # run shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
-ARG GEMC_VERSION="na"
+ARG SIM_OR_GEMC="na"
+ARG VERSION="na"
+ARG LOCAL_DIR_INSTALL="na"
 ARG MODULE_TO_LOAD="na"
-RUN echo "GEMC_VERSION=$GEMC_VERSION, MODULE_TO_LOAD=$MODULE_TO_LOAD"
 
-ENV SIM_HOME /usr/local
+RUN echo "$SIM_OR_GEMC: VERSION=$VERSION, MODULE_TO_LOAD=$MODULE_TO_LOAD, $LOCAL_DIR_INSTALL=$LOCAL_DIR_INSTALL"
 
+ENV SIM_HOME $LOCAL_DIR_INSTALL
 WORKDIR $SIM_HOME
 
-COPY install_gemc $SIM_HOME
+COPY localSetup.sh $SIM_HOME
+COPY install_gemc  $SIM_HOME
 
-RUN echo "module load $MODULE_TO_LOAD" >> $SIM_HOME/localSetup.sh \
+RUN sed  -i -e "s|templateSim|$SIM_HOME|g"  localSetup.sh \
+    && echo "module load $MODULE_TO_LOAD" >> $SIM_HOME/localSetup.sh \
     && cp $SIM_HOME/localSetup.sh /app/localSetup.sh \
     && cp $SIM_HOME/localSetup.sh /etc/profile.d/localSetup.sh
 
-# gemc installation
+# gemc or sim installation
 RUN source /app/localSetup.sh \
-    && cd $SIM_HOME/ceInstall \
-    && git pull \
-    && $SIM_HOME/install_gemc $GEMC_VERSION $SIM_HOME
+    && $SIM_HOME/install_gemc $SIM_OR_GEMC $VERSION $SIM_HOME \
+    && strip --remove-section=.note.ABI-tag $QTDIR/lib/libQt5Core.so.5
+

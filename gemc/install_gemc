@@ -1,41 +1,61 @@
 #!/bin/zsh
 
 # the argument to this script are:
-# 1. the gemc version to install
-# 2. the SIM_HOME directory
+# 1: install sim or gemc
+# 2. the gemc version to install
+# 3. the SIM_HOME directory
 
 # the gemc version could be:
 # a. 2.X (gemc2)
 # b. 1.X (gemc3)
-# c. a dash separated list like 4.2-5.1-5.2 (clas12Tags).
+# c. a dash separated list like 4.4.2-5.1 (clas12Tags).
 
 source /usr/share/Modules/init/sh
 
 # argument is gemc version, SIM_HOME
-if [[ $# -eq 2 ]]; then
-  gemc_version=$1
-  export SIM_HOME=$2
+if [[ $# -eq 3 ]]; then
 
-  source $SIM_HOME/ceInstall/setup.sh install
+  sim_or_gemc=$1
+  version=$2
+  export SIM_HOME=$3
+
   export TERM=${TERM:-xterm}
+  source $SIM_HOME/ceInstall/setup.sh install
 
-  if [[ $gemc_version == "2.11" ]]; then
-    echo " > Installing gemc version $gemc_version - SIM_HOME is $SIM_HOME"
-    $SIM_HOME/ceInstall/install/install_gemc  $gemc_version
-  elif [[ $gemc_version == "1.1" || $gemc_version == "dev" ]]; then
-    echo " > Installing gemc3 version $gemc_version - SIM_HOME is $SIM_HOME"
-    $SIM_HOME/ceInstall/install/install_gemc3 $gemc_version
-  elif [[ $gemc_version == *"-"* ]]; then
-    # create array with  clas12Tags versions
-    tags=(${(s/-/)gemc_version})
-	  for g in $=tags
-    do
-	    echo " > Installing clas12Tag $g - SIM_HOME is $SIM_HOME"
-	    install_gemc $g
-    done
-  else
-    echo " > ERROR: gemc version $gemc_version is not supported. Exiting."
-    exit 1
+  if [[ $sim_or_gemc != "sim" && $sim_or_gemc != "gemc" ]]; then
+    echo "ERROR: first argument must be 'sim' or 'gemc'"
+    return 1
+  elif [[ $sim_or_gemc == "sim" ]]; then
+    echo " > Installing sim version $version - SIM_HOME is $SIM_HOME"
+    $SIM_HOME/ceInstall/install/install_sim $version
+  elif [[ $sim_or_gemc == "gemc" ]]; then
+    if [[ $version == "2.11" ]]; then
+      echo " > Installing gemc version $version - SIM_HOME is $SIM_HOME"
+      $SIM_HOME/ceInstall/install/install_gemc  $version
+    elif [[ $version == "1.1" || $version == "dev" ]]; then
+      echo " > Installing gemc3 version $version - SIM_HOME is $SIM_HOME"
+      $SIM_HOME/ceInstall/install/install_gemc3 $version
+    elif [[ $version == *"-"* ]]; then
+      # create array with  clas12Tags versions
+      tags=(${(s/-/)version})
+	    for g in $=tags
+      do
+	      echo " > Installing clas12Tag $g - SIM_HOME is $SIM_HOME"
+	      $SIM_HOME/ceInstall/install/install_gemc $g
+      done
+    else
+      echo " > ERROR: gemc version $version is not supported. Exiting."
+      exit 1
+    fi
   fi
 
+
+
+
+
+
+
+else
+  echo " > ERROR: wrong number of arguments. Exiting."
+  exit 1
 fi
