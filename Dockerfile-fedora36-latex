@@ -18,10 +18,6 @@ LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 SHELL ["/bin/bash", "-c"]
 
 
-RUN   yum -y update \
-	&& yum -y check-update \
-	&& yum clean packages \
-	&& yum clean all
 
 # xrandr added so we could change resolutions
 RUN yum install -y \
@@ -45,6 +41,10 @@ RUN yum install -y \
 
 
 
+RUN   yum -y update \
+	&& yum -y check-update \
+	&& yum clean packages \
+	&& yum clean all
 
 # Setup demo environment variables
 ENV HOME=/root \
