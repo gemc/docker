@@ -60,6 +60,5 @@ COPY conf.d /app/conf.d
 COPY supervisord.conf entrypoint.sh /app/
 
 
-
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080

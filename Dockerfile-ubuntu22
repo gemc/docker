@@ -17,6 +17,7 @@ RUN    apt update \
 	&& apt  autoclean
 
 
+
 # no interactive session to identify the timezone
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
     && DEBIAN_FRONTEND=noninteractive apt  install -y --no-install-recommends tzdata \
@@ -29,21 +30,20 @@ RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
 	psmisc procps mailcap net-tools \
 	libcpandb-perl \
     xvfb x11vnc novnc fluxbox xterm supervisor  \
-    qtbase5-dev libsqlite3-dev \
+    qtbase5-dev libqt5widgets5 libqt5opengl5-dev libqt5printsupport5 libsqlite3-dev \
 	&& apt  autoclean
 
 
-# root not available yet on ubuntu22, see https://root.cern/install/#conda
-# so using conda for now.
-ENV CONDA_INSTALLER_FILE Miniconda3-py310_23.3.1-0-Linux-aarch64.sh
-# this will not work within the JLAB firewall
-RUN curl -SL https://repo.anaconda.com/miniconda/$CONDA_INSTALLER_FILE -O \
-    && bash $CONDA_INSTALLER_FILE -b \
-    && source /root/miniconda3/etc/profile.d/conda.sh \
-    && conda config --set channel_priority strict \
-    && conda create -c conda-forge --name myroot root \
-    && conda activate myroot
+# root installed using tarball
+ENV ROOT_RELEASE=6.28.04
+ENV ROOT_FILE=root_v${ROOT_RELEASE}.Linux-ubuntu22-x86_64-gcc11.3.tar.gz
+ENV ROOT_INSTALL_DIR=/usr/local
 
+RUN cd ${ROOT_INSTALL_DIR} \
+    && wget https://root.cern/download/${ROOT_FILE} \
+    && tar -xzvf ${ROOT_FILE} \
+    && rm ${ROOT_FILE} \
+    && echo "cd ${ROOT_INSTALL_DIR}/root ; source bin/thisroot.sh ; cd -" >> /etc/profile.d/root.sh
 
 # Setup demo environment variables
 ENV HOME=/root \
@@ -57,9 +57,8 @@ ENV HOME=/root \
     RUN_FLUXBOX=yes
 
 COPY conf.d /app/conf.d
-COPY supervisord.conf entrypoint.sh ubuntu_conda.sh /app/
+COPY supervisord.conf entrypoint.sh /app/
 
-RUN cat /app/ubuntu_conda.sh >> /root/.bashrc
 
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080

@@ -10,7 +10,9 @@
 # b. 1.X (gemc3)
 # c. a dash separated list like 4.4.2-5.1 (clas12Tags).
 
-source /usr/share/Modules/init/sh
+# on fedora and ubuntu installation dir is different for modules
+[[ -f /usr/share/Modules/init/sh ]] && source /usr/share/Modules/init/sh
+[[ -f /usr/share/modules/init/sh ]] && source /usr/share/modules/init/sh
 
 # argument is gemc version, SIM_HOME
 if [[ $# -eq 3 ]]; then
