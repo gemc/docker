@@ -13,6 +13,7 @@ Inside the container:
 ```
 cd $SIM_HOME
 tar cvfz fedora.tar.gz ceInstall noarch fedora36-gcc12
+rm -f /usr/local/mywork/fedora.tar.gz
 mv fedora.tar.gz /usr/local/mywork/
  ```
 
@@ -37,6 +38,7 @@ scp fedora.tar.gz ifarm:/work/clas12/ungaro
 
 On ifarm, as clas12 (warning. default shell is tcsh):
 ```
+ssh clas12@ifarm
 alias l 'ls -l'
 cd /scigroup/cvmfs/hallb/clas12/soft/ceInstall
 git pull

@@ -13,6 +13,7 @@
 # To build clas12Tags, sim image must be installed on /cvmfs first
 # docker_build_sim_image         2.4 fedora36                /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
 # docker_build_gemc_image        4.4.2-5.1-5.2-5.3 fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft
+# docker_build_gemc_image        4.4.2-5.1-5.2-5.3 ubuntu22 /usr/local
 # docker_run_gemc_image          4.4.2-5.1-5.2-5.3 fedora36-cvmfs  [i]
 # docker_tag_and_push_gemc_image 4.4.2-5.1-5.2-5.3 fedora36-cvmfs
 # --------------------------------------------------------------------------
@@ -20,7 +21,7 @@
 FROM imagetemplate
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
-# run shell instead of sh
+# run bash shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
 ARG SIM_OR_GEMC="na"
@@ -28,7 +29,7 @@ ARG VERSION="na"
 ARG LOCAL_DIR_INSTALL="na"
 ARG MODULE_TO_LOAD="na"
 
-RUN echo "$SIM_OR_GEMC: VERSION=$VERSION, MODULE_TO_LOAD=$MODULE_TO_LOAD, $LOCAL_DIR_INSTALL=$LOCAL_DIR_INSTALL"
+RUN echo "$SIM_OR_GEMC: VERSION=$VERSION, MODULE_TO_LOAD=$MODULE_TO_LOAD, LOCAL_DIR_INSTALL=$LOCAL_DIR_INSTALL"
 
 ENV SIM_HOME $LOCAL_DIR_INSTALL
 WORKDIR $SIM_HOME
@@ -36,7 +37,7 @@ WORKDIR $SIM_HOME
 COPY localSetup.sh $SIM_HOME
 COPY install_gemc  $SIM_HOME
 
-RUN sed  -i -e "s|templateSim|$SIM_HOME|g"  localSetup.sh \
+RUN sed  -i -e "s|templateSim|$SIM_HOME|g"   $SIM_HOME/localSetup.sh \
     && echo "module load $MODULE_TO_LOAD" >> $SIM_HOME/localSetup.sh \
     && cp $SIM_HOME/localSetup.sh /app/localSetup.sh \
     && cp $SIM_HOME/localSetup.sh /etc/profile.d/localSetup.sh
