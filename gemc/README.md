@@ -42,6 +42,8 @@ ssh clas12@ifarm
 alias l 'ls -l'
 cd /scigroup/cvmfs/hallb/clas12/soft/ceInstall
 git pull
+cd /scigroup/cvmfs/hallb/clas12/soft/noarch/clas12-config
+git pull
 cd /scigroup/cvmfs/hallb/clas12/soft/fedora36-gcc12/sim/2.4
 \cp -rf  /work/clas12/ungaro/fedora36-gcc12/sim/2.4/* .
 cd /scigroup/cvmfs/hallb/clas12/soft/noarch/scons_bm
