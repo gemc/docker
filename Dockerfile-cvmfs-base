@@ -1,9 +1,9 @@
 # gemc image - containing gemc2 or gemc3
 # --------------------------------------------------------------------------
 #
-# docker_build_image base:fedora36  Dockerfile-cvmfs-base  cvmfs:fedora36  "--no-cache"
-# docker_run_image cvmfs:fedora36 [i] [cvmf]
-# docker_tag_and_push_image cvmfs:fedora36
+# docker_build_image   base:fedora36  Dockerfile-cvmfs-base      cvmfs:fedora36       "--no-cache"
+# docker_run_image                                               cvmfs:fedora36       [i] [cvmf]
+# docker_tag_and_push_image                         jeffersonlab/cvmfs:fedora36
 #
 #  docker tag cvmfs:fedora36 jeffersonlab/clas12software:production
 #  docker tag cvmfs:fedora36 jeffersonlab/clas12software:devel

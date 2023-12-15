@@ -1,9 +1,9 @@
-# ubuntu base image
+# Ubuntu https://hub.docker.com/_/ubuntu
 #-----------------------------------------------------------------------------------------
 #
-# docker_build_image ubuntu:jammy  Dockerfile-ubuntu22  base:ubuntu22  "--no-cache"
-# docker_run_image base:ubuntu22 [i]
-# docker_tag_and_push_image base:ubuntu22
+# docker_build_image   ubuntu:jammy   Dockerfile-ubuntu22        base:ubuntu22        "--no-cache"
+# docker_run_image                                               base:ubuntu22        [i]
+# docker_tag_and_push_image                         jeffersonlab/base:ubuntu22
 #
 #-----------------------------------------------------------------------------------------
 
@@ -13,8 +13,12 @@ LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 # run shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
-RUN    apt update \
-	&& apt  autoclean
+ADD https://pki.jlab.org/JLabCA.crt /etc/pki/ca-trust/source/anchors/JLabCA.crt
+RUN update-ca-trust
+
+
+
+
 
 
 
@@ -23,14 +27,17 @@ RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
     && DEBIAN_FRONTEND=noninteractive apt  install -y --no-install-recommends tzdata \
 	cmake make g++ \
     expat libexpat1-dev \
-    libmysqlclient-dev \
+    libmysqlclient-dev libsqlite3-dev \
 	libpython3-dev scons \
 	libglu1-mesa-dev   libx11-dev   libxpm-dev   libxft-dev   libxt-dev   libxmu-dev   libxrender-dev \
 	bzip2 wget curl nano git bash tcsh zsh hostname gedit environment-modules \
 	psmisc procps mailcap net-tools \
 	libcpandb-perl \
-    xvfb x11vnc novnc fluxbox xterm supervisor  \
-    qtbase5-dev libqt5widgets5 libqt5opengl5-dev libqt5printsupport5 libsqlite3-dev \
+    xterm \
+    xvfb x11vnc novnc  \
+    fluxbox  supervisor  \
+    qtbase5-dev libqt5widgets5 libqt5opengl5-dev libqt5printsupport5 \
+	&& apt  update \
 	&& apt  autoclean
 
 

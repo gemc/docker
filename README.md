@@ -7,21 +7,18 @@ The containers work in batch mode or interactively using novnc:
 
 ## Base containers: includes necessary packages to support geant4 and gemc applications.
 
-- Fedora:
-  - base:fedora36
-
+- base:fedora36
+- base:ubuntu22
+- base:almalinux9*
   
-- Ubuntu:
-  - base:ubuntu22
-
-
 ## Sim containers: includes clhep, xercesc, qt and geant4: 
 
 - Fedora:
   - 10.6.2-fedora36
   - 10.7.4-fedora36
   - 11.1.1-fedora36
-``
+
+
 - Ubuntu:
   - 10.6.2-ubuntu22
   - 10.7.4-ubuntu22
@@ -48,10 +45,7 @@ The containers work in batch mode or interactively using novnc:
 
 ### Notes
 
-- The github username or organization should be linked to docker hub:
-  on the ACCOUNT settings go to applications and click on Docker Hub Builder.
-  Grant access to the organizations if needed.
-- CentOS8 notes:  https://fedoraproject.org/wiki/EPEL
+- The Almalinux container does not support interactive sessions yet.
 
 
 ## Dockerfile Commands
@@ -63,9 +57,9 @@ The containers work in batch mode or interactively using novnc:
 
 See https://github.com/theasp/docker-novnc/
 
+- xterm - to demo that it works
 - Xvfb - X11 in a virtual framebuffer
 - x11vnc - A VNC server that scrapes the above X11 server
 - noNVC - A HTML5 canvas vnc viewer
 - Fluxbox - a small window manager
-- xterm - to demo that it works
 - supervisord - to keep it all running

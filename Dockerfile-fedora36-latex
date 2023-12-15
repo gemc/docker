@@ -1,51 +1,46 @@
-# docker fedora36 base image - TODO: needs update to use fluxbox
+# fedora36 latex base image
 #--------------------------------------------------------------------------
 #
-# To manually build and push the container (use --no-cache to force rebuild):
-#
-#  docker buildx build --platform linux/amd64  --progress=plain --no-cache -f Dockerfile-fedora36-latex -t base:fedora36-latex .
-#  docker tag base:fedora36-latex maureeungaro/base:fedora36-latex
-#  docker push maureeungaro/base:fedora36-latex
-#
-#  docker run -it --rm base:fedora36-latex bash
+# docker_build_image   fedora:36      Dockerfile-fedora36-latex  base:fedora36-latex  "--no-cache"
+# docker_run_image                                               base:fedora36-latex  [i]
+# docker_tag_and_push_image                         maureeungaro/base:fedora36-latex
 #
 #--------------------------------------------------------------------------
 
-FROM fedora:36
+FROM imagetemplate
 LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 
 # run shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
+ADD https://pki.jlab.org/JLabCA.crt /etc/pki/ca-trust/source/anchors/JLabCA.crt
+RUN update-ca-trust
 
 
-# xrandr added so we could change resolutions
-RUN yum install -y \
-	python3-devel python3-scons \
-	bzip2 wget curl nano git which bash tcsh zsh hostname  gedit environment-modules \
+
+
+
+
+
+
+RUN dnf install -y \
+	python3-devel \
+    python3-scons \
+	bzip2 wget curl nano git which bash tcsh zsh hostname gedit environment-modules \
 	psmisc procps mailcap net-tools \
 	perl-CPAN glibc-langpack-en \
-    xorg-x11-server-Xvfb x11vnc novnc fluxbox xterm supervisor \
-    texlive-scheme-basic \
-    texlive-wrapfig \
-    texlive-multirow \
-    texlive-sidecap \
-    texlive-fancyhdr \
-    texlive-everysel \
-    texlive-collection-fontsrecommended \
-    texlive-sauter \
-    texlive-revtex4 \
-    texlive-sttools \
-	&& yum clean packages \
-	&& yum clean all \
-	&& rm -rf /var/cache/yum
+    xorg-x11-server-Xvfb xterm \
+    x11vnc novnc  \
+    fluxbox supervisor \
+    texlive-scheme-basic texlive-wrapfig texlive-multirow texlive-sidecap texlive-fancyhdr texlive-everysel \
+    texlive-collection-fontsrecommended texlive-sauter texlive-revtex4 texlive-sttools \
+    texlive-pythontex texlive-fvextra \
+    && dnf -y update \
+	&& dnf -y check-update \
+	&& dnf clean packages \
+	&& dnf clean all \
+   	&& rm -rf /var/cache/yum
 
-
-
-RUN   yum -y update \
-	&& yum -y check-update \
-	&& yum clean packages \
-	&& yum clean all
 
 # Setup demo environment variables
 ENV HOME=/root \

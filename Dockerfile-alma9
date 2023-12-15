@@ -1,9 +1,9 @@
-# Fedora base image
+# AlmaLinux image https://almalinux.org https://hub.docker.com/_/almalinux
 #-----------------------------------------------------------------------------------------
 #
-# docker_build_image   fedora:36      Dockerfile-fedora36        base:fedora36        "--no-cache"
-# docker_run_image                                               base:fedora36        [i]
-# docker_tag_and_push_image                         jeffersonlab/base:fedora36
+# docker_build_image   almalinux:9    Dockerfile-alma9           base:almalinux9      "--no-cache"
+# docker_run_image                                               base:almalinux9      [i]
+# docker_tag_and_push_image                         jeffersonlab/base:almalinux9
 #
 #-----------------------------------------------------------------------------------------
 
@@ -16,26 +16,26 @@ SHELL ["/bin/bash", "-c"]
 ADD https://pki.jlab.org/JLabCA.crt /etc/pki/ca-trust/source/anchors/JLabCA.crt
 RUN update-ca-trust
 
+# alma specific:
+# crb: for mysql-devel
+# synergy: root, scons, vncs
+RUN    dnf install -y  'dnf-command(config-manager)' \
+    && dnf config-manager --set-enabled crb \
+    && dnf install -y almalinux-release-synergy
 
-
-
-
-
-
-
-RUN yum install -y \
+RUN dnf install -y --allowerasing \
 	cmake3 make gcc-c++ \
 	expat-devel \
 	mysql-devel sqlite-devel \
 	python3-devel \
     python3-scons \
-	mesa-libGLU-devel libX11-devel libXpm-devel libXft-devel libXt-devel libXmu-devel libXrender-devel xrandr \
+	mesa-libGLU-devel libX11-devel libXpm-devel libXft-devel libXt-devel libXmu-devel libXrender-devel xrandr\
 	bzip2 wget curl nano git which bash tcsh zsh hostname  gedit environment-modules \
 	psmisc procps mailcap net-tools \
 	perl-CPAN glibc-langpack-en \
     xorg-x11-server-Xvfb xterm \
     x11vnc novnc \
-    fluxbox supervisor \
+    # fluxbox supervisor
     qt5-qtbase-devel qt5-linguist \
     root \
     && dnf -y update \
