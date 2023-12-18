@@ -1,4 +1,4 @@
-# gemc image - containing gemc2 (including clas12tags), gemc3
+# Sim/gemc imagees, based on base:os
 # --------------------------------------------------------------------------
 #
 # docker_build_sim_image        2.4 fedora36  /usr/local

@@ -4,7 +4,6 @@
 [[ -f /usr/share/Modules/init/sh ]] && source /usr/share/Modules/init/sh
 [[ -f /usr/share/modules/init/sh ]] && source /usr/share/modules/init/sh
 
-
 export TERM=xterm-256color
 export SIM_HOME=templateSim
 

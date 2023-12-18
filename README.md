@@ -26,6 +26,7 @@ The containers work in batch mode or interactively using novnc:
 
 ---
 
+### Sim containers with SIM_HOME set to:
 
 ### Additional content:
 

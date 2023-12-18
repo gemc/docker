@@ -1,4 +1,4 @@
-# gemc image - containing gemc2 or gemc3
+# For OSG production: based on base:fedora36
 # --------------------------------------------------------------------------
 #
 # docker_build_image   base:fedora36  Dockerfile-cvmfs-base      cvmfs:fedora36       "--no-cache"
@@ -25,21 +25,20 @@ SHELL ["/bin/bash", "-c"]
 # lsof for tcsh modules
 
 COPY gemc/bgMerginFilename.sh  /usr/bin/bgMerginFilename.sh
-COPY localSetup-cvmfs.sh /app/localSetup.sh
-RUN yum install -y \
+COPY localSetup.sh /app/localSetup.sh
+RUN dnf install -y \
 	flexiblas-devel \
     liburing \
     xrootd-client lsof \
-    git make cmake gcc-c++ gcc binutils \
+    gcc binutils \
     libX11-devel libXpm-devel libXft-devel libXext-devel python openssl-devel \
     redhat-lsb-core gcc-gfortran pcre-devel \
     mesa-libGL-devel mesa-libGLU-devel glew-devel ftgl-devel mysql-devel \
     fftw-devel cfitsio-devel graphviz-devel libuuid-devel \
     avahi-compat-libdns_sd-devel openldap-devel python3-numpy \
     libxml2-devel gsl-devel readline-devel qt5-qtwebengine-devel \
-    R-devel R-Rcpp-devel R-RInside-devel
-
-RUN  yum -y update \
-    && yum -y check-update \
-    && yum clean packages \
-    && yum clean all
+    R-devel R-Rcpp-devel R-RInside-devel \
+    && dnf -y update \
+    && dnf -y check-update \
+    && dnf clean packages \
+    && dnf clean all
