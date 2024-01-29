@@ -1,5 +1,5 @@
 # Test based on https://github.com/theasp/docker-novnc
-# docker build --progress=plain --no-cache -f Dockerfile-test -t base:test .
+# docker build --progress=plain --no-cache -f Dockerfile-fluxbox-test -t base:test .
 # docker run --rm -it -p 8080:8080 base:test
 # browse to http://localhost:8080/vnc.html
 

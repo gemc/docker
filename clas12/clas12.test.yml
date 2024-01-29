@@ -1,4 +1,0 @@
-sut:
-  build: .
-  dockerfile: Dockerfile-clas12software4.4.1
-  command: /jlab/tests/test1.sh

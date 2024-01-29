@@ -24,6 +24,11 @@ The containers work in batch mode or interactively using novnc:
   - 10.7.4-ubuntu22
   - 11.1.1-ubuntu22
 
+- Almalinux:
+  - 10.6.2-almalinux9
+  - 10.7.4-almalinux9
+  - 11.1.1-almalinux9
+  
 ---
 
 ### Sim containers with SIM_HOME set to:

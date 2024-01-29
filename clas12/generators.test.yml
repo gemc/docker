@@ -1,4 +1,0 @@
-sut:
-  build: .
-  dockerfile: Dockerfile-clas12software4.4.2
-  command: /jlab/tests/generators.sh
