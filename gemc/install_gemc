@@ -34,10 +34,10 @@ if [[ $# -eq 3 ]]; then
     if [[ $version == "2.11" ]]; then
       echo " > Installing gemc version $version - SIM_HOME is $SIM_HOME"
       $SIM_HOME/ceInstall/install/install_gemc  $version
-    elif [[ $version == "1.1" || $version == "dev" ]]; then
+    elif [[ $version == "1.1" ]]; then
       echo " > Installing gemc3 version $version - SIM_HOME is $SIM_HOME"
       $SIM_HOME/ceInstall/install/install_gemc3 $version
-    elif [[ $version == *"-"* ]]; then
+    elif [[ $version == *"-"* || $version == "dev" ]]; then
       # create array with  clas12Tags versions
       tags=(${(s/-/)version})
 	    for g in $=tags

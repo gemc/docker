@@ -1,4 +1,0 @@
-
-1. the -i is not passed to install_software - this would cause the /etc/profile.d/localSetup.sh to run
-   and source setup.sh again - which is causing troubles in zsh (not sure why)
-
