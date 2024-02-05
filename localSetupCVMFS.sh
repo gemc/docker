@@ -7,6 +7,7 @@
 export TERM=xterm-256color
 
 
+export SIM_HOME=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 
 
@@ -21,8 +22,7 @@ export TERM=xterm-256color
 
 
 
-
-
+source $SIM_HOME/ceInstall/setup.sh install
 
 
 alias l='ls -l'

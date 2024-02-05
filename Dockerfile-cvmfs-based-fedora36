@@ -25,7 +25,7 @@ SHELL ["/bin/bash", "-c"]
 # lsof for tcsh modules
 
 COPY gemc/bgMerginFilename.sh  /usr/bin/bgMerginFilename.sh
-COPY localSetup.sh /app/localSetup.sh
+COPY localSetupCVMFS.sh /app/localSetup.sh
 RUN dnf install -y \
 	flexiblas-devel \
     liburing \

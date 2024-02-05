@@ -32,11 +32,14 @@ scp fedora.tar.gz ifarm:/work/clas12/ungaro
 
 
 **On ifarm**:
+Docker does not deal well with sym links. The last command will 
+replace them with the actual files.
 ```
 cd /scigroup/cvmfs/geant4
 l /work/clas12/ungaro
 git clone https://github.com/JeffersonLab/ceInstall.git
 tar -zxpvf /work/clas12/ungaro/fedora.tar.gz
+find ./ -type l  -name "*.so*" -exec sh -c 'for i in "$@"; do cp --preserve --remove-destination "$(readlink -f "$i")" "$i"; done' sh {} +
 ```
 
 

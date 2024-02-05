@@ -13,12 +13,15 @@ LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 # run shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
+# Update needed to use the right package repos
+RUN  apt update
+
+# Install ca-certificates tools
+RUN apt-get install -y ca-certificates
+
 # JLab certificate
 ADD https://pki.jlab.org/JLabCA.crt /etc/pki/ca-trust/source/anchors/JLabCA.crt
-RUN update-ca-trust
-
-
-
+RUN update-ca-certificates
 
 
 
@@ -43,8 +46,8 @@ RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
 
 
 # root installed using tarball
-ENV ROOT_RELEASE=6.28.04
-ENV ROOT_FILE=root_v${ROOT_RELEASE}.Linux-ubuntu22-x86_64-gcc11.3.tar.gz
+ENV ROOT_RELEASE=6.30.04
+ENV ROOT_FILE=root_v${ROOT_RELEASE}.Linux-ubuntu22.04-x86_64-gcc11.4.tar.gz
 ENV ROOT_INSTALL_DIR=/usr/local
 
 RUN cd ${ROOT_INSTALL_DIR} \
