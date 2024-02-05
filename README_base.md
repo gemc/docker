@@ -21,8 +21,8 @@ support geant4 installation.
 
 The containers work in batch mode or interactively using novnc:
 
-* batch mode:  `docker run -it --rm container  bash`
-* interactive: `docker run -it --rm -p 8080:8080 container` <br/> 
+* **batch mode**:  `docker run -it --rm container  bash`
+* **interactive**: `docker run -it --rm -p 8080:8080 container` <br/> 
   then point your browser to `http://localhost:8080`
 
 <br/>

@@ -5,24 +5,22 @@
 # docker_run_sim_image          1.0 fedora36 [i]
 # docker_tag_and_push_sim_image 1.0 fedora36
 #
-# /usr/local installation
-# docker_build_gemc_image        2.11           fedora36  /usr/local
+# /usr/local installation, for ci
 # docker_build_gemc_image        4.4.2-5.4-5.5  fedora36  /usr/local
-# docker_build_gemc_image        dev            fedora36  /usr/local
-# docker_build_gemc_image        4.4.2-5.4-5.5  ubuntu22  /usr/local
 # docker_tag_and_push_gemc_image 4.4.2-5.4-5.5  fedora36
+# docker_build_gemc_image        dev            fedora36  /usr/local
 # docker_tag_and_push_gemc_image dev            fedora36
 # docker_build_gemc_image        1.1            fedora36  /usr/local
+# docker_build_gemc_image        2.11           fedora36  /usr/local
 # docker_run_gemc_image          2.11           fedora36  [i]
 # docker_tag_and_push_gemc_image 2.11           fedora36
 #
 # /cvmfs installation
-# docker_build_sim_image         1.0           fedora36  /cvmfs/oasis.opensciencegrid.org/jlab
-# docker_build_sim_image         1.1           fedora36  /cvmfs/oasis.opensciencegrid.org/jlab
-# docker_build_gemc_image        4.4.2-5.4-5.5 fedora36  /cvmfs/oasis.opensciencegrid.org/jlab
-# docker_build_gemc_image        5.6           fedora36  /cvmfs/oasis.opensciencegrid.org/jlab
+# docker_build_sim_image         1.0           fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_gemc_image        4.4.2-5.4-5.5 fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_gemc_image        5.6-dev       fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 # docker_run_gemc_image          4.4.2-5.4-5.5 fedora36-cvmfs  [i]
-# docker_tag_and_push_gemc_image 4.4.2-5.4-5.5 fedora36-cvmfs
+# docker_run_gemc_image          5.6-dev       fedora36-cvmfs  [i]
 # --------------------------------------------------------------------------
 
 FROM imagetemplate

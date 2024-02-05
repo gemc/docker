@@ -1,32 +1,17 @@
-## Sim containers
+## CVMFS-Bases containers
 
 ### Description:
 
-Includes clhep, xercesc, qt and geant4 packages.
+Containers with root support, capables of loading geant4 software from CVMFS
+using modules.
 
 <br/>
 
 ### Supported tags:
 
-- **Fedora**:
-
-  - jeffersonlab/10.6.2-fedora36
-  - jeffersonlab/10.7.4-fedora36
-  - jeffersonlab/11.2.0-fedora36
-
-
-- **Ubuntu**:
-
-  - jeffersonlab/10.6.2-ubuntu22
-  - jeffersonlab/10.7.4-ubuntu22
-  - jeffersonlab/11.2.0-ubuntu22
-
-
-- **Almalinux[^1]**:
-
-  - jeffersonlab/10.6.2-almalinux9
-  - jeffersonlab/10.7.4-almalinux9
-  - jeffersonlab/11.2.0-almalinux9
+- jeffersonlab/cvmfs:fedora36
+- jeffersonlab/cvmfs:ubuntu22
+- jeffersonlab/cvmfs:almalinux9[^1]
   
 [^1] The Almalinux container does not support interactive sessions yet.
 
@@ -36,8 +21,8 @@ Includes clhep, xercesc, qt and geant4 packages.
 
 The containers work in batch mode or interactively using novnc:
 
-* **batch mode**:  `docker run -it --rm container  bash`
-* **interactive**: `docker run -it --rm -p 8080:8080 container` <br/> 
+* **batch mode**:  `docker run -it --rm -v /cvmfs:/cvmfs:ro container  bash`
+* **interactive**: `docker run -it --rm -v /cvmfs:/cvmfs:ro -p 8080:8080 container` <br/> 
   then point your browser to `http://localhost:8080`
 
 <br/>
@@ -45,7 +30,7 @@ The containers work in batch mode or interactively using novnc:
 #### Example:
 
 ```
-docker run -it --rm jeffersonlab/10.7.4-fedora36 bash
+docker run -it --rm  -v /cvmfs:/cvmfs:ro jeffersonlab/base:fedora36 bash
 ```
 
 <br/>
