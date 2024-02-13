@@ -16,9 +16,10 @@
 # docker_tag_and_push_gemc_image 2.11           fedora36
 #
 # /cvmfs installation
-# docker_build_sim_image         1.0           fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
-# docker_build_gemc_image        4.4.2-5.4-5.5 fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
-# docker_build_gemc_image        5.6-dev       fedora36  /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_sim_image         1.0           fedora36   /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_sim_image         1.1           almalinux9 /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_gemc_image        4.4.2-5.4-5.5 fedora36   /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# docker_build_gemc_image        5.6-dev       fedora36   /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 # docker_run_gemc_image          4.4.2-5.4-5.5 fedora36-cvmfs  [i]
 # docker_run_gemc_image          5.6-dev       fedora36-cvmfs  [i]
 # --------------------------------------------------------------------------

@@ -11,9 +11,8 @@ support geant4 installation.
 
 - jeffersonlab/base:fedora36
 - jeffersonlab/base:ubuntu22
-- jeffersonlab/base:almalinux9[^1]
+- jeffersonlab/base:almalinux9
   
-[^1] The Almalinux container does not support interactive sessions yet.
 
 <br/>
 

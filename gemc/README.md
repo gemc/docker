@@ -14,11 +14,19 @@ docker_run_sim_image   1.2           fedora36-cvmfs
 Notice: omit 'noarch' when necessary.
 
 ```
-filename=/usr/local/mywork/fedora.tar.gz
+version=1.2
+#ostype=almalinux9-gcc11  
+ostype=ubuntu22-gcc11  
+#ostype=fedora36-gcc12
+filename=/usr/local/mywork/$ostype-$version.tar.gz
+#filename=/usr/local/mywork/noarch
 rm -f $filename
 cd $SIM_HOME
-tar cvfz $filename noarch 1.0/fedora36-gcc12
-tar cvfz $filename 1.1/fedora36-gcc12
+find ./ -type l  -name "*.so*" -exec sh -c 'for i in "$@"; do cp --preserve --remove-destination "$(readlink -f "$i")" "$i"; echo $i; done' sh {} +
+find ./ -type l  -name "*.a*"  -exec sh -c 'for i in "$@"; do cp --preserve --remove-destination "$(readlink -f "$i")" "$i"; echo $i; done' sh {} +
+find ./ -type d -name ".git" -exec rm -rf {} +
+tar cvfz $filename $version/$ostype
+#tar cvfz $filename noarch
 ```
 
 
@@ -27,7 +35,12 @@ tar cvfz $filename 1.1/fedora36-gcc12
 
 ```
 cd ~/mywork
-scp fedora.tar.gz ifarm:/work/clas12/ungaro
+version=1.2
+#ostype=almalinux9-gcc11  
+ostype=ubuntu22-gcc11  
+#ostype=fedora36-gcc12
+filename=$ostype-$version.tar.gz
+scp $filename ifarm:/work/clas12/ungaro
 ```
 
 
@@ -37,9 +50,13 @@ replace them with the actual files.
 ```
 cd /scigroup/cvmfs/geant4
 l /work/clas12/ungaro
-git clone https://github.com/JeffersonLab/ceInstall.git
-tar -zxpvf /work/clas12/ungaro/fedora.tar.gz
-find ./ -type l  -name "*.so*" -exec sh -c 'for i in "$@"; do cp --preserve --remove-destination "$(readlink -f "$i")" "$i"; done' sh {} +
+version=1.1
+#ostype=almalinux9-gcc11  
+ostype=ubuntu22-gcc11  
+#ostype=fedora36-gcc12
+filename=/work/clas12/ungaro/$ostype-$version.tar.gz
+#git clone https://github.com/JeffersonLab/ceInstall.git
+tar -zxpvf  $filename
 ```
 
 
