@@ -24,17 +24,16 @@ RUN update-ca-trust
 
 
 
-RUN yum install -y \
+RUN dnf install -y \
 	git make cmake gcc-c++ \
 	expat-devel \
-	mysql-devel sqlite-devel \
-	python3-devel \
-    python3-scons \
-	mesa-libGLU-devel libX11-devel libXpm-devel libXft-devel libXt-devel libXmu-devel libXrender-devel xrandr \
-	bzip2 wget curl nano which bash tcsh zsh hostname gedit environment-modules \
+	mariadb-devel sqlite-devel \
+	python3-devel python3-scons \
+	mesa-libGLU-devel libX11-devel libXpm-devel libXft-devel libXt-devel libXmu-devel libXrender-devel  xorg-x11-server-Xvfb xrandr \
+    bzip2 wget curl nano which bash tcsh zsh hostname gedit environment-modules \
 	psmisc procps mailcap net-tools \
 	perl-CPAN glibc-langpack-en \
-    xorg-x11-server-Xvfb xterm \
+	xterm \
     x11vnc novnc \
     fluxbox supervisor \
     qt5-qtbase-devel qt5-linguist \

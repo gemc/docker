@@ -13,7 +13,7 @@ LABEL maintainer="Maurizio Ungaro <ungaro@jlab.org>"
 # run shell instead of sh
 SHELL ["/bin/bash", "-c"]
 
-# Update needed to use the right package repos
+# Update needed at beginning to use the right package repos
 RUN  apt update
 
 # Install ca-certificates tools
@@ -29,16 +29,16 @@ RUN update-ca-certificates
 # no interactive session to identify the timezone
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime \
     && DEBIAN_FRONTEND=noninteractive apt  install -y --no-install-recommends tzdata \
-	cmake make g++ \
+	git make cmake g++ \
     expat libexpat1-dev \
     libmysqlclient-dev libsqlite3-dev \
 	libpython3-dev scons \
-	libglu1-mesa-dev   libx11-dev   libxpm-dev   libxft-dev   libxt-dev   libxmu-dev   libxrender-dev \
-	bzip2 wget curl nano git bash tcsh zsh hostname gedit environment-modules \
+	libglu1-mesa-dev   libx11-dev   libxpm-dev   libxft-dev   libxt-dev   libxmu-dev   libxrender-dev xvfb x11-xserver-utils\
+	bzip2 wget curl nano which bash tcsh zsh hostname gedit environment-modules \
 	psmisc procps mailcap net-tools \
 	libcpandb-perl \
     xterm \
-    xvfb x11vnc novnc  \
+    x11vnc novnc  \
     fluxbox  supervisor  \
     qtbase5-dev libqt5widgets5 libqt5opengl5-dev libqt5printsupport5 \
 	&& apt  update \
